@@ -1,24 +1,23 @@
 .Rate {
-    // z-index: 15;
-    display: flex;
-    flex-direction: column;
+  // z-index: 15;
+  display: flex;
+  flex-direction: column;
 
-    iframe {
+  iframe {
+    border: none;
 
-        border: none;
-
-        .RatingValue__Container-sc-fl6036-0 .hAnutS .es-rating-value {
-            font-size: 50px;
-        }
+    .RatingValue__Container-sc-fl6036-0 .hAnutS .es-rating-value {
+      font-size: 50px;
     }
+  }
 
-    .Logo-container {
-        width: 100%;
+  .Logo-container {
+    width: 100%;
 
-        img {
-            width: 15vw;
-            // width: 15%;
-            background-color: transparent;
-        }
+    img {
+      width: 15vw;
+      height: auto;
+      background-color: transparent;
     }
+  }
 }

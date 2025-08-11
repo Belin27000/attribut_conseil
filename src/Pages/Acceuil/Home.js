@@ -56,11 +56,11 @@ const Home = () => {
                     alt="Logo Qualiopi" />
                 <div className='QualContainer-Bloc'>
                     <div className='Qualiopi_stats'>
-                        <DownloadFile file={allFiles.QualiopiFiles()} />
+                        <DownloadFile file={allFiles.QualiopiFiles()} dot={false} />
                     </div>
                     <p className='QualContainer-Data'>Validé jusqu'au {QualiopiValidity}.</p>
                     <p className='QualContainer-Data'>La certification Qualiopi a été délivrée pour la catégorie d'action suivante :</p>
-                    <p className='QualContainer-Data'>Actions de formation et Bilan de compétences</p>
+                    <p className='QualContainer-Data'>Actions de formation, Bilan de compétences, VAE</p>
                     <p className='QualContainer-Data'>Délais d'acces aux formations 10 jours maximum</p>
                 </div>
             </div>

@@ -105,7 +105,7 @@ const Vae = () => {
                 </p>
             </article>
             <div className='Vae_stats'>
-                <DownloadFile file={allFiles.vaeStat()} />
+                <DownloadFile file={allFiles.vaeStat()} dot={false} />
             </div>
 
             <article className="Vae-article">

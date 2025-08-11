@@ -1,773 +1,747 @@
 main {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .CareerConsult {
-    margin: 0 2rem;
-    color: white;
-    text-align: start;
+  margin: 0 2rem;
+  color: white;
+  text-align: start;
+  position: relative;
+  // overflow: hidden;
+
+  .Yellow {
+    color: var(--acYellow);
+  }
+
+  &-title,
+  &-subtitle {
     position: relative;
-    // overflow: hidden;
+  }
 
-    .Yellow {
-        color: var(--acYellow);
+  h1 {
+    font-size: 8vw;
+  }
+
+  h2 {
+    font-size: 6vw;
+  }
+
+  .container-img {
+    width: 100%;
+    position: relative;
+
+    img {
+      z-index: 0;
+      position: absolute;
+      left: -2rem;
+      width: calc(100% + 4rem);
+      height: auto;
     }
+  }
 
-    &-title,
-    &-subtitle {
-        position: relative;
+  &-intro {
+    font-size: 4.5vw;
+    position: relative;
+  }
 
+  .split {
+    width: 100%;
 
-    }
+    &-left {
+      background-color: #5f9cbb;
+      padding: 1rem;
 
-    h1 {
-        font-size: 8vw;
-    }
-
-    h2 {
-        font-size: 6vw;
-    }
-
-    .container-img {
-        width: 100%;
-        position: relative;
-
-        img {
-            z-index: 0;
-            position: absolute;
-            left: -2rem;
-            width: calc(100% + 4rem);
-        }
-    }
-
-    &-intro {
-        font-size: 4.5vw;
-        position: relative
-    }
-
-    .split {
-        width: 100%;
-
-        &-left {
-            background-color: #5F9CBB;
-            padding: 1rem;
-
-            .logo {
-                width: 100%;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-
-                img {
-                    width: 15vw;
-                }
-
-                p {
-                    width: 60vw;
-                    text-align: center;
-                    font-size: 5vw;
-                }
-            }
-
-            .multiScreen {
-                p {
-                    width: 35vw;
-                }
-            }
-
-            .timer {
-                p {
-                    width: 32vw;
-                }
-            }
-        }
-
-        &-right {
-            position: relative;
-
-            .theorie {
-                width: 65vw;
-                margin-bottom: 5rem;
-            }
-
-            .pratique {
-                h3 {
-                    font-size: 2rem;
-                }
-
-                p {
-                    font-size: 1.2rem;
-                }
-            }
-
-            .pourcent {
-                width: 100%;
-
-                display: none;
-
-            }
-
-
-
-            .simplepourcent {
-                width: 40vw;
-                position: absolute;
-                right: -8vw;
-                top: 30%;
-                transform: translateY(-50%);
-                display: flex;
-                justify-content: flex-end;
-
-                img {
-                    padding-right: .5rem;
-                    width: 75%;
-                }
-            }
-        }
-    }
-
-    .touchTarget {
+      .logo {
         width: 100%;
         display: flex;
         flex-direction: column;
+        align-items: center;
 
         img {
-            width: 100%;
+          width: 15vw;
+          height: auto;
         }
 
         p {
-            margin: 0;
+          width: 60vw;
+          text-align: center;
+          font-size: 5vw;
         }
+      }
 
-        p:first-of-type {
-            font-weight: bold;
-            font-size: 4.1vw;
-            margin: 1rem 0;
+      .multiScreen {
+        p {
+          width: 35vw;
         }
+      }
 
+      .timer {
+        p {
+          width: 32vw;
+        }
+      }
     }
 
-    .forWho {
+    &-right {
+      position: relative;
+
+      .theorie {
+        width: 65vw;
+        margin-bottom: 5rem;
+      }
+
+      .pratique {
         h3 {
-            text-align: center;
+          font-size: 2rem;
         }
 
         p {
-            font-size: 5vw;
+          font-size: 1.2rem;
         }
+      }
+
+      .pourcent {
+        width: 100%;
+
+        display: none;
+      }
+
+      .simplepourcent {
+        width: 40vw;
+        height: auto;
+        position: absolute;
+        right: -8vw;
+        top: 30%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: flex-end;
+
+        img {
+          padding-right: 0.5rem;
+          width: 75%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  .touchTarget {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    img {
+      width: 100%;
+      height: auto;
     }
 
-    .prog {
-        .title-container {
-            display: flex;
-            flex-direction: column;
-        }
-
-        &-title {
-            background-color: var(--acYellow);
-            text-align: center;
-            padding: 1rem;
-            margin: .5rem 0;
-            font-size: 8vw;
-            border-radius: 50px;
-        }
-
-        .prog-title-list {
-            list-style-type: none;
-            padding: 0;
-            font-weight: bold;
-            font-size: 3.2vw;
-        }
+    p {
+      margin: 0;
     }
 
-    .modules {
+    p:first-of-type {
+      font-weight: bold;
+      font-size: 4.1vw;
+      margin: 1rem 0;
+    }
+  }
+
+  .forWho {
+    h3 {
+      text-align: center;
+    }
+
+    p {
+      font-size: 5vw;
+    }
+  }
+
+  .prog {
+    .title-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-title {
+      background-color: var(--acYellow);
+      text-align: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      font-size: 8vw;
+      border-radius: 50px;
+    }
+
+    .prog-title-list {
+      list-style-type: none;
+      padding: 0;
+      font-weight: bold;
+      font-size: 3.2vw;
+    }
+  }
+
+  .modules {
+    display: flex;
+    flex-direction: column;
+
+    p {
+      margin: 0;
+    }
+
+    &-left {
+      background-color: white;
+      color: var(--acDarkBlue);
+      padding: 0 1rem 1rem 1rem;
+
+      h4 {
+        margin: 1rem 0 0 0;
+      }
+
+      .modules2-list {
+        padding: 0 1rem 1rem 1rem;
+        margin: 0;
+
+        &-detail {
+          font-weight: initial;
+          font-size: 1rem;
+        }
+      }
+    }
+
+    &-right {
+      padding: 0 0 1rem 0;
+
+      h4 {
+        margin: 1rem 0 0 0;
+      }
+
+      .modules3-list,
+      .modules4-list,
+      .modules5-list {
+        padding: 0 1rem 1rem 1rem;
+        margin: 0;
+
+        &-detail {
+          font-weight: initial;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+
+  .planning {
+    font-weight: bold;
+
+    .fw-light {
+      font-weight: initial;
+    }
+
+    h4 {
+      font-size: 5vw;
+    }
+
+    p {
+      font-size: 4vw;
+    }
+
+    .planning-date {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      p {
+        align-self: start;
+      }
+
+      div {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .image-container {
+        width: 25%;
+        // display: flex;
+        flex-direction: column;
+        // align-items: center;
+        align-self: baseline;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .date-list {
+        padding: 0;
+        margin: 0;
+        font-size: 4vw;
+      }
+    }
+  }
+
+  .contact {
+    .image-container {
+      position: relative;
+      right: -15vw;
+      top: 2vw;
+
+      img {
+        position: relative;
+        width: 100%;
+        height: auto;
+      }
+
+      .text {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        width: 30vw;
+        top: 3vw;
+        left: 7vw;
+        font-size: 2.7vw;
+        z-index: 2;
+        position: absolute;
 
         p {
-            margin: 0;
+          text-align: center;
         }
 
-        &-left {
-            background-color: white;
+        .contact-tel {
+          margin-top: 15vw;
+          font-size: 3vw;
+          &:hover {
+            background-color: var(--acYellow);
+            padding: 0 0.51rem;
             color: var(--acDarkBlue);
-            padding: 0 1rem 1rem 1rem;
-
-            h4 {
-                margin: 1rem 0 0 0;
-            }
-
-            .modules2-list {
-                padding: 0 1rem 1rem 1rem;
-                margin: 0;
-
-                &-detail {
-                    font-weight: initial;
-                    font-size: 1rem;
-                }
-            }
+          }
         }
-
-        &-right {
-            padding: 0 0 1rem 0;
-
-            h4 {
-                margin: 1rem 0 0 0;
-            }
-
-            .modules3-list,
-            .modules4-list,
-            .modules5-list {
-                padding: 0 1rem 1rem 1rem;
-                margin: 0;
-
-                &-detail {
-                    font-weight: initial;
-                    font-size: 1rem;
-                }
-            }
-        }
+      }
     }
-
-    .planning {
-        font-weight: bold;
-
-        .fw-light {
-            font-weight: initial;
-        }
-
-        h4 {
-            font-size: 5vw;
-        }
-
-        p {
-            font-size: 4vw;
-
-        }
-
-        .planning-date {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-
-            p {
-                align-self: start;
-            }
-
-            div {
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .image-container {
-                width: 25%;
-                // display: flex;
-                flex-direction: column;
-                // align-items: center;
-                align-self: baseline;
-
-                img {
-
-                    width: 100%;
-                }
-            }
-
-            .date-list {
-                padding: 0;
-                margin: 0;
-                font-size: 4vw;
-            }
-        }
-    }
-
-
-
-    .contact {
-
-
-        .image-container {
-            position: relative;
-            right: -15vw;
-            top: 2vw;
-
-
-            img {
-                position: relative;
-                width: 100%;
-            }
-
-            .text {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 30vw;
-                top: 3vw;
-                left: 7vw;
-                font-size: 2.7vw;
-                z-index: 2;
-                position: absolute;
-
-                p {
-                    text-align: center;
-                }
-
-                .contact-tel {
-                    margin-top: 15vw;
-                    font-size: 3vw;
-                }
-            }
-
-        }
-    }
+  }
 }
 
 @media (min-width: 500px) {
-    .CareerConsult {
-        p {
-            font-size: 1.5rem;
-
-        }
-
-        font-size: 1.5rem;
-
-        .split {
-            &-right {
-                .simplepourcent {
-                    width: 10rem;
-                    position: absolute;
-                    top: 7rem;
-                    right: -2rem;
-
-                }
-            }
-        }
-
-        .forWho {
-            h3 {
-                font-size: 5vw;
-            }
-
-            p {
-                font-size: 1.5rem;
-            }
-        }
-
-        .contact {
-            .image-container {
-                .text {
-                    left: 8vw;
-
-                    p {
-                        font-size: 3vw;
-                    }
-                }
-            }
-        }
+  .CareerConsult {
+    p {
+      font-size: 1.5rem;
     }
 
+    font-size: 1.5rem;
+
+    .split {
+      &-right {
+        .simplepourcent {
+          width: 10rem;
+          position: absolute;
+          top: 7rem;
+          right: -2rem;
+        }
+      }
+    }
+
+    .forWho {
+      h3 {
+        font-size: 5vw;
+      }
+
+      p {
+        font-size: 1.5rem;
+      }
+    }
+
+    .contact {
+      .image-container {
+        .text {
+          left: 8vw;
+
+          p {
+            font-size: 3vw;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 768px) {
-    .CareerConsult {
+  .CareerConsult {
+    width: 100%;
+
+    .container-img {
+      width: 100%;
+
+      img {
         width: 100%;
-
-        .container-img {
-            width: 100%;
-
-            img {
-                width: 100%;
-            }
-        }
-
-        .split {
-            display: flex;
-            width: 100%;
-            position: relative;
-            margin-bottom: 1.5rem;
-            padding-left: 5vw;
-
-            &-left {
-
-                width: 25%;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-
-                .logo {
-                    p {
-                        font-size: 1.2rem;
-                        width: 50%;
-                    }
-
-                    img {
-                        width: 35%;
-                    }
-                }
-
-                .target {
-                    p {
-                        width: 85%;
-
-                    }
-                }
-            }
-
-            &-right {
-                width: 50%;
-                padding-left: 1rem;
-                position: relative;
-
-                .theorie {
-                    width: 100%;
-                }
-
-                .simplepourcent {
-                    display: none;
-                }
-
-                .pourcent {
-                    position: absolute;
-                    display: initial;
-                    left: 40vw;
-                    bottom: 5vw;
-                    z-index: 5;
-                    width: 100vw;
-                    overflow: hidden;
-
-                    img {
-                        width: 100%;
-                    }
-
-                }
-
-                .theorie {
-                    width: 55%;
-
-                    h3,
-                    p {
-                        font-size: 1.2rem;
-                    }
-
-                    margin-bottom: 0;
-                }
-
-                .pratique {
-                    h3 {
-                        font-size: 2.5rem;
-                    }
-
-                    p {
-                        font-size: 1.7rem;
-                    }
-                }
-            }
-        }
-
-        .touchTarget {
-            display: grid;
-            grid-template-columns: 40vw 2fr;
-            // grid-gap: 20px;
-
-            .text-container {
-                margin-left: 2rem;
-                // width: 38vw;
-            }
-
-            p:first-of-type {
-                font-size: 3vw;
-                margin-top: 0;
-            }
-
-            p {
-                font-size: 2.7vw;
-            }
-
-        }
-
-        .forWho {
-            h3 {
-                font-size: 2.5rem;
-            }
-
-            p {
-                font-size: 2rem;
-            }
-        }
-
-        .prog {
-            .title-container {
-                flex-direction: row;
-                margin-bottom: 2rem;
-
-                .prog-title {
-                    width: 45%;
-                    font-size: 2rem;
-                    margin: 0 1rem 0 0;
-                }
-
-                .prog-title-list {
-                    width: 55%;
-                    font-size: .9rem;
-                    margin: 0;
-                }
-            }
-
-            .modules {
-                display: grid;
-                grid-template-columns: 2fr 2.5fr;
-                font-size: 2vw;
-
-                p {
-                    font-size: 2vw;
-                }
-
-                .modules2-detail,
-                .modules3-detail,
-                .modules4-detail,
-                .modules5-detail {
-                    font-size: 2vw;
-
-                }
-
-                &-left {
-                    display: flex;
-                    flex-direction: column;
-                    padding: 0 3vw;
-
-                    margin-right: 1rem;
-
-                    .modules1,
-                    .modules2 {
-                        margin-bottom: 2.5rem;
-                    }
-                }
-
-                &-right {
-                    .modules3 {
-                        h4 {
-
-                            margin-top: 0;
-                        }
-                    }
-                }
-
-            }
-        }
-
-        .planning {
-
-            .planning-date {
-                justify-content: space-evenly;
-
-                .date-list {
-                    font-size: 2rem;
-                }
-            }
-        }
-
-        .contact {
-            display: flex;
-            justify-content: center;
-
-            .image-container {
-                width: 550px;
-                right: initial;
-
-                .text {
-                    width: 185px;
-                    left: 55px;
-
-                    p {
-                        font-size: 1.2rem;
-
-                    }
-
-                    .contact-tel {
-                        margin-top: 5rem;
-                        font-size: 1.4rem;
-
-                    }
-                }
-            }
-        }
+      }
     }
+
+    .split {
+      display: flex;
+      width: 100%;
+      position: relative;
+      margin-bottom: 1.5rem;
+      padding-left: 5vw;
+
+      &-left {
+        width: 25%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .logo {
+          p {
+            font-size: 1.2rem;
+            width: 50%;
+          }
+
+          img {
+            width: 35%;
+          }
+        }
+
+        .target {
+          p {
+            width: 85%;
+          }
+        }
+      }
+
+      &-right {
+        width: 50%;
+        padding-left: 1rem;
+        position: relative;
+
+        .theorie {
+          width: 100%;
+        }
+
+        .simplepourcent {
+          display: none;
+        }
+
+        .pourcent {
+          position: absolute;
+          display: initial;
+          left: 40vw;
+          bottom: 5vw;
+          z-index: 5;
+          width: 100vw;
+          overflow: hidden;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .theorie {
+          width: 55%;
+
+          h3,
+          p {
+            font-size: 1.2rem;
+          }
+
+          margin-bottom: 0;
+        }
+
+        .pratique {
+          h3 {
+            font-size: 2.5rem;
+          }
+
+          p {
+            font-size: 1.7rem;
+          }
+        }
+      }
+    }
+
+    .touchTarget {
+      display: grid;
+      grid-template-columns: 40vw 2fr;
+      // grid-gap: 20px;
+
+      .text-container {
+        margin-left: 2rem;
+        // width: 38vw;
+      }
+
+      p:first-of-type {
+        font-size: 3vw;
+        margin-top: 0;
+      }
+
+      p {
+        font-size: 2.7vw;
+      }
+    }
+
+    .forWho {
+      h3 {
+        font-size: 2.5rem;
+      }
+
+      p {
+        font-size: 2rem;
+      }
+    }
+
+    .prog {
+      .title-container {
+        flex-direction: row;
+        margin-bottom: 2rem;
+
+        .prog-title {
+          width: 45%;
+          font-size: 2rem;
+          margin: 0 1rem 0 0;
+        }
+
+        .prog-title-list {
+          width: 55%;
+          font-size: 0.9rem;
+          margin: 0;
+        }
+      }
+
+      .modules {
+        display: grid;
+        grid-template-columns: 2fr 2.5fr;
+        font-size: 2vw;
+
+        p {
+          font-size: 2vw;
+        }
+
+        .modules2-detail,
+        .modules3-detail,
+        .modules4-detail,
+        .modules5-detail {
+          font-size: 2vw;
+        }
+
+        &-left {
+          display: flex;
+          flex-direction: column;
+          padding: 0 3vw;
+
+          margin-right: 1rem;
+
+          .modules1,
+          .modules2 {
+            margin-bottom: 2.5rem;
+          }
+        }
+
+        &-right {
+          .modules3 {
+            h4 {
+              margin-top: 0;
+            }
+          }
+        }
+      }
+    }
+
+    .planning {
+      .planning-date {
+        justify-content: space-evenly;
+
+        .date-list {
+          font-size: 2rem;
+        }
+      }
+    }
+
+    .contact {
+      display: flex;
+      justify-content: center;
+
+      .image-container {
+        width: 550px;
+        right: initial;
+
+        .text {
+          width: 185px;
+          left: 55px;
+
+          p {
+            font-size: 1.2rem;
+          }
+
+          .contact-tel {
+            margin-top: 5rem;
+            font-size: 1.4rem;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 964px) {
-    .CareerConsult {
-
-
-        h1 {
-            font-size: 6rem;
-        }
-
-        h2 {
-            font-size: 4rem;
-            width: 70%;
-        }
-
-        &-intro {
-            width: 85%;
-        }
-
-        .split {
-            &-left {
-                width: 20%;
-                margin-right: 2rem;
-            }
-
-            &-right {
-                .theorie {
-                    width: 50%;
-
-                    p {
-
-                        font-size: 1.5rem;
-                    }
-                }
-
-                .pratique {
-                    p {
-                        font-size: 2rem;
-                    }
-                }
-
-                .pourcent {
-                    bottom: 2vw;
-                    left: 45vw;
-                }
-            }
-        }
-
-        .touchTarget {
-            // grid-template-columns: 1fr 2fr;
-
-            justify-items: center;
-
-            .text-container {
-                width: 70%;
-            }
-
-            p:first-of-type {
-                font-size: 2.5rem;
-            }
-
-            p {
-                font-size: 2rem;
-
-            }
-        }
-
-        .prog {
-            .title-container {
-                justify-content: space-between;
-
-                .prog-title {
-                    width: 30%;
-
-                    &-list {
-                        font-size: 1rem;
-                    }
-                }
-            }
-
-            .modules {
-                font-size: 1.5rem;
-
-                p {
-
-                    font-size: 1.5rem;
-                }
-
-                .modules2-detail,
-                .modules3-detail,
-                .modules4-detail,
-                .modules5-detail {
-                    font-size: 1.5rem;
-                }
-            }
-        }
-
-        .planning {
-            h4 {
-                font-size: 4rem;
-            }
-
-            p {
-                font-size: 3rem;
-
-            }
-
-            .planning-date {
-                .date-list {
-                    font-size: 2.5rem;
-                }
-
-                p {
-                    align-self: center;
-                }
-            }
-        }
-
+  .CareerConsult {
+    h1 {
+      font-size: 6rem;
     }
+
+    h2 {
+      font-size: 4rem;
+      width: 70%;
+    }
+
+    &-intro {
+      width: 85%;
+    }
+
+    .split {
+      &-left {
+        width: 20%;
+        margin-right: 2rem;
+      }
+
+      &-right {
+        .theorie {
+          width: 50%;
+
+          p {
+            font-size: 1.5rem;
+          }
+        }
+
+        .pratique {
+          p {
+            font-size: 2rem;
+          }
+        }
+
+        .pourcent {
+          bottom: 2vw;
+          left: 45vw;
+        }
+      }
+    }
+
+    .touchTarget {
+      // grid-template-columns: 1fr 2fr;
+
+      justify-items: center;
+
+      .text-container {
+        width: 70%;
+      }
+
+      p:first-of-type {
+        font-size: 2.5rem;
+      }
+
+      p {
+        font-size: 2rem;
+      }
+    }
+
+    .prog {
+      .title-container {
+        justify-content: space-between;
+
+        .prog-title {
+          width: 30%;
+
+          &-list {
+            font-size: 1rem;
+          }
+        }
+      }
+
+      .modules {
+        font-size: 1.5rem;
+
+        p {
+          font-size: 1.5rem;
+        }
+
+        .modules2-detail,
+        .modules3-detail,
+        .modules4-detail,
+        .modules5-detail {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .planning {
+      h4 {
+        font-size: 4rem;
+      }
+
+      p {
+        font-size: 3rem;
+      }
+
+      .planning-date {
+        .date-list {
+          font-size: 2.5rem;
+        }
+
+        p {
+          align-self: center;
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 1280px) {
-    .CareerConsult {
-        .split {
-            &-right {
-
-                .pourcent {
-                    bottom: -10rem;
-                    left: 35rem;
-                }
-            }
+  .CareerConsult {
+    .split {
+      &-right {
+        .pourcent {
+          bottom: -10rem;
+          left: 35rem;
         }
-
-        .planning {
-            .planning-date {
-                div {
-                    justify-content: space-evenly;
-                }
-            }
-        }
+      }
     }
+
+    .planning {
+      .planning-date {
+        div {
+          justify-content: space-evenly;
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 1920px) {
-    .CareerConsult {
-        &-intro {
-            width: 75%;
-        }
-
-        .split {
-            &-right {
-                .pourcent {
-                    left: 60rem;
-                    bottom: -10rem;
-
-                    img {
-                        width: 70%;
-                    }
-                }
-
-                .theorie {
-                    h3 {
-                        font-size: 2rem;
-
-                    }
-
-                    p {
-
-                        font-size: 1.75rem;
-                    }
-                }
-
-                .pratique {
-                    width: 80%;
-                }
-            }
-        }
+  .CareerConsult {
+    &-intro {
+      width: 75%;
     }
+
+    .split {
+      &-right {
+        .pourcent {
+          left: 60rem;
+          bottom: -10rem;
+
+          img {
+            width: 70%;
+          }
+        }
+
+        .theorie {
+          h3 {
+            font-size: 2rem;
+          }
+
+          p {
+            font-size: 1.75rem;
+          }
+        }
+
+        .pratique {
+          width: 80%;
+        }
+      }
+    }
+  }
 }

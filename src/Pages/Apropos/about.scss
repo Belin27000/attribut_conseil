@@ -1,179 +1,173 @@
 .About {
-    width: 100%;
-    /* background-color: var(--acPurple); */
-    border-radius: 15px;
+  width: 100%;
+  /* background-color: var(--acPurple); */
+  border-radius: 15px;
 
-    h2 {
-        color: white;
-        text-transform: uppercase;
-    }
+  h2 {
+    color: white;
+    text-transform: uppercase;
+  }
 }
 
 .Pres {
+  padding: 1rem;
 
+  & p:first-child {
+    color: var(--acYellow);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  & p {
+    color: white;
+    text-align: start;
+  }
+
+  &-center {
+    background-color: white;
     padding: 1rem;
 
-    & p:first-child {
-        color: var(--acYellow);
+    color: var(--acDarkBlue);
+
+    &_bold {
+      font-weight: bold;
+
+      &_size {
+        font-size: 1.5rem;
         font-weight: bold;
-        text-align: center;
+      }
     }
 
-    & p {
-        color: white;
-        text-align: start;
-    }
+    &-certif {
+      background-color: white;
+      color: var(--acDarkBlue);
+      padding: 0 1rem;
 
-    &-center {
-        background-color: white;
-        padding: 1rem;
-
-        color: var(--acDarkBlue);
+      &_width {
+        img {
+          width: 50%;
+          height: auto;
+        }
 
         &_bold {
-            font-weight: bold;
-
-            &_size {
-                font-size: 1.5rem;
-                font-weight: bold;
-            }
+          font-weight: bold;
         }
-
-        &-certif {
-            background-color: white;
-            color: var(--acDarkBlue);
-            padding: 0 1rem;
-
-            &_width {
-                img {
-                    width: 50%;
-                }
-
-                &_bold {
-                    font-weight: bold;
-                }
-            }
-        }
+      }
     }
+  }
 
-    ul {
-        color: white;
-    }
+  ul {
+    color: white;
+  }
 
-    h3 {
-        color: var(--acYellow);
-    }
+  h3 {
+    color: var(--acYellow);
+  }
 }
 
 .db_Pic {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 
-    img {
-        width: 50%;
-        height: auto;
-        object-fit: contain;
-        border-radius: 50%;
-    }
+  img {
+    width: 50%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 50%;
+  }
 }
 
 @media (min-width: 500px) {
-    .Pres {
-
-        ul li {
-            text-align: start;
-        }
+  .Pres {
+    ul li {
+      text-align: start;
     }
+  }
 }
 
 @media (min-width: 760px) {
+  .Pres {
+    padding: 0 5rem;
 
-
-    .Pres {
-        padding: 0 5rem;
-
-        p {
-            text-align: justify;
-        }
-
-        &-Daph {
-            margin: 0;
-
-            &_margin {
-                margin: 0 0 1rem 0;
-            }
-        }
-
-        &-center-certif {
-            padding: 1rem 5rem;
-            display: flex;
-
-            &_width {
-                width: 50%;
-
-                &-Qual {
-                    img {
-
-                        width: 50%;
-                    }
-                }
-
-                &_bold {
-                    font-weight: bold;
-
-                    .Datadoc {
-                        img {
-                            width: 25%;
-                        }
-                    }
-                }
-
-                P {
-                    text-align: start;
-                    margin: 0;
-                }
-
-                .Datadoc {
-                    margin-top: 1rem;
-                }
-
-                &_bold .DataDockNbr {
-                    text-align: center;
-                    margin-bottom: 1rem;
-                }
-
-                .certifList {
-                    font-size: 1.2rem;
-                    text-align: start;
-                    line-height: 2rem;
-                }
-            }
-
-        }
-
-        ul li {
-            text-align: start;
-        }
+    p {
+      text-align: justify;
     }
 
-    .db_Pic {
-        width: 100%;
-        display: flex;
-        align-items: flex-end;
+    &-Daph {
+      margin: 0;
 
-        &-container {
-            width: 25%;
-        }
-
-        img {
-            width: 100%;
-            height: auto;
-            border-radius: 50%;
-        }
-
-        div {
-            margin-left: 2rem;
-
-        }
+      &_margin {
+        margin: 0 0 1rem 0;
+      }
     }
+
+    &-center-certif {
+      padding: 1rem 5rem;
+      display: flex;
+
+      &_width {
+        width: 50%;
+
+        &-Qual {
+          img {
+            width: 50%;
+          }
+        }
+
+        &_bold {
+          font-weight: bold;
+
+          .Datadoc {
+            img {
+              width: 25%;
+            }
+          }
+        }
+
+        P {
+          text-align: start;
+          margin: 0;
+        }
+
+        .Datadoc {
+          margin-top: 1rem;
+        }
+
+        &_bold .DataDockNbr {
+          text-align: center;
+          margin-bottom: 1rem;
+        }
+
+        .certifList {
+          font-size: 1.2rem;
+          text-align: start;
+          line-height: 2rem;
+        }
+      }
+    }
+
+    ul li {
+      text-align: start;
+    }
+  }
+
+  .db_Pic {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+
+    &-container {
+      width: 25%;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 50%;
+    }
+
+    div {
+      margin-left: 2rem;
+    }
+  }
 }

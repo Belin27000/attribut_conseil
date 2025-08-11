@@ -18,6 +18,21 @@
     cursor: pointer;
     font-weight: bold;
     align-items: center;
-    text-decoration: underline;
-    color: white;
+
+    a {
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+
+        .dot {
+            margin-right: 8px;
+            color: var(--acYellow);
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+
+        span {
+            text-decoration: underline;
+        }
+    }
 }

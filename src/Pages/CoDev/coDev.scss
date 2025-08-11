@@ -1,332 +1,632 @@
 .CoDev {
-    color: white;
-    margin: 0;
+  color: white;
+  margin: 0;
+  width: 100%;
+  position: relative;
+
+  h1 {
+    text-align: start;
+    width: 90%;
+    padding: 0 1rem;
+    z-index: 1;
+    position: relative;
+    font-size: 7.5vw;
+
+    span {
+      color: var(--acYellow);
+    }
+  }
+
+  &_p {
+    padding: 0 1rem;
+    font-size: 5vw;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+    text-align: start;
+
+    &_Yellow {
+      font-size: 5vw;
+      padding: 0 1rem;
+      text-align: start;
+      position: relative;
+      font-weight: bold;
+      color: var(--acYellow);
+      z-index: 1;
+    }
+  }
+
+  .container-img {
+    position: absolute;
+    top: 0rem;
     width: 100%;
+    z-index: 0;
+
+    .Tree {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  &-article {
+    position: relative;
+    z-index: 1;
+
+    .Welcom {
+      font-size: 8vw;
+      font-weight: bold;
+      padding: 0 1rem;
+      text-align: start;
+      text-align: start;
+    }
+
+    .Script {
+      padding: 0 1rem;
+      text-align: start;
+      font-size: 5vw;
+    }
+
+    .movie-cont {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .Centrale-Text {
+    font-size: 5vw;
+    text-align: start;
+    padding: 0 1rem;
+  }
+
+  .boat {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    position: relative;
+    margin-bottom: 2rem;
+
+    &-container-text {
+      p {
+        margin: 0;
+      }
+
+      text-transform: uppercase;
+      font-weight: bold;
+      width: 40%;
+      text-align: start;
+      padding: 0 0rem 0 0.5rem;
+      font-size: 4vw;
+
+      .yellow {
+        color: var(--acYellow);
+      }
+    }
+
+    &-pic {
+      width: 60%;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+
+    .BlueDot_rightTop {
+      width: 17vw;
+      position: absolute;
+      top: -1.2rem;
+      left: calc(49%);
+      // width: 100%;
+    }
+
+    .BlueDot_leftBottom {
+      width: 17vw;
+      position: absolute;
+      bottom: -2rem;
+      left: -1rem;
+      // width: 100%;
+    }
+  }
+
+  .percentage {
+    // display: flex;
+    margin-top: 5vw;
+
+    .orga {
+      padding: 0 1rem;
+
+      img {
+        width: 15%;
+        height: auto;
+      }
+
+      background-color: var(--acLightBlue);
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+
+      .meeting-des {
+        width: 30%;
+      }
+
+      .chrono-des {
+        width: 70%;
+      }
+    }
+
+    .split {
+      padding-left: 1rem;
+      position: relative;
+
+      h3 {
+        text-transform: uppercase;
+      }
+
+      text-align: start;
+
+      .theories {
+        font-size: 1rem;
+
+        &-des {
+          width: 45%;
+        }
+      }
+
+      .practices {
+        font-size: 2rem;
+
+        &-des {
+          width: 100%;
+        }
+      }
+
+      .percent {
+        bottom: -5rem;
+        position: absolute;
+        width: 200vw;
+        left: 55%;
+        // right: 0;
+      }
+
+      overflow: hidden;
+    }
+  }
+
+  .stepExemple {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 12rem;
+    align-items: center;
     position: relative;
 
-    h1 {
-        text-align: start;
-        width: 90%;
-        padding: 0 1rem;
-        z-index: 1;
-        position: relative;
-        font-size: 7.5vw;
-
-        span {
-            color: var(--acYellow);
-        }
+    .verticalDots {
+      width: 15%;
+      height: fit-content;
     }
 
-    &_p {
-        padding: 0 1rem;
-        font-size: 5vw;
+    p {
+      text-align: start;
+      padding-left: 1rem;
+
+      .Bold {
         font-weight: bold;
-        position: relative;
-        z-index: 1;
-        text-align: start;
-
-        &_Yellow {
-            font-size: 5vw;
-            padding: 0 1rem;
-            text-align: start;
-            position: relative;
-            font-weight: bold;
-            color: var(--acYellow);
-            z-index: 1;
-        }
+      }
     }
 
-    .container-img {
-        position: absolute;
-        top: 0rem;
-        width: 100%;
-        z-index: 0;
+    .animCoDev {
+      position: absolute;
+      left: 0;
+      // bottom: 0;
+      background-color: var(--acLightBlue);
 
-        .Tree {
-            width: 100%;
-        }
-    }
+      p {
+        text-align: center;
+      }
 
-    &-article {
-        position: relative;
-        z-index: 1;
-
-        .Welcom {
-            font-size: 8vw;
-            font-weight: bold;
-            padding: 0 1rem;
-            text-align: start;
-            text-align: start;
-        }
-
-        .Script {
-            padding: 0 1rem;
-            text-align: start;
-            font-size: 5vw;
-
-        }
-
-        .movie-cont {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-        }
-    }
-
-    .Centrale-Text {
-        font-size: 5vw;
-        text-align: start;
-        padding: 0 1rem;
-
-    }
-
-    .boat {
+      &-pictoContAll {
         display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-        position: relative;
-        margin-bottom: 2rem;
+        justify-content: space-evenly;
 
-        &-container-text {
-            p {
-                margin: 0;
-            }
+        .pictoCont {
+          width: 15%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
 
-            text-transform: uppercase;
-            font-weight: bold;
-            width: 40%;
-            text-align: start;
-            padding: 0 0rem 0 .5rem;
-            font-size: 4vw;
+          img {
+            width: 100%;
+            height: auto;
+          }
 
-            .yellow {
-                color: var(--acYellow);
-            }
+          .picto-des {
+            padding: 0;
+            font-size: 0.5rem;
+            text-align: center;
+          }
         }
-
-        &-pic {
-            width: 60%;
-
-            img {
-                width: 100%;
-            }
-        }
-
-        .BlueDot_rightTop {
-            width: 17vw;
-            position: absolute;
-            top: -1.2rem;
-            left: calc(49%);
-            // width: 100%;
-        }
-
-        .BlueDot_leftBottom {
-            width: 17vw;
-            position: absolute;
-            bottom: -2rem;
-            left: -1rem;
-            // width: 100%;
-        }
+      }
     }
+  }
 
-    .percentage {
-        // display: flex;
-        margin-top: 5vw;
+  .benefits {
+    text-align: start;
+    padding: 0 1rem;
+    margin-bottom: 5rem;
+  }
 
-        .orga {
-            padding: 0 1rem;
+  .circleDotCont {
+    .allTextV2 {
+      .mainTextV2 {
+        // width: 50vw;
+        // height: 50vw;
 
-            img {
-                width: 15%;
-            }
-
-            background-color: var(--acLightBlue);
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-
-            .meeting-des {
-                width: 30%;
-            }
-
-            .chrono-des {
-                width: 70%;
-            }
-        }
-
-        .split {
-            padding-left: 1rem;
-            position: relative;
-
-            h3 {
-                text-transform: uppercase;
-            }
-
-            text-align: start;
-
-            .theories {
-                font-size: 1rem;
-
-                &-des {
-                    width: 45%;
-                }
-            }
-
-            .practices {
-                font-size: 2rem;
-
-                &-des {
-                    width: 100%;
-                }
-            }
-
-            .percent {
-                bottom: -5rem;
-                position: absolute;
-                width: 200vw;
-                left: 55%;
-                // right: 0;
-            }
-
-            overflow: hidden;
-        }
-    }
-
-    .stepExemple {
-        display: flex;
-        margin-top: 2rem;
-        margin-bottom: 12rem;
-        align-items: center;
-        position: relative;
-
-        .verticalDots {
-            width: 15%;
-            height: fit-content;
+        .textAuto {
+          display: none;
         }
 
         p {
-            text-align: start;
-            padding-left: 1rem;
-
-            .Bold {
-                font-weight: bold;
-            }
+          font-size: 4vw;
         }
+      }
+    }
 
-        .animCoDev {
-            position: absolute;
-            left: 0;
-            // bottom: 0;
-            background-color: var(--acLightBlue);
+    .videoContainerV2 {
+      right: 7vw;
+      top: -17vw;
+    }
+  }
 
-            p {
-                text-align: center;
-            }
+  .timeline {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
 
-            &-pictoContAll {
-                display: flex;
-                justify-content: space-evenly;
+    // width: 80%;
+    &-cont {
+      width: 90%;
+      text-align: start;
 
-                .pictoCont {
-                    width: 15%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
+      .Bold {
+        font-weight: bold;
+      }
 
-                    img {
-                        width: 100%;
-                    }
+      ::before {
+        content: "";
+        position: absolute;
+        /* positionner les ronds par rapport à chaque article */
+        bottom: 0.1rem;
+        /* positionner le rond au milieu de l'article */
+        left: 2vw;
+        /* ajustez la position du rond par rapport au côté gauche de l'article */
+        // transform: translateY(-50%);
+        /* centrez le rond verticalement */
+        width: 6vw;
+        /* largeur du rond */
+        height: 6vw;
+        /* hauteur du rond */
+        background-color: var(--acYellow);
+        /* couleur jaune */
+        border-radius: 50%;
+        /* pour obtenir un cercle */
+      }
 
-                    .picto-des {
-                        padding: 0;
-                        font-size: .5rem;
-                        text-align: center;
-                    }
-                }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 5%;
+        /* positionner le trait à partir du centre du rond */
+        left: 4.5vw;
+        /* aligner le trait avec le bord gauche de l'article */
+        width: 3px;
+        /* épaisseur du trait */
+        height: calc(90%);
+        /* hauteur du trait, ajustée pour atteindre le bas de l'article */
+        background-color: var(--acYellow);
+        /* couleur jaune */
+      }
+    }
+  }
 
-            }
+  @media (min-width: 760px) {
+    h1 {
+      font-size: 5rem;
+    }
+
+    .CoDev_p {
+      font-size: 3rem;
+
+      &_Yellow {
+        font-size: 3rem;
+      }
+    }
+
+    &-article {
+      .Welcom {
+        font-size: 5rem;
+      }
+
+      .Script {
+        font-size: 1.5rem;
+      }
+    }
+
+    .Centrale-Text {
+      p {
+        font-size: 1.5rem;
+      }
+    }
+
+    .boat {
+      &-container-text {
+        font-size: 4.15vw;
+      }
+
+      .BlueDot_rightTop {
+        top: -4rem;
+      }
+
+      .BlueDot_leftBottom {
+        bottom: -3.5rem;
+        left: -3.5rem;
+      }
+    }
+
+    .timeline-cont {
+      width: 75%;
+
+      h2 {
+        font-size: 2rem;
+        width: 80%;
+      }
+
+      p {
+        font-size: 2rem;
+        padding-right: 2rem;
+      }
+
+      ::before {
+        left: 8.8vw;
+        width: 9vw;
+        height: 9vw;
+      }
+
+      &::after {
+        left: 13vw;
+        width: 5px;
+      }
+
+      // ::after {
+      //     left: 10vw;
+      // }
+    }
+
+    .percentage {
+      display: flex;
+
+      .orga {
+        width: 40%;
+      }
+
+      .split {
+        width: 60%;
+        overflow: initial;
+
+        .percent {
+          bottom: -4rem;
+          width: 100vw;
         }
+      }
+    }
+
+    .stepExemple {
+      padding: 0 5vw;
+      margin-bottom: 15rem;
+
+      .steps {
+        font-size: 1.25rem;
+      }
     }
 
     .benefits {
-        text-align: start;
-        padding: 0 1rem;
-        margin-bottom: 5rem;
+      font-size: 1.5rem;
+      margin-bottom: 10rem;
     }
 
     .circleDotCont {
+      .videoContainerV2 {
+        width: 10rem;
+        left: 4vw;
+      }
 
-        .allTextV2 {
-
-            .mainTextV2 {
-                // width: 50vw;
-                // height: 50vw;
-
-                .textAuto {
-                    display: none;
-                }
-
-                p {
-                    font-size: 4vw;
-                }
-
-            }
-        }
-
-        .videoContainerV2 {
-            right: 7vw;
-            top: -17vw;
-        }
+      .allTextV2 .mainTextV2 p {
+        font-size: 2.8vw;
+      }
     }
+  }
 
-    .timeline {
+  @media (min-width: 820px) {
+    &-article {
+      .scriptAndMovie {
         display: flex;
-        justify-content: flex-end;
-        position: relative;
+        align-items: center;
+        // flex-direction: row;
 
-        // width: 80%;
-        &-cont {
-            width: 90%;
-            text-align: start;
-
-            .Bold {
-                font-weight: bold;
-            }
-
-            ::before {
-                content: "";
-                position: absolute;
-                /* positionner les ronds par rapport à chaque article */
-                bottom: .1rem;
-                /* positionner le rond au milieu de l'article */
-                left: 2vw;
-                /* ajustez la position du rond par rapport au côté gauche de l'article */
-                // transform: translateY(-50%);
-                /* centrez le rond verticalement */
-                width: 6vw;
-                /* largeur du rond */
-                height: 6vw;
-                /* hauteur du rond */
-                background-color: var(--acYellow);
-                /* couleur jaune */
-                border-radius: 50%;
-                /* pour obtenir un cercle */
-            }
-
-            &::after {
-                content: "";
-                position: absolute;
-                top: 5%;
-                /* positionner le trait à partir du centre du rond */
-                left: 4.5vw;
-                /* aligner le trait avec le bord gauche de l'article */
-                width: 3px;
-                /* épaisseur du trait */
-                height: calc(90%);
-                /* hauteur du trait, ajustée pour atteindre le bas de l'article */
-                background-color: var(--acYellow);
-                /* couleur jaune */
-            }
+        .Script {
+          font-size: 3vw;
         }
+      }
     }
+
+    .Centrale-Text {
+      font-size: 3vw;
+    }
+
+    .boat {
+      .BlueDot_rightTop {
+        top: -5rem;
+      }
+
+      .BlueDot_leftBottom {
+        bottom: -4.5rem;
+        left: -2rem;
+      }
+    }
+  }
+
+  @media (min-width: 1200px) {
+    .CoDev_p,
+    .CoDev_p_Yellow {
+      font-size: 2.5rem;
+    }
+
+    .CoDev-article {
+      .scriptAndMovie .Script {
+        font-size: 1.5rem;
+        width: 100%;
+      }
+
+      .movie-cont {
+        width: 80%;
+
+        .movie {
+          width: 70%;
+          height: auto;
+          border: 25px solid var(--acLightBlue);
+        }
+      }
+    }
+
+    .Centrale-Text {
+      margin-bottom: 5rem;
+    }
+
+    .boat {
+      .BlueDot_rightTop {
+        width: 10rem;
+        top: -5.5rem;
+        left: 55%;
+      }
+
+      .BlueDot_leftBottom {
+        width: 10rem;
+      }
+    }
+
+    .timeline-cont p {
+      width: 80%;
+    }
+
+    .percentage {
+      padding: 0 10rem 0 15rem;
+
+      .orga {
+        width: 35%;
+
+        img {
+          width: 35%;
+        }
+
+        p {
+          font-size: 1rem;
+        }
+      }
+
+      .split {
+        width: 60%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .theories {
+          font-size: 1.5rem;
+          margin-bottom: 0;
+
+          &-des {
+            width: 70%;
+            font-size: 1.5rem;
+          }
+        }
+
+        .percent {
+          bottom: -12rem;
+          left: 25rem;
+          width: 90rem;
+          height: auto;
+        }
+
+        .practices {
+          font-size: 3rem;
+          margin-bottom: 0;
+
+          &-des {
+            font-size: 1.8rem;
+            width: 95%;
+            margin-bottom: 0;
+          }
+        }
+      }
+    }
+
+    .stepExemple {
+      padding: 0 10rem;
+      margin-bottom: 2rem;
+
+      .steps {
+        font-size: 2rem;
+      }
+
+      .verticalDots {
+        width: 15%;
+        align-self: flex-start;
+        margin-top: 8rem;
+      }
+
+      .animCoDev {
+        position: initial;
+
+        &-pictoContAll {
+          .pictoCont {
+            .picto-des {
+              font-size: 1.5rem;
+            }
+          }
+        }
+
+        // margin: 0 5vw 0 18vw;
+      }
+
+      // margin-bottom: 25rem;
+    }
+
+    .benefits {
+      padding: 0 10rem;
+      margin-bottom: 15rem;
+
+      h2 {
+        font-size: 2.5rem;
+      }
+    }
+
+    .circleDotCont {
+      .videoContainerV2 {
+        width: 15rem;
+        top: -12rem;
+        left: 7rem;
+
+        .movie {
+          width: 25rem;
+          // height: 15rem;
+        }
+      }
+
+      .allTextV2 .mainTextV2 .textPerso {
+        font-size: 2.5rem;
+      }
+    }
+
+    .Review {
+      margin-top: 5rem;
+    }
+  }
 }

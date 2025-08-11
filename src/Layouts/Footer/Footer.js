@@ -115,8 +115,8 @@ const Footer = () => {
                         <img className='handicap-picture' src={Handi} alt='Handicap log' width='220' height='220' />
                         <DownloadFile image={Handi} className='FooterFiles' file={allFiles.HandiFiles()} />
                     </div>
-                    <DownloadFile className='FooterFiles' file={allFiles.RGPDFiles()} />
-                    <DownloadFile className='FooterFiles' file={allFiles.CGUFiles()} />
+                    <DownloadFile className='FooterFiles' file={allFiles.RGPDFiles()} dot={false} />
+                    <DownloadFile className='FooterFiles' file={allFiles.CGUFiles()} dot={false} />
                     <div className='builderRef'>
                         <p>Made with <FaHeart /> By <a href="https://conseilsandtechs.com/" rel="noreferrer" target="_blank">Yann LECERF from Conseils & Tech</a></p>
                     </div>

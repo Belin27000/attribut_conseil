@@ -1,807 +1,752 @@
 .Bilan {
-    margin: 0 1rem;
-    padding-bottom: 2rem;
-    color: white;
+  margin: 0 1rem;
+  padding-bottom: 2rem;
+  color: white;
+  position: relative;
+
+  .Qualiopi_stats {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .Single-Link {
+      text-decoration: none;
+      background-color: var(--acYellow);
+      width: 50%;
+      padding: 1rem;
+      border-radius: 25px;
+
+      a {
+        color: white;
+
+        &:hover {
+          color: var(--acDarkBlue);
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .LogCpf {
+    background-color: white;
+  }
+
+  .container-img {
+    width: 100%;
+    position: absolute;
+    top: -1rem;
+    left: -1.5rem;
+    right: -1.5rem;
+    z-index: 2;
+    margin: 0;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .MobileHand-img {
+    width: 99%;
     position: relative;
 
-    .Qualiopi_stats {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-
-
-        .Single-Link {
-            text-decoration: none;
-            background-color: var(--acYellow);
-            width: 50%;
-            padding: 1rem;
-            border-radius: 25px;
-
-            a {
-                color: white;
-
-                &:hover {
-                    color: var(--acDarkBlue);
-                    text-decoration: underline;
-                }
-            }
-        }
+    img {
+      width: 100%;
+      height: auto;
     }
 
-    .LogCpf {
-        background-color: white;
-    }
+    .infoOnMobile {
+      width: 30%;
+      position: absolute;
+      top: 5%;
+      left: 11%;
 
-    .container-img {
-        width: 100%;
-        position: absolute;
-        top: -1rem;
-        left: -1.5rem;
-        right: -1.5rem;
-        z-index: 2;
+      h3 {
+        font-size: 0.6rem;
+      }
+
+      p {
+        font-size: 0.7rem;
         margin: 0;
+        margin-bottom: 0.4rem;
+      }
 
-
-        img {
-            width: 100%;
-        }
-    }
-
-    .MobileHand-img {
-        width: 99%;
-        position: relative;
-
-        img {
-            width: 100%;
-        }
-
-        .infoOnMobile {
-            width: 30%;
-            position: absolute;
-            top: 5%;
-            left: 11%;
-
-            h3 {
-                font-size: .6rem;
-            }
-
-            p {
-                font-size: .7rem;
-                margin: 0;
-                margin-bottom: .4rem;
-            }
-
-            .TelButton {
-                margin: 0;
-                padding: .21rem 0;
-                width: 100%;
-
-                a {
-                    font-size: .65rem;
-                }
-            }
-
-        }
-    }
-
-    &-oblique {
-        position: relative;
-        left: -10%;
-        width: 110%;
-        background: linear-gradient(90deg, transparent 50%, var(--acDarkBlue) 50%), linear-gradient(275deg, #a6a6a6 35%, #ffffff);
-        background-clip: content-box;
-        margin-left: 1rem;
-
-
-
-
-
-        display: flex;
-        margin-bottom: 3rem;
-        justify-content: space-between;
-        align-items: stretch;
-
-        .oblique {
-            &-Left {
-                width: 45%;
-                color: var(--acDarkBlue);
-                text-align: start;
-                margin-left: 1rem;
-                font-weight: bold;
-                flex: 1;
-                font-size: .8rem;
-                line-height: 1.3rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-evenly;
-                padding-left: .5rem;
-
-                p {
-                    padding-right: 1rem
-                }
-
-            }
-
-            &-Right {
-                width: 50%;
-                display: flex;
-                align-items: center;
-                flex-direction: column;
-                flex: 1;
-                justify-content: space-evenly;
-
-                &_list {
-                    padding: 0;
-                    font-weight: bold;
-                    align-items: center;
-                    width: 95%;
-                    justify-content: space-evenly;
-
-                    .subList {
-                        width: 75%;
-
-                        &-text-list {
-                            list-style-type: none;
-                            text-align: start;
-                            font-size: .7rem;
-                            padding: 0;
-                        }
-
-                        &-Yellow {
-                            color: var(--acYellow);
-                            font-size: 1rem;
-
-                            &.small {
-                                font-size: 0.6rem
-                            }
-                        }
-
-                        &_imgCont {
-                            // height: 100%;
-                            width: 15%;
-                            // display: flex;
-
-                            img {
-                                // justify-content: center;
-                                width: 100%;
-
-                            }
-                        }
-                    }
-
-                    list-style-type: none;
-                    display: flex;
-                }
-            }
-        }
-
-    }
-
-
-    h1 {
-
-        margin-top: 0;
-        text-align: left;
+      .TelButton {
+        margin: 0;
+        padding: 0.21rem 0;
         width: 100%;
-        font-size: 2.5rem;
-        z-index: 3;
-        position: relative;
 
-
-        // &.Title,
-        // .city {
-        //     text-transform: uppercase;
-        // }
-
-        span {
-
-            color: var(--acYellow);
+        a {
+          font-size: 0.65rem;
         }
-
+      }
     }
+  }
 
-    &_Yellow {
-        text-transform: uppercase;
-        font-size: 20px;
+  &-oblique {
+    position: relative;
+    left: -10%;
+    width: 110%;
+    background: linear-gradient(90deg, transparent 50%, var(--acDarkBlue) 50%),
+      linear-gradient(275deg, #a6a6a6 35%, #ffffff);
+    background-clip: content-box;
+    margin-left: 1rem;
+
+    display: flex;
+    margin-bottom: 3rem;
+    justify-content: space-between;
+    align-items: stretch;
+
+    .oblique {
+      &-Left {
+        width: 45%;
+        color: var(--acDarkBlue);
+        text-align: start;
+        margin-left: 1rem;
         font-weight: bold;
-        text-align: left;
-        position: relative;
-        z-index: 3;
-
-        span {
-            color: var(--acYellow);
-
-        }
-    }
-
-    &-article {
-        line-height: 2rem;
-        position: relative;
-        z-index: 3;
+        flex: 1;
+        font-size: 0.8rem;
+        line-height: 1.3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding-left: 0.5rem;
 
         p {
-            font-size: 20px;
-            text-align: left;
-            font-weight: bold;
+          padding-right: 1rem;
         }
+      }
 
-        ul li {
-            font-size: 1.2rem;
-            text-align: start;
-        }
-
-    }
-
-    .timeline {
-        position: relative;
-
-        .articleCertif {
-            &-pic {
-                width: 100%;
-
-                img {
-                    width: 10%;
-                }
-            }
-        }
-
-        .articleCertif-pic {
-            display: flex;
-            justify-content: space-evenly;
-            margin: 4rem 0;
-
-            img {
-                width: 35%;
-            }
-        }
-
-        &.right-container {
-            text-align: end;
-
-            &.topDot::before {
-                content: "";
-                position: absolute;
-                /* positionner les ronds par rapport à chaque article */
-                top: .1rem;
-                /* positionner le rond au milieu de l'article */
-                left: -1rem;
-                /* ajustez la position du rond par rapport au côté gauche de l'article */
-                // transform: translateY(-50%);
-                /* centrez le rond verticalement */
-                width: 1.5rem;
-                /* largeur du rond */
-                height: 1.5rem;
-                /* hauteur du rond */
-                background-color: var(--acYellow);
-                /* couleur jaune */
-                border-radius: 50%;
-                /* pour obtenir un cercle */
-            }
-
-            &.downDot::before {
-                content: "";
-
-                position: absolute;
-                /* positionner les ronds par rapport à chaque article */
-                bottom: -4rem;
-                /* positionner le rond au milieu de l'article */
-                left: -1rem;
-                /* ajustez la position du rond par rapport au côté gauche de l'article */
-                // transform: translateY(-50%);
-                /* centrez le rond verticalement */
-                width: 1.5rem;
-                /* largeur du rond */
-                height: 1.5rem;
-                /* hauteur du rond */
-                background-color: var(--acYellow);
-                /* couleur jaune */
-                border-radius: 50%;
-                /* pour obtenir un cercle */
-
-            }
-
-            &::after {
-                content: "";
-                position: absolute;
-                top: 1%;
-                /* positionner le trait à partir du centre du rond */
-                left: -.4rem;
-                /* aligner le trait avec le bord gauche de l'article */
-                width: 3px;
-                /* épaisseur du trait */
-                height: calc(100% + 45px);
-                /* hauteur du trait, ajustée pour atteindre le bas de l'article */
-                background-color: var(--acYellow);
-                /* couleur jaune */
-            }
-        }
-
-        &.left-container {
-            text-align: start;
-
-            ul {
-                padding-left: 0;
-
-                li {
-                    list-style-type: none;
-
-                    p {
-                        margin: 0;
-                    }
-                }
-            }
-
-            // padding-right: 1rem;
-        }
-
-        &.left-container::before {
-            content: "";
-            position: absolute;
-            /* positionner les ronds par rapport à chaque article */
-            top: .1rem;
-            /* positionner le rond au milieu de l'article */
-            right: -1rem;
-
-            /* ajustez la position du rond par rapport au côté gauche de l'article */
-            // transform: translateY(-50%);
-            /* centrez le rond verticalement */
-            width: 1.5rem;
-            /* largeur du rond */
-            height: 1.5rem;
-            /* hauteur du rond */
-            background-color: var(--acYellow);
-            /* couleur jaune */
-            border-radius: 50%;
-            /* pour obtenir un cercle */
-        }
-
-        &.left-container::after {
-            content: "";
-            position: absolute;
-            top: .1rem;
-            /* positionner le trait à partir du centre du rond */
-            right: -0.4rem;
-            /* aligner le trait avec le bord gauche de l'article */
-            width: 3px;
-            /* épaisseur du trait */
-            height: calc(100% + 48px);
-            /* hauteur du trait, ajustée pour atteindre le bas de l'article */
-            background-color: var(--acYellow);
-            /* couleur jaune */
-        }
-
-        &.last.left-container::after {
-            height: calc(100%);
-
-        }
-    }
-
-    .TelButton,
-    .ContactButton {
-
-        margin: 2rem 0;
-    }
-
-    .movie-container {
-        width: 100%;
+      &-Right {
+        width: 50%;
         display: flex;
-        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        flex: 1;
+        justify-content: space-evenly;
 
-        .movie {
-            width: 200px;
-            height: 200px;
+        &_list {
+          padding: 0;
+          font-weight: bold;
+          align-items: center;
+          width: 95%;
+          justify-content: space-evenly;
+
+          .subList {
+            width: 75%;
+
+            &-text-list {
+              list-style-type: none;
+              text-align: start;
+              font-size: 0.7rem;
+              padding: 0;
+            }
+
+            &-Yellow {
+              color: var(--acYellow);
+              font-size: 1rem;
+
+              &.small {
+                font-size: 0.6rem;
+              }
+            }
+
+            &_imgCont {
+              // height: 100%;
+              width: 15%;
+              // display: flex;
+
+              img {
+                // justify-content: center;
+                width: 100%;
+                height: auto;
+              }
+            }
+          }
+
+          list-style-type: none;
+          display: flex;
         }
+      }
+    }
+  }
 
-        margin: 2.5rem 0;
+  h1 {
+    margin-top: 0;
+    text-align: left;
+    width: 100%;
+    font-size: 2.5rem;
+    z-index: 3;
+    position: relative;
+
+    // &.Title,
+    // .city {
+    //     text-transform: uppercase;
+    // }
+
+    span {
+      color: var(--acYellow);
+    }
+  }
+
+  &_Yellow {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: left;
+    position: relative;
+    z-index: 3;
+
+    span {
+      color: var(--acYellow);
+    }
+  }
+
+  &-article {
+    line-height: 2rem;
+    position: relative;
+    z-index: 3;
+
+    p {
+      font-size: 20px;
+      text-align: left;
+      font-weight: bold;
     }
 
+    ul li {
+      font-size: 1.2rem;
+      text-align: start;
+    }
+  }
+
+  .timeline {
+    position: relative;
+
+    .articleCertif {
+      &-pic {
+        width: 100%;
+
+        img {
+          width: 10%;
+        }
+      }
+    }
+
+    .articleCertif-pic {
+      display: flex;
+      justify-content: space-evenly;
+      margin: 4rem 0;
+
+      img {
+        width: 35%;
+      }
+    }
+
+    &.right-container {
+      text-align: end;
+
+      &.topDot::before {
+        content: "";
+        position: absolute;
+        /* positionner les ronds par rapport à chaque article */
+        top: 0.1rem;
+        /* positionner le rond au milieu de l'article */
+        left: -1rem;
+        /* ajustez la position du rond par rapport au côté gauche de l'article */
+        // transform: translateY(-50%);
+        /* centrez le rond verticalement */
+        width: 1.5rem;
+        /* largeur du rond */
+        height: 1.5rem;
+        /* hauteur du rond */
+        background-color: var(--acYellow);
+        /* couleur jaune */
+        border-radius: 50%;
+        /* pour obtenir un cercle */
+      }
+
+      &.downDot::before {
+        content: "";
+
+        position: absolute;
+        /* positionner les ronds par rapport à chaque article */
+        bottom: -4rem;
+        /* positionner le rond au milieu de l'article */
+        left: -1rem;
+        /* ajustez la position du rond par rapport au côté gauche de l'article */
+        // transform: translateY(-50%);
+        /* centrez le rond verticalement */
+        width: 1.5rem;
+        /* largeur du rond */
+        height: 1.5rem;
+        /* hauteur du rond */
+        background-color: var(--acYellow);
+        /* couleur jaune */
+        border-radius: 50%;
+        /* pour obtenir un cercle */
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 1%;
+        /* positionner le trait à partir du centre du rond */
+        left: -0.4rem;
+        /* aligner le trait avec le bord gauche de l'article */
+        width: 3px;
+        /* épaisseur du trait */
+        height: calc(100% + 45px);
+        /* hauteur du trait, ajustée pour atteindre le bas de l'article */
+        background-color: var(--acYellow);
+        /* couleur jaune */
+      }
+    }
+
+    &.left-container {
+      text-align: start;
+
+      ul {
+        padding-left: 0;
+
+        li {
+          list-style-type: none;
+
+          p {
+            margin: 0;
+          }
+        }
+      }
+
+      // padding-right: 1rem;
+    }
+
+    &.left-container::before {
+      content: "";
+      position: absolute;
+      /* positionner les ronds par rapport à chaque article */
+      top: 0.1rem;
+      /* positionner le rond au milieu de l'article */
+      right: -1rem;
+
+      /* ajustez la position du rond par rapport au côté gauche de l'article */
+      // transform: translateY(-50%);
+      /* centrez le rond verticalement */
+      width: 1.5rem;
+      /* largeur du rond */
+      height: 1.5rem;
+      /* hauteur du rond */
+      background-color: var(--acYellow);
+      /* couleur jaune */
+      border-radius: 50%;
+      /* pour obtenir un cercle */
+    }
+
+    &.left-container::after {
+      content: "";
+      position: absolute;
+      top: 0.1rem;
+      /* positionner le trait à partir du centre du rond */
+      right: -0.4rem;
+      /* aligner le trait avec le bord gauche de l'article */
+      width: 3px;
+      /* épaisseur du trait */
+      height: calc(100% + 48px);
+      /* hauteur du trait, ajustée pour atteindre le bas de l'article */
+      background-color: var(--acYellow);
+      /* couleur jaune */
+    }
+
+    &.last.left-container::after {
+      height: calc(100%);
+    }
+  }
+
+  .TelButton,
+  .ContactButton {
+    margin: 2rem 0;
+  }
+
+  .movie-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .movie {
+      width: 200px;
+      height: 200px;
+    }
+
+    margin: 2.5rem 0;
+  }
 }
 
 @media (min-width: 400px) {
-    .Bilan {
-
-        .MobileHand-img {
-            .infoOnMobile {
-                h3 {
-                    font-size: 3.5vw;
-                }
-
-                p {
-                    font-size: 2.85vw;
-                }
-            }
+  .Bilan {
+    .MobileHand-img {
+      .infoOnMobile {
+        h3 {
+          font-size: 3.5vw;
         }
 
-        &-oblique {
-            left: -5%;
-            width: 105%;
-
-            .oblique-Left {
-                padding: 1rem
-            }
+        p {
+          font-size: 2.85vw;
         }
-
-        ;
+      }
     }
+
+    &-oblique {
+      left: -5%;
+      width: 105%;
+
+      .oblique-Left {
+        padding: 1rem;
+      }
+    }
+  }
 }
 
 @media (min-width: 650px) {
-
-    .Bilan {
-        &-oblique {
-            .oblique-Left {
-                padding: 0 2rem;
-            }
-        }
+  .Bilan {
+    &-oblique {
+      .oblique-Left {
+        padding: 0 2rem;
+      }
     }
+  }
 }
 
 @media (min-width: 760px) {
+  .Bilan {
+    font-size: 2rem;
 
-    .Bilan {
-        font-size: 2rem;
-
-        h1 {
-            font-size: 5rem;
-            margin-bottom: 0;
-        }
-
-        &_Yellow {
-            font-size: 2rem;
-        }
-
-        &-article {
-            width: 82%;
-        }
-
-        .timeline {
-            // width: 50%;
-            padding: 0 1rem;
-        }
-
-        .timeline {
-
-            &.right-container {
-                text-align: start;
-
-                &.withMovie {
-                    div {
-                        p {
-                            width: 50%;
-                            // font-size: 2rem;
-                        }
-
-                        display: flex;
-
-                        .movie-container {
-
-
-                            .movie {
-                                width: 350px;
-                                height: 350px;
-                            }
-
-                        }
-                    }
-
-                    .col {
-                        flex-direction: column;
-
-                        p {
-                            width: 100%;
-                        }
-                    }
-
-                    .secret {
-                        flex-direction: column;
-                        width: 60%;
-
-                        p {
-                            width: 100%;
-                        }
-                    }
-
-                    &.downDot {
-                        display: flex;
-                        align-items: center;
-                        margin-bottom: 5rem;
-
-                        .movie-container {
-
-
-                            .movie {
-                                width: 350px;
-                                height: 350px;
-                            }
-
-                        }
-
-                    }
-                }
-
-            }
-
-            &.left-container {
-                text-align: end;
-
-                &.withMovie {
-                    display: flex;
-                    flex-direction: row-reverse;
-                    align-items: center;
-
-                    div {
-                        width: 60%;
-                    }
-
-                    .movie-container {
-
-
-                        .movie {
-                            width: 350px;
-                            height: 350px;
-                        }
-
-                    }
-
-                }
-            }
-
-        }
-
-        .ContactButton {
-            font-size: 2rem;
-        }
-
-        .MobileHand-img {
-
-            .infoOnMobile {
-                left: 12%;
-                top: 3%;
-
-                h3 {
-                    font-size: 3.5vw;
-                }
-
-                p {
-                    font-size: 3vw;
-                    // line-height: 2.5rem;
-
-                }
-
-                .TelButton {
-                    margin-top: 1rem;
-
-                    padding: 1rem 0;
-
-                    a {
-                        font-size: 1.5rem;
-                    }
-                }
-            }
-        }
-
-        &-oblique {
-            left: -8%;
-            width: 105%;
-
-
-            background: linear-gradient(85deg, transparent 60%, var(--acDarkBlue) 50%), linear-gradient(60deg, #ffffff, #a6a6a6);
-            background-clip: content-box;
-
-            .oblique-Left {
-                // width: 30%;
-
-                p {
-                    font-size: 1.3rem;
-                    line-height: 1.7rem;
-                    margin: 0 1.1rem;
-                }
-            }
-
-            .oblique-Right {
-                align-items: end;
-
-                &_list {
-                    width: 70%;
-                }
-
-                .subList-text-list {
-                    font-size: 1rem;
-
-                    .subList-Yellow {
-                        font-size: .91rem;
-                    }
-                }
-            }
-        }
-
-        // .clique {
-        //     width: 70%;
-        // }
-
-        // .questions-container {
-        //     .question {
-        //         padding: 0;
-        //         margin: 0 1rem;
-        //     }
-        // }
+    h1 {
+      font-size: 5rem;
+      margin-bottom: 0;
     }
 
+    &_Yellow {
+      font-size: 2rem;
+    }
 
+    &-article {
+      width: 82%;
+    }
+
+    .timeline {
+      // width: 50%;
+      padding: 0 1rem;
+    }
+
+    .timeline {
+      &.right-container {
+        text-align: start;
+
+        &.withMovie {
+          div {
+            p {
+              width: 50%;
+              // font-size: 2rem;
+            }
+
+            display: flex;
+
+            .movie-container {
+              .movie {
+                width: 350px;
+                height: 350px;
+              }
+            }
+          }
+
+          .col {
+            flex-direction: column;
+
+            p {
+              width: 100%;
+            }
+          }
+
+          .secret {
+            flex-direction: column;
+            width: 60%;
+
+            p {
+              width: 100%;
+            }
+          }
+
+          &.downDot {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5rem;
+
+            .movie-container {
+              .movie {
+                width: 350px;
+                height: 350px;
+              }
+            }
+          }
+        }
+      }
+
+      &.left-container {
+        text-align: end;
+
+        &.withMovie {
+          display: flex;
+          flex-direction: row-reverse;
+          align-items: center;
+
+          div {
+            width: 60%;
+          }
+
+          .movie-container {
+            .movie {
+              width: 350px;
+              height: 350px;
+            }
+          }
+        }
+      }
+    }
+
+    .ContactButton {
+      font-size: 2rem;
+    }
+
+    .MobileHand-img {
+      .infoOnMobile {
+        left: 12%;
+        top: 3%;
+
+        h3 {
+          font-size: 3.5vw;
+        }
+
+        p {
+          font-size: 3vw;
+          // line-height: 2.5rem;
+        }
+
+        .TelButton {
+          margin-top: 1rem;
+
+          padding: 1rem 0;
+
+          a {
+            font-size: 1.5rem;
+          }
+        }
+      }
+    }
+
+    &-oblique {
+      left: -8%;
+      width: 105%;
+
+      background: linear-gradient(85deg, transparent 60%, var(--acDarkBlue) 50%),
+        linear-gradient(60deg, #ffffff, #a6a6a6);
+      background-clip: content-box;
+
+      .oblique-Left {
+        // width: 30%;
+
+        p {
+          font-size: 1.3rem;
+          line-height: 1.7rem;
+          margin: 0 1.1rem;
+        }
+      }
+
+      .oblique-Right {
+        align-items: end;
+
+        &_list {
+          width: 70%;
+        }
+
+        .subList-text-list {
+          font-size: 1rem;
+
+          .subList-Yellow {
+            font-size: 0.91rem;
+          }
+        }
+      }
+    }
+
+    // .clique {
+    //     width: 70%;
+    // }
+
+    // .questions-container {
+    //     .question {
+    //         padding: 0;
+    //         margin: 0 1rem;
+    //     }
+    // }
+  }
 }
 
 @media (min-width: 1024px) {
-    .Bilan {
-        h1 {
-            font-size: 7rem;
-        }
-
-        &_Yellow {
-            font-size: 3rem;
-        }
-
-        &-article {
-            width: 65%;
-
-            p {
-                font-weight: bold;
-                font-size: 1.5rem;
-                white-space: pre-line;
-            }
-        }
-
-
-        .timeline {
-            &.right-container {
-                padding: 0 3rem;
-                z-index: 2;
-
-                &.withMovie {
-                    div {
-
-                        p {
-                            width: 70%;
-                            // font-size: 2rem;
-                        }
-
-
-
-
-                    }
-
-                    &.downDot {
-                        &::before {
-                            width: 3rem;
-                            height: 3rem;
-                        }
-
-                        &::after {
-                            left: .35rem;
-                            width: 5px;
-                        }
-                    }
-                }
-
-                &.topDot {
-
-                    &::before {
-                        width: 3rem;
-                        height: 3rem;
-                    }
-
-                    &::after {
-                        left: .35rem;
-                        width: 5px;
-                    }
-                }
-            }
-
-            &.left-container {
-                padding-right: 2rem;
-
-                &::before {
-                    width: 3rem;
-                    height: 3rem;
-
-                }
-
-                &::after {
-                    right: .35rem;
-                    width: 5px;
-                }
-
-                &.withMovie {
-
-                    &::before {
-                        width: 3rem;
-                        height: 3rem;
-
-                    }
-
-                    &::after {
-                        right: .35rem;
-                        width: 5px;
-                    }
-
-
-                    div {
-                        p {
-                            // width: 70%;
-                        }
-
-                        &.movie {
-                            width: 25%;
-                        }
-                    }
-                }
-            }
-        }
-
-        .MobileHand-img {
-            img {
-
-                width: 50%;
-            }
-
-            .infoOnMobile {
-                width: 17%;
-                left: 30%;
-
-                h3 {
-                    font-size: 2vw;
-                }
-
-                p {
-                    font-size: 1.5vw;
-                }
-
-                .TelButton {
-                    padding: .5rem;
-
-                    a {
-                        font-size: .8rem;
-                    }
-                }
-            }
-        }
-
-        &-oblique {
-            left: -3%;
-            width: 103%;
-
-            .oblique-Left {
-                // width: 30%;
-                padding: 2rem 0;
-
-                p {
-                    font-size: 1.85vw;
-                    line-height: 5vh;
-                    margin: 0 2vw;
-                    font-weight: 200;
-                    width: 100%;
-                }
-
-                justify-content: initial;
-            }
-
-            .oblique-Right {
-                ul {
-                    margin: 0;
-                }
-
-            }
-        }
-
-        // .clique {
-        //     width: 50%;
-
-        //     p {
-        //         margin-bottom: 0;
-        //         top: -35px;
-        //         font-size: 2.9rem;
-        //     }
-        // }
-
-
+  .Bilan {
+    h1 {
+      font-size: 7rem;
     }
+
+    &_Yellow {
+      font-size: 3rem;
+    }
+
+    &-article {
+      width: 65%;
+
+      p {
+        font-weight: bold;
+        font-size: 1.5rem;
+        white-space: pre-line;
+      }
+    }
+
+    .timeline {
+      &.right-container {
+        padding: 0 3rem;
+        z-index: 2;
+
+        &.withMovie {
+          div {
+            p {
+              width: 70%;
+              // font-size: 2rem;
+            }
+          }
+
+          &.downDot {
+            &::before {
+              width: 3rem;
+              height: 3rem;
+            }
+
+            &::after {
+              left: 0.35rem;
+              width: 5px;
+            }
+          }
+        }
+
+        &.topDot {
+          &::before {
+            width: 3rem;
+            height: 3rem;
+          }
+
+          &::after {
+            left: 0.35rem;
+            width: 5px;
+          }
+        }
+      }
+
+      &.left-container {
+        padding-right: 2rem;
+
+        &::before {
+          width: 3rem;
+          height: 3rem;
+        }
+
+        &::after {
+          right: 0.35rem;
+          width: 5px;
+        }
+
+        &.withMovie {
+          &::before {
+            width: 3rem;
+            height: 3rem;
+          }
+
+          &::after {
+            right: 0.35rem;
+            width: 5px;
+          }
+
+          div {
+            p {
+              // width: 70%;
+            }
+
+            &.movie {
+              width: 25%;
+            }
+          }
+        }
+      }
+    }
+
+    .MobileHand-img {
+      img {
+        width: 50%;
+      }
+
+      .infoOnMobile {
+        width: 17%;
+        left: 30%;
+
+        h3 {
+          font-size: 2vw;
+        }
+
+        p {
+          font-size: 1.5vw;
+        }
+
+        .TelButton {
+          padding: 0.5rem;
+
+          a {
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+
+    &-oblique {
+      left: -3%;
+      width: 103%;
+
+      .oblique-Left {
+        // width: 30%;
+        padding: 2rem 0;
+
+        p {
+          font-size: 1.85vw;
+          line-height: 5vh;
+          margin: 0 2vw;
+          font-weight: 200;
+          width: 100%;
+        }
+
+        justify-content: initial;
+      }
+
+      .oblique-Right {
+        ul {
+          margin: 0;
+        }
+      }
+    }
+
+    // .clique {
+    //     width: 50%;
+
+    //     p {
+    //         margin-bottom: 0;
+    //         top: -35px;
+    //         font-size: 2.9rem;
+    //     }
+    // }
+  }
 }

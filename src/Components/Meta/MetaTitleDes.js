@@ -1,25 +1,33 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
+import React from "react";
+import { Helmet } from "react-helmet";
 
-const MetaTitleDes = ({ title = 'Attribut Conseils - Cabinet conseil en ressources humaines', description = 'Vous cherchez à réaliser un bilan de compétences en Seine et Marne ? Contactez-nous !' }) => {
+const MetaTitleDes = ({
+  title = "Attribut Conseils - Cabinet conseil en ressources humaines",
+  description = "Vous cherchez à réaliser un bilan de compétences en Seine et Marne ? Contactez-nous !",
+}) => {
+  return (
+    <Helmet>
+      {/* Titre de la page */}
+      <title>{title}</title>
 
+      {/* Meta description */}
+      <meta name="description" content={description} />
 
-    return (
-        <Helmet>
-            <title>{title}</title>
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://elfsight.com" />
-            <meta name='description' content={description} />
-            {/* Balise Twitter */}
-            <meta name="twitter:title" content={title} />
-            <meta name="twitter:description" content={description} />
-            {/* Balise openGraph */}
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-        </Helmet>
-    );
+      {/* Balises Open Graph */}
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+
+      {/* Balises Twitter */}
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+
+      {/* Directives SEO */}
+      <meta
+        name="robots"
+        content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"
+      />
+    </Helmet>
+  );
 };
 
 export default MetaTitleDes;
-
