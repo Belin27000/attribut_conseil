@@ -159,7 +159,8 @@ const Fontainebleau = () => {
             </li>
             <li>
               <p>
-                s'approprier les résultats détaillés de la phase d'investigation{" "}
+                s'approprier les résultats détaillés de la phase
+                d'investigation{" "}
               </p>
             </li>
             <li>
@@ -339,7 +340,7 @@ const Fontainebleau = () => {
         </div>
       </div>
       <div className="Qualiopi_stats">
-        <DownloadFile file={allFiles.fileList()} dot={false} />
+        <DownloadFile file={[allFiles.fileList()[0]]} dot={false} />
       </div>
       <article className="timeline right-container topDot withMovie">
         <h2>Comment financer mon bilan de compétences? </h2>
@@ -367,6 +368,9 @@ const Fontainebleau = () => {
       <ContactButton text="Je demande le programme du bilan de compétences" />
       <GoogleWidget />
       <TelButton number="06 98 88 15 55" />
+      <div className="Qualiopi_stats">
+        <DownloadFile file={[allFiles.vae()[1]]} dot={false} />
+      </div>
       <Questions tag="all" ville="Fontainebleau" />
       <Dday />
       <ScrollToTop />

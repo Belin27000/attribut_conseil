@@ -1,0 +1,598 @@
+.VaeV2 {
+  --font-body: "Montserrat", sans-serif;
+  --font-title: "League Spartan", sans-serif;
+  --font-accent: "Quicksand", sans-serif;
+  --content-max: 1824px;
+
+  max-width: var(--content-max);
+  margin-inline: auto;
+  color: var(--acNewWhite);
+  background-color: var(--acNewLightBlue);
+  position: relative;
+  overflow: hidden;
+
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
+  line-height: 1.6;
+
+  &-Logo {
+    position: absolute;
+    top: 0;
+    .Tree {
+      z-index: 2;
+      width: 150%;
+      height: auto;
+      position: relative;
+      left: 25%;
+    }
+  }
+
+  article {
+    padding: clamp(0.5rem, 2vw, 2rem);
+    position: relative;
+    z-index: 10;
+  }
+
+  h1 {
+    font-family: var(--font-title);
+    font-size: clamp(2rem, 7vw, 8rem);
+    color: black;
+    text-transform: uppercase;
+    font-weight: bold;
+    z-index: 10;
+    position: relative;
+
+    span {
+      color: var(--acNewWhite);
+    }
+  }
+
+  h2 {
+    font-family: var(--font-title);
+    font-size: clamp(1.5rem, 3vw, 3.5rem);
+    color: black;
+    text-transform: uppercase;
+  }
+
+  h3 {
+    font-family: var(--font-accent);
+    font-size: clamp(1.3rem, 1.8vw, 2.2rem);
+    margin: 0;
+    text-align: center;
+    color: var(--acNewWhite);
+  }
+
+  ul {
+    font-family: var(--font-body);
+    font-size: clamp(1rem, 1.2vw, 1.4rem);
+    font-weight: bold;
+    text-align: start;
+  }
+
+  .VaeV2-title {
+    font-family: var(--font-accent);
+    font-weight: bold;
+    font-size: clamp(1.3rem, 3.5vw, 7rem);
+  }
+
+  .button-withHand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+
+    .hand {
+      rotate: 90deg;
+      font-size: clamp(3rem, 6vw, 5rem);
+      margin: 0;
+    }
+
+    .ContactButton {
+      border-radius: 0;
+      font-size: clamp(1.2rem, 2vw, 2rem);
+      padding: clamp(0.5rem, 1vw, 1rem) clamp(1.5rem, 3vw, 3rem);
+      font-family: var(--font-body);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    &.footer {
+      margin-bottom: 2rem;
+    }
+  }
+  .bloc1 {
+    &-text {
+      p {
+        font-size: clamp(1rem, 2.5vw, 3rem);
+        &:nth-of-type(2) {
+          margin-bottom: 0;
+        }
+        &:nth-of-type(3) {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+
+  // .bloc2 {
+  //   p {
+  //     font-weight: bold;
+  //   }
+
+  //   .black {
+  //     font-size: clamp(1.2rem, 1.5vw + 0.5rem, 2rem);
+  //     color: black;
+  //   }
+
+  //   .mortarboard {
+  //     display: inline-block;
+  //     width: calc(100% + 20rem);
+  //     position: relative;
+  //     left: -12rem;
+
+  //     img {
+  //       position: relative;
+  //       top: 2rem;
+  //       left: -2rem;
+  //       width: calc(100% + 4rem);
+  //       height: auto;
+  //       display: block;
+  //       object-fit: contain;
+  //     }
+
+  //     .button-withHand {
+  //       position: absolute;
+  //       top: 50%;
+  //       left: 50%;
+  //       transform: translate(-50%, -50%);
+  //       z-index: 2;
+  //     }
+  //   }
+  // }
+  .bloc2 {
+    p {
+      font-weight: bold;
+    }
+
+    .black {
+      font-size: clamp(1.2rem, 1.5vw + 0.5rem, 2rem);
+      color: black;
+    }
+
+    .mortarboard {
+      position: relative;
+      width: 100vw; // ✅ toute la largeur de l'écran
+      left: 50%;
+      transform: translateX(-50%); // ✅ centré par rapport au viewport
+      margin-top: 2rem;
+
+      img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+      }
+
+      .button-withHand {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); // ✅ bouton centré parfaitement
+        z-index: 2;
+      }
+    }
+  }
+
+  .bloc3 {
+    .container {
+      &-left {
+        h2 {
+          text-transform: uppercase;
+          font-size: clamp(1.5rem, 5vw, 5.5rem);
+        }
+        img {
+          display: none;
+        }
+      }
+      &-right {
+        p,
+        ul {
+          font-size: clamp(1.2rem, 3.35vw, 3.85rem);
+        }
+      }
+    }
+  }
+
+  .bloc4 {
+    background-color: var(--acNewWhite);
+    h2 {
+      font-size: clamp(1.5rem, 4vw, 5rem);
+    }
+    .blue {
+      text-transform: initial;
+      color: var(--acNewLightBlue);
+    }
+
+    .subBloc {
+      color: black;
+      margin-bottom: 1rem;
+      h3 {
+        font-size: clamp(1.3rem, 5vw, 3.5rem);
+      }
+
+      .number {
+        font-family: var(--font-title);
+        font-size: clamp(2.5rem, 15vw, 25rem);
+        font-weight: bold;
+      }
+
+      .bloc {
+        background-color: var(--acNewLightBlue);
+        padding: 0.5rem;
+        position: relative;
+        text-align: start;
+
+        .container {
+          width: 10%;
+          position: absolute;
+          right: 2%;
+          top: 15%;
+
+          img {
+            width: 100%;
+            height: auto;
+          }
+        }
+      }
+
+      ul {
+        font-weight: bold;
+        font-size: clamp(1.5rem, 2vw, 2.75rem);
+      }
+    }
+
+    .footer {
+      position: relative;
+
+      p {
+        color: black;
+        font-weight: bold;
+        font-size: clamp(1rem, 3vw, 3rem);
+      }
+      .hand {
+        font-size: clamp(3rem, 6vw, 5rem);
+      }
+
+      .container {
+        position: absolute;
+        bottom: -2rem;
+        left: -2.5rem;
+        width: 35%;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+    }
+  }
+
+  .bloc5 {
+    background-color: var(--acNewWhite);
+
+    .VaeV2_stats {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 2rem;
+
+      .Single-Link {
+        text-decoration: none;
+        background-color: var(--acYellow);
+        width: 100%;
+        padding: 1rem;
+        border-radius: 25px;
+
+        a {
+          color: white;
+
+          &:hover {
+            color: var(--acDarkBlue);
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    h2 {
+      font-size: clamp(1.5rem, 4vw, 7.5rem);
+    }
+    .allPage-text {
+      background-color: var(--acNewLightBlue);
+      padding: 1rem;
+    }
+    p {
+      font-weight: bold;
+      margin: 0;
+      font-size: clamp(1rem, 3vw, 3.5rem);
+
+      &:nth-of-type(1) {
+        margin-bottom: 2rem;
+      }
+    }
+
+    .container img {
+      display: none;
+    }
+  }
+
+  .bloc6 {
+    padding: clamp(0rem, 5vw, 10rem);
+
+    .allMargin {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    h2 {
+      font-size: clamp(1.5rem, 4.5vw, 5rem);
+      text-align: start;
+      margin: 0;
+      span {
+        color: var(--acNewWhite);
+      }
+    }
+
+    &-white {
+      background-color: var(--acNewWhite);
+      color: black;
+      padding: clamp(0rem, 1vw, 2rem);
+
+      ul {
+        font-size: clamp(1rem, 2vw, 3rem);
+        font-weight: initial;
+      }
+
+      p {
+        margin: 0;
+        text-align: start;
+        font-size: clamp(1rem, 2vw, 2.5rem);
+      }
+
+      &.bold {
+        p {
+          font-weight: bold;
+          margin: 0;
+          font-size: clamp(1rem, 2vw, 2.25rem);
+          text-align: center;
+
+          &:nth-of-type(1) {
+            font-size: clamp(1.5rem, 4vw, 4rem);
+          }
+        }
+      }
+    }
+
+    &-container {
+      width: 100%;
+      height: 100%; /* le container prend la hauteur de son parent */
+
+      img {
+        width: 100%;
+        height: 100%; /* l’image occupe toute la hauteur */
+        display: block;
+      }
+    }
+
+    .footer {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .container {
+        width: 25%;
+
+        img {
+          width: 100%;
+          height: auto;
+        }
+      }
+
+      p {
+        color: black;
+        font-weight: bold;
+        font-size: clamp(1rem, 3vw, 3rem);
+      }
+    }
+  }
+
+  .faq {
+    margin: 3rem 0;
+    background-color: var(--acNewWhite);
+    color: black;
+    padding: 2rem;
+    font-family: var(--font-body);
+
+    h2 {
+      text-transform: uppercase;
+      font-size: clamp(1.5rem, 2vw, 3rem);
+      font-family: var(--font-title);
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid #ccc;
+      padding: 1rem 0;
+      transition: all 0.3s ease;
+
+      &.open {
+        background-color: var(--acNewLightBlue);
+      }
+
+      .faq-question {
+        background: none;
+        border: none;
+        width: 100%;
+        text-align: left;
+        font-size: clamp(1.3rem, 2vw, 2.2rem);
+        font-family: var(--font-title);
+        font-weight: bold;
+        color: black;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+
+        .symbol {
+          font-size: 2rem;
+          font-weight: bold;
+        }
+      }
+
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+
+        .faq-answer-inner {
+          padding-top: 1rem;
+          font-size: clamp(1rem, 1.2vw, 1.3rem);
+          font-family: var(--font-body);
+          font-weight: normal;
+          line-height: 1.5;
+        }
+      }
+
+      &.open .faq-answer {
+        max-height: 500px;
+      }
+    }
+  }
+}
+@media (min-width: 760px) {
+  .VaeV2 {
+    .button-withHand {
+      flex-direction: row;
+      justify-content: center;
+      .hand {
+        rotate: initial;
+        padding-right: 2rem;
+      }
+    }
+    h1 {
+      text-align: start;
+      margin-left: 2rem;
+    }
+    &-title {
+      text-align: start;
+    }
+    .bloc1 {
+      &-text {
+        margin: 0 5rem;
+        text-align: start;
+      }
+    }
+    .bloc2 {
+      text-align: start;
+      h2 {
+        margin: 0 5rem;
+      }
+      &-text {
+        margin: 0 5rem;
+        p,
+        .black,
+        ul {
+          font-size: clamp(1rem, 2.5vw, 3rem);
+        }
+      }
+    }
+    .bloc3 {
+      .container {
+        display: flex;
+        &-left {
+          position: relative;
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          h2 {
+            margin-left: 2rem;
+            position: absolute;
+            text-align: start;
+          }
+          img {
+            display: initial;
+            width: 100%;
+          }
+        }
+        &-right {
+          padding-left: 1rem;
+          text-align: start;
+          width: 50%;
+          p,
+          ul {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    .bloc4 {
+      .footer {
+        .container {
+          width: 20%;
+        }
+      }
+      .subBloc {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        .number {
+          width: 15%;
+        }
+        .bloc {
+          width: 85%;
+        }
+        .bloc {
+          .container {
+            top: 25%;
+          }
+        }
+      }
+    }
+    .bloc5 {
+      font-size: clamp(1.5rem, 2vw, 3rem);
+
+      .VaeV2_stats {
+        .Single-Link {
+          width: 50%;
+        }
+      }
+
+      .allPage {
+        display: flex;
+        gap: 1rem;
+
+        &-text {
+          height: auto;
+          width: 50%;
+          text-align: start;
+        }
+      }
+      .container {
+        width: 50%;
+        height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+          display: block;
+        }
+      }
+    }
+    .bloc6 {
+      .allMargin {
+        padding: 0 5rem;
+      }
+    }
+  }
+}

@@ -1,4 +1,4 @@
-WITH RealOrder AS (
+-WITH RealOrder AS (
     SELECT *
     FROM orders
     WHERE order_status <> 'canceled'

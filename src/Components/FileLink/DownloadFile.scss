@@ -1,38 +1,47 @@
 .Download-link {
-    color: var(--acYellow);
+  color: var(--acYellow);
+  padding: 0;
+  margin: 0;
 
-    li {
-        text-align: start;
-        list-style-type: disc;
+  li {
+    text-align: start;
+    list-style-type: disc;
 
-        a {
-            color: var(--acYellow);
-            font-weight: bold;
-            text-decoration: none;
-            line-height: 1.5rem;
-        }
+    a {
+      color: var(--acYellow);
+      font-weight: bold;
+      text-decoration: none;
+      line-height: 1.5rem;
     }
+  }
+}
+
+.Download-link.no-bullet {
+  li {
+    list-style-type: none;
+    text-align: center;
+  }
 }
 
 .Single-Link {
-    cursor: pointer;
-    font-weight: bold;
+  cursor: pointer;
+  font-weight: bold;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    display: inline-flex;
     align-items: center;
 
-    a {
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-
-        .dot {
-            margin-right: 8px;
-            color: var(--acYellow);
-            font-size: 1.2rem;
-            text-decoration: none;
-        }
-
-        span {
-            text-decoration: underline;
-        }
+    .dot {
+      margin-right: 8px;
+      color: var(--acYellow);
+      font-size: 1.2rem;
+      text-decoration: none;
     }
+
+    span {
+      text-decoration: underline;
+    }
+  }
 }

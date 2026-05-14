@@ -1,6 +1,6 @@
 import allFiles from "@/_Services/fileToDownload.service.js";
-import FlagCPF from "@/Assets/Images/CPF_France.png";
-import CPF_White from "@/Assets/Images/CPF_White.png";
+//import FlagCPF from "@/Assets/Images/CPF_France.png";
+//import CPF_White from "@/Assets/Images/CPF_White.png";
 import success from "@/Assets/Images/success.png";
 import Tree from "@/Assets/Images/Tree.png";
 import TwoDesigner from "@/Assets/Images/TwoDesigner.png";
@@ -30,13 +30,13 @@ const BusinessCreationTraining = () => {
             width={1002}
             height={633}
           />
-          <img
+          {/* <img
             className="FlagCPF"
             src={FlagCPF}
             alt="Logo CPF avec drapeau Français"
             width={500}
             height={164}
-          />
+          /> */}
         </div>
         <div className="container-head">
           <h1>
@@ -213,15 +213,15 @@ const BusinessCreationTraining = () => {
             nécessaire entre les entretiens.
           </p>
           <p>
-            Pour financer votre formation vous avez 4 possibilités : utiliser
-            vos droits CPF, le plan de développement des compétences de votre
-            employeur, France Travail ou le financement personnel. Vous pouvez
-            consulter nos conditions générales de vente ci dessous.
+            Pour financer votre formation vous avez 3 possibilités : le plan de
+            développement des compétences de votre employeur, France Travail ou
+            le financement personnel. Vous pouvez consulter nos conditions
+            générales de vente ci dessous.
           </p>
         </div>
-        <div className="picContainer">
+        {/* <div className="picContainer">
           <img src={CPF_White} alt="Logo CPF" width={450} height={265} />
-        </div>
+        </div> */}
       </div>
       <div className="trainYourself">
         <h3>FORMEZ VOUS ET DÉVELOPPEZ VOS COMPÉTENCES ENTREPRENEURIALES</h3>

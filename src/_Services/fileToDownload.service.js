@@ -6,6 +6,7 @@ import OrientationJeuneProg from "@/Assets/FileToDownload/OrientationJeune/ProgO
 import OutplacementIndividuel from "../Assets/FileToDownload/Outplacement/OUTPLACEMENT_INDIVIDUEL.pdf";
 import QualiopiCertif from "@/Assets/FileToDownload/Qualiopi/QualiopiCertif.pdf";
 import StatsBC from "@/Assets/FileToDownload/Qualiopi/beforeAudit/StatsBc.pdf";
+import SatisfactionBC from "@/Assets/FileToDownload/BilanDeComp/SatisfactionBC.pdf";
 import StatsCrea from "@/Assets/FileToDownload/Qualiopi/beforeAudit/StatsCrea.pdf";
 import RGPD from "@/Assets/FileToDownload/RGPD.pdf";
 import TrainingTrainerPrice from "@/Assets/FileToDownload/TrainingTrainer/TrainingTrainerPrice.pdf";
@@ -14,11 +15,13 @@ import VaeEthique from "@/Assets/FileToDownload/Vae/EthiqueVae.pdf";
 // import VaeProg from '@/Assets/FileToDownload/Vae/PROGVae.pdf'
 // import VaePrice from '@/Assets/FileToDownload/Vae/PriceVae.pdf'
 import vae_Stats from "@/Assets/FileToDownload/Vae/STATS_VAE_2025.pdf";
+import SatisfactionVae from "@/Assets/FileToDownload/Vae/SatisfactionVAE.pdf";
 import careerConsultPrice from "@/Assets/FileToDownload/careerConsult/careerConsultPrice.pdf";
 import careerConsultProg from "@/Assets/FileToDownload/careerConsult/careerConsultProg.pdf";
 import Charte_PSH from "@/Assets/FileToDownload/registreHandi/Charte_PSH.pdf";
 import PSH from "@/Assets/FileToDownload/registreHandi/LIVRET_ACCUEIL_PSH.pdf";
 import RegistreHandi from "@/Assets/FileToDownload/registreHandi/registre.pdf";
+import CGV from "@/Assets/FileToDownload/CGV.pdf";
 // import CreaCompanyStats from '@/Assets/FileToDownload/CreaCompany/CreaCompanyStats.pdf'
 // import CreaCompanyProg from '@/Assets/FileToDownload/CreaCompany/CreaCompanyProg.pdf'
 // import CreaCompanyPrice from '@/Assets/FileToDownload/CreaCompany/CreaCompanyPrice.pdf'
@@ -28,6 +31,10 @@ const bilanDeCompFiles = [
   {
     name: "Consultez nos statistiques de suivi sur 6 mois",
     pdfFile: StatsBC,
+  },
+  {
+    name: "Résultat satisfaction clients sur nos bilans de compétences",
+    pdfFile: SatisfactionBC,
   },
 ];
 const vaeFiles = [
@@ -42,6 +49,10 @@ const vaeFiles = [
   {
     name: "Déontologie et étique",
     pdfFile: VaeEthique,
+  },
+  {
+    name: "Résultat satisfaction clients sur nos VAE",
+    pdfFile: SatisfactionVae,
   },
 ];
 const vaeStats = [
@@ -103,6 +114,10 @@ const TrainingTrainerFile = [
   },
 ];
 const CGUFile = [
+  {
+    name: "Conditions générales de vente",
+    pdfFile: CGV,
+  },
   {
     name: "Conditions générales d'utilisation du site",
     pdfFile: CGU,

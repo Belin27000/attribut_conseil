@@ -1,188 +1,181 @@
 .Footer {
-    .ReviewPad {
-        display: none;
-    }
+  .ReviewPad {
+    display: none;
+  }
 
-    background-color: white;
+  background-color: white;
 
+  width: 100%;
+  position: relative;
+  bottom: 0;
 
+  .FooterLogoContainer {
     width: 100%;
-    position: relative;
-    bottom: 0;
+    display: flex;
+    // flex-direction: column;
+    justify-content: space-evenly;
+    background-color: white;
+    align-items: center;
 
-    .FooterLogoContainer {
+    div {
+      // width: 100%;
+
+      img {
+        display: flex;
+        object-fit: contain;
         width: 100%;
-        display: flex;
-        // flex-direction: column;
-        justify-content: space-evenly;
-        background-color: white;
-        align-items: center;
+        height: 100%;
 
-
-
-        div {
-            // width: 100%;
-
-            img {
-                display: flex;
-                object-fit: contain;
-                width: 100%;
-                height: 100%;
-
-                z-index: 2;
-            }
-        }
-
-        .LogoContainer {
-            display: flex;
-        }
-
-        .Qualiopi_stats {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-
-
-            .Single-Link {
-                // background-color: var(--acYellow);
-                width: 45%;
-                padding: 0 0 1rem 0;
-                border-radius: 25px;
-                // margin: 1.5rem 0;
-
-                a {
-                    text-decoration: underline;
-                    color: black;
-
-                    &:hover {
-                        color: var(--acDarkBlue);
-                        background-color: var(--acYellow);
-                        padding: .5rem 1rem;
-                        border-radius: 15px;
-
-                    }
-                }
-            }
-        }
-
-
-    }
-
-    .Handi {
-        display: flex;
-        flex-direction: column;
-        // position: absolute;
-        // bottom: 0;
         z-index: 2;
-        width: 100%;
-        align-items: center;
-
-
-
-        .handicap-picture {
-            width: 10%;
-            height: auto;
-        }
-
-        ul {
-            padding: 0;
-            margin-bottom: 0;
-
-            li {
-                list-style-type: none;
-                text-align: center;
-            }
-        }
+      }
     }
 
-    .FooterPictureFont {
-        width: 100%;
-        transform: scaleX(-1);
-
-        img {
-            width: 100%;
-            height: auto;
-        }
-
-        &-mention {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            background-color: var(--acDarkBlue);
-            transform: scaleX(-1);
-
-            .Single-Link {
-                a {
-                    font-size: .5rem;
-
-                }
-            }
-
-
-            .builderRef {
-                color: white;
-
-                p {
-                    margin: 0;
-                    font-size: .51rem;
-                    margin: .15rem 0;
-
-                    a {
-                        font-size: .51rem;
-                        font-weight: bold;
-                        text-decoration: underline;
-                    }
-                }
-            }
-
-            a {
-                margin-bottom: .5rem;
-                color: white;
-                font-size: .7rem;
-                text-decoration: none;
-
-            }
-        }
+    .LogoContainer {
+      display: flex;
     }
 
-    .City_Link {
-        color: transparent;
+    .Qualiopi_stats {
+      width: 100%;
+      display: flex;
+      justify-content: center;
 
-        h2 {
-            font-size: .8rem;
-            margin-bottom: 0;
-        }
-
-        ul {
-            margin-top: 0;
-            list-style-type: none;
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-        }
+      .Single-Link {
+        // background-color: var(--acYellow);
+        width: 45%;
+        padding: 0 0 1rem 0;
+        border-radius: 25px;
+        // margin: 1.5rem 0;
 
         a {
-            color: transparent;
-            font-size: .6rem;
-            text-decoration: none;
-            // color: var(--acDarkBlue);
+          text-decoration: underline;
+          color: black;
 
+          &:hover {
+            color: var(--acDarkBlue);
+            background-color: var(--acYellow);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+          }
         }
-
-        // li:hover {
-
-        //     margin: 0 .5rem;
-        //     // background-color: var(--acDarkBlue);
-
-        //     a {
-        //         color: white;
-        //         // text-decoration: underline
-        //     }
-        // }
+      }
     }
+  }
+
+  .Handi {
+    display: flex;
+    flex-direction: column;
+    // position: absolute;
+    // bottom: 0;
+    z-index: 2;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+
+    .handicap-picture {
+      width: 10%;
+      height: auto;
+    }
+
+    ul {
+      padding: 0;
+      margin-bottom: 0;
+
+      li {
+        list-style-type: none;
+        text-align: center;
+      }
+    }
+  }
+
+  .FooterPictureFont {
+    width: 100%;
+    transform: scaleX(-1);
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    &-mention {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      background-color: var(--acDarkBlue);
+      transform: scaleX(-1);
+
+      .Single-Link {
+        a {
+          font-size: 0.5rem;
+        }
+      }
+
+      .builderRef {
+        color: white;
+
+        p {
+          margin: 0;
+          font-size: 0.51rem;
+          margin: 0.15rem 0;
+
+          a {
+            font-size: 0.51rem;
+            font-weight: bold;
+            text-decoration: underline;
+          }
+        }
+      }
+
+      a {
+        margin-bottom: 0.5rem;
+        color: white;
+        font-size: 0.7rem;
+        text-decoration: none;
+      }
+
+      .FooterFiles {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
+  .City_Link {
+    color: transparent;
+
+    h2 {
+      font-size: 0.8rem;
+      margin-bottom: 0;
+    }
+
+    ul {
+      margin-top: 0;
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+    }
+
+    a {
+      color: transparent;
+      font-size: 0.6rem;
+      text-decoration: none;
+      // color: var(--acDarkBlue);
+    }
+
+    // li:hover {
+
+    //     margin: 0 .5rem;
+    //     // background-color: var(--acDarkBlue);
+
+    //     a {
+    //         color: white;
+    //         // text-decoration: underline
+    //     }
+    // }
+  }
 }
 
 // .QualContainer-Data {
@@ -191,154 +184,147 @@
 //     margin: 0;
 // }
 
+@media screen and (min-width: 768px) {
+  .Footer {
+    // .ReviewPad {
+    //     display: block;
+    // }
 
+    .FooterLogoContainer {
+      width: 45%;
+      position: relative;
+      // position: absolute;
+      z-index: 1;
+      background-color: transparent;
+      bottom: 65%;
+    }
 
+    .FooterPictureFont {
+      position: relative;
 
-@media screen and (min-width:768px) {
-    .Footer {
-        // .ReviewPad {
-        //     display: block;
+      &-mention {
+        transform: scalex(-1);
+        flex-direction: row;
+        align-items: flex-end;
+        padding-bottom: 1rem;
+        background-color: transparent;
+
+        .handicap-picture {
+          width: 10%;
+        }
+
+        // ul li {
+        //     list-style-type: none;
         // }
 
-        .FooterLogoContainer {
-            width: 45%;
-            position: relative;
-            // position: absolute;
-            z-index: 1;
-            background-color: transparent;
-            bottom: 65%;
-
+        .Handi,
+        .FooterFiles,
+        .builderRef {
+          width: 100%;
         }
 
-        .FooterPictureFont {
-            position: relative;
+        .Handi .Single-Link {
+          width: 100%;
+        }
 
-            &-mention {
-                transform: scalex(-1);
-                flex-direction: row;
-                align-items: flex-end;
-                padding-bottom: 1rem;
-                background-color: transparent;
+        .Single-Link a {
+          font-size: 0.75rem;
+        }
 
-                .handicap-picture {
-                    width: 10%;
-                }
+        .builderRef {
+          color: white;
 
-                // ul li {
-                //     list-style-type: none;
-                // }
+          p {
+            margin: 0;
+            font-size: 0.75rem;
 
-                div {
-                    width: 25%;
-                }
-
-                .Handi .Single-Link {
-                    width: 100%;
-                }
-
-                .Single-Link a {
-
-                    font-size: .75rem;
-                }
-
-                .builderRef {
-                    color: white;
-
-                    p {
-                        margin: 0;
-                        font-size: .75rem;
-
-                        a {
-                            font-size: .8rem;
-                            font-weight: bold;
-                            text-decoration: underline;
-                        }
-                    }
-                }
+            a {
+              font-size: 0.8rem;
+              font-weight: bold;
+              text-decoration: underline;
             }
+          }
         }
-
-        .City_Link {
-            h2 {
-                font-size: .8rem;
-            }
-
-            width: 30%;
-            position: absolute;
-            font-size: .9rem;
-            top: 0;
-            right: 10%;
-            z-index: 5;
-        }
+      }
     }
 
-    .LogoContainer {
-        // justify-content: space-between;
+    .City_Link {
+      h2 {
+        font-size: 0.8rem;
+      }
 
-        .CpfContainer,
+      width: 30%;
+      position: absolute;
+      font-size: 0.9rem;
+      top: 0;
+      right: 10%;
+      z-index: 5;
+    }
+  }
+
+  .LogoContainer {
+    // justify-content: space-between;
+
+    .CpfContainer,
         // .QualioContainer,
         .CharteContainer {
-            width: 20%;
-        }
+      width: 20%;
+    }
+  }
+
+  .QualContainer {
+    width: 100%;
+
+    &-Pic {
+      width: 20%;
+      object-fit: contain;
+      height: auto;
     }
 
-    .QualContainer {
-        width: 100%;
-
-        &-Pic {
-            width: 20%;
-            object-fit: contain;
-            height: auto;
-        }
-
-        &-Data {
-            font-size: .6rem;
-            font-weight: bold;
-            margin: 0;
-        }
+    &-Data {
+      font-size: 0.6rem;
+      font-weight: bold;
+      margin: 0;
     }
-
-
+  }
 }
 
 @media screen and (min-width: 992px) {
-    .Footer {
-        // .ReviewPad {
-        //     display: none;
-        // }
+  .Footer {
+    // .ReviewPad {
+    //     display: none;
+    // }
 
+    // .Map {
+    //     // height: 100%;
+    //     width: 30%;
+    //     height: 75%;
+    //     // display: initial;
+    //     // position: absolute;
+    //     // top: 0;
+    //     // z-index: 1;
+    //     // right: 10%;
 
-        // .Map {
-        //     // height: 100%;
-        //     width: 30%;
-        //     height: 75%;
-        //     // display: initial;
-        //     // position: absolute;
-        //     // top: 0;
-        //     // z-index: 1;
-        //     // right: 10%;
+    //     h2 {
+    //         margin-bottom: 1rem;
+    //     }
 
-        //     h2 {
-        //         margin-bottom: 1rem;
-        //     }
+    //     iframe {
+    //         width: 100%;
+    //         height: 100%;
+    //         // height: fit-content;
+    //         // border-radius: 15px;
+    //     }
+    // }
 
-        //     iframe {
-        //         width: 100%;
-        //         height: 100%;
-        //         // height: fit-content;
-        //         // border-radius: 15px;
-        //     }
-        // }
+    .City_Link {
+      h2 {
+        font-size: 1.2em;
+      }
 
-        .City_Link {
-            h2 {
-                font-size: 1.2em;
-            }
-
-
-            a {
-                font-size: .8rem;
-            }
-        }
+      a {
+        font-size: 0.8rem;
+      }
     }
+  }
 }

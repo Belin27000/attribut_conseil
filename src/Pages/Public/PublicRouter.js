@@ -18,7 +18,8 @@ import PracticesAnalyse from "../PracticesAnalyse/PracticesAnalyse.js";
 import ProfessionalMeeting from "../ProfessionalMeeting/ProfessionalMeeting.js";
 import PsyWork from "../PsyWork/PsyWork.js";
 import TrainingTrainer from "../TrainingTrainer/TrainingTrainer.js";
-import Vae from "../Vae/Vae.js";
+// import Vae from "../Vae/Vae.js";
+import Vae from "../Vae/V2/Vae2.js";
 import YouthGuidance from "../youthGuidance/YouthGuidance.js";
 // import BusinessCreationTraining2 from '../BusinessCreationTraining/BusinessCreationTraining2.js';
 
