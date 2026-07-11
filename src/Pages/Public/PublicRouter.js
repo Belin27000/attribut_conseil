@@ -48,10 +48,28 @@ import Motivation from "../Advice/Motivation/Motivation.js";
 import Blog from "../Blog/Blog.js";
 import Podcast1 from "../Podcasts/Podcast/Podcast1.js";
 import Podcasts from "../Podcasts/Podcasts.js";
+import Private360Page from "./Private360Page.js";
+import Private360ProPage from "./Private360ProPage.js";
+import PrivateNeoPage from "./PrivateNeoPage.js";
+import PrivateValeursCroyancesPage from "./PrivateValeursCroyancesPage.js";
+import PrivateMbtiPage from "./PrivateMbtiPage.js";
+import PrivateCourbeDeatisfactionPage from "./PrivateCourbeDeatisfactionPage.js";
 
 const PublicRouter = () => {
   return (
     <Routes>
+      <Route path="/360" element={<Private360Page />} />
+      <Route path="/360PRO" element={<Private360ProPage />} />
+      <Route path="/NEO" element={<PrivateNeoPage />} />
+      <Route path="/MBTI" element={<PrivateMbtiPage />} />
+      <Route
+        path="/valeursetcroyances"
+        element={<PrivateValeursCroyancesPage />}
+      />
+      <Route
+        path="/courbe-de-satisfaction"
+        element={<PrivateCourbeDeatisfactionPage />}
+      />
       <Route element={<Layout />}>
         <Route index element={<Home />} />
 

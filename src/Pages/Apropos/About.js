@@ -179,7 +179,7 @@ const About = () => {
               La certification Qualiopi a été délivrée pour la catégorie
               d'action suivante :{" "}
             </p>
-            <p>Bilan de compétences et actions de formation</p>
+            <p>Bilan de compétences, actions de formation et VAE</p>
           </div>
           <div className="Pres-center-certif_width_bold Datadoc">
             <p>ATTRIBUT CONSEILS est datadocké sous le numéro :</p>

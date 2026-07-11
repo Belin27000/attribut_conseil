@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Courbe de satisfaction — Histoire de vie | Attribut Conseils</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --azur-dark:#1A3D5C; --azur:#5996B2; --or:#DBBE3F; --creme:#FAF5F0;
+    --encre:#243B4A; --trait:#E3D8CC;
+    --pro:#0F3A5F;        /* bleu azur profond */
+    --perso:#C2452C;      /* terracotta */
+    --pos:#3F7A57; --neg:#B0533A;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--creme);color:var(--encre);
+    font-family:"Inter",system-ui,-apple-system,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px 96px}
+
+  header.masthead{padding:46px 24px 30px;max-width:1120px;margin:0 auto}
+  .brandline{display:flex;align-items:center;gap:14px}
+  .wordmark{font-weight:600;letter-spacing:.34em;font-size:.72rem;text-transform:uppercase;color:var(--azur-dark)}
+  .rule{height:1px;flex:1;background:linear-gradient(90deg,var(--or),rgba(219,190,63,0))}
+  h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;
+    font-size:clamp(2rem,4.4vw,3.05rem);line-height:1.04;margin:.5em 0 .15em;color:var(--azur-dark)}
+  .lede{max-width:64ch;font-size:1.06rem;color:#52606b;margin:.2em 0 0}
+
+  .intro{padding-top:28px;padding-bottom:30px}
+  .intro-lead{font-size:1.02rem;color:#4a5660;line-height:1.7;margin:0;max-width:76ch}
+  .callout{border-left:3px solid var(--or);background:rgba(219,190,63,.08);
+    padding:18px 24px;border-radius:0 12px 12px 0;margin-top:22px;max-width:76ch}
+  .callout h3{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.32rem;color:var(--azur-dark);margin:0 0 6px}
+  .callout p{margin:0;font-size:.97rem;color:#52606b;line-height:1.65}
+
+  section{background:#fff;border:1px solid var(--trait);border-radius:14px;
+    padding:30px 30px 34px;margin-top:26px;box-shadow:0 1px 0 rgba(26,61,92,.03)}
+  .eyebrow{display:flex;align-items:baseline;gap:12px;margin:0 0 6px}
+  .eyebrow .num{font-family:"Cormorant Garamond",serif;font-size:1.5rem;color:var(--or);font-weight:600;line-height:1}
+  h2{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:1.7rem;color:var(--azur-dark);margin:0}
+  .hint{font-size:.92rem;color:#6b7680;margin:.35em 0 1.4em;max-width:76ch}
+
+  .toprow{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end}
+  .field{display:flex;flex-direction:column;gap:6px}
+  .field label{font-size:.74rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#7a8590}
+  input[type=text],input[type=number],textarea,select{
+    font-family:"Inter";font-size:.97rem;color:var(--encre);background:var(--creme);
+    border:1px solid var(--trait);border-radius:9px;padding:11px 13px;transition:border-color .15s,box-shadow .15s}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--azur);box-shadow:0 0 0 3px rgba(89,150,178,.18)}
+  textarea{resize:vertical;min-height:74px;width:100%}
+
+  .seg{display:inline-flex;background:var(--creme);border:1px solid var(--trait);border-radius:10px;padding:3px}
+  .seg button{font-size:.9rem;font-weight:500;border:0;background:transparent;color:#6b7680;
+    padding:8px 16px;border-radius:7px;cursor:pointer;transition:all .15s}
+  .seg button[aria-pressed="true"]{background:#fff;color:var(--azur-dark);box-shadow:0 1px 3px rgba(26,61,92,.12);font-weight:600}
+
+  .versants{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px}
+  .versant{border:1px solid var(--trait);border-radius:12px;padding:16px 16px 18px;background:var(--creme)}
+  .versant.pro{border-top:3px solid var(--pro)}
+  .versant.perso{border-top:3px solid var(--perso)}
+  .versant.muted{opacity:.4;pointer-events:none}
+  .versant h4{margin:0 0 14px;font-size:.78rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+  .versant.pro h4{color:var(--pro)} .versant.perso h4{color:var(--perso)}
+  .versant h4 .mk{width:13px;height:13px;flex:none}
+  .versant .sublabel{font-size:.7rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:#7a8590;margin:0 0 5px}
+  .versant input[type=text],.versant input[type=number]{width:100%;background:#fff}
+  .versant .rep{margin-bottom:12px;max-width:160px}
+  .slider-wrap{display:flex;align-items:center;gap:12px;margin-top:14px}
+  input[type=range]{flex:1;accent-color:var(--azur);height:4px}
+  .nivval{font-family:"Cormorant Garamond",serif;font-size:1.5rem;font-weight:600;min-width:46px;text-align:center;line-height:1}
+  .scale-cap{display:flex;justify-content:space-between;font-size:.68rem;color:#9aa4ad;margin-top:4px}
+
+  .btn{font-weight:600;font-size:.95rem;border:0;border-radius:10px;padding:13px 24px;cursor:pointer;transition:all .15s}
+  .btn-primary{background:var(--azur-dark);color:#fff}.btn-primary:hover{background:#12304a}
+  .btn-ghost{background:transparent;color:var(--azur-dark);border:1px solid var(--trait)}.btn-ghost:hover{border-color:var(--azur)}
+  .btn-or{background:var(--or);color:var(--azur-dark)}.btn-or:hover{background:#cdb02f}
+  .col-btn{width:100%;margin-top:18px}
+  .col-btn.pro{background:var(--pro);color:#fff}.col-btn.pro:hover{background:#0b2c49}
+  .col-btn.perso{background:var(--perso);color:#fff}.col-btn.perso:hover{background:#a83a25}
+  .col-btn:disabled{opacity:.45;cursor:default}
+  .formactions{display:none;gap:12px;align-items:center;margin-top:18px;flex-wrap:wrap}
+  .formactions.show{display:flex}
+  .editing-note{font-size:.85rem;color:var(--or);font-weight:600;display:none}
+
+  .nudge{display:none;gap:12px;align-items:flex-start;background:rgba(219,190,63,.13);
+    border:1px solid rgba(219,190,63,.55);border-radius:11px;padding:13px 16px;margin-top:20px;
+    font-size:.9rem;color:#7a6a1f;line-height:1.5}
+  .nudge.show{display:flex}
+  .nudge .ic{font-family:"Cormorant Garamond",serif;font-size:1.3rem;line-height:1;color:var(--or);flex:none}
+  .balance{font-size:.82rem;color:#9aa4ad;margin-top:14px}
+
+  .steps{margin-top:22px;border-top:1px solid var(--trait)}
+  .step{display:flex;align-items:center;gap:14px;padding:12px 4px;border-bottom:1px solid var(--trait)}
+  .step .badge{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:.78rem;font-weight:700;flex:none}
+  .step .badge.pro{background:var(--pro)} .step .badge.perso{background:var(--perso)}
+  .step .lib{flex:1;min-width:0}
+  .step .lib b{font-weight:600;color:var(--encre);font-size:.96rem}
+  .step .lib span{display:block;font-size:.8rem;color:#8a939c}
+  .chip{font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:4px 9px;border-radius:20px;flex:none}
+  .chip.pro{background:rgba(15,58,95,.1);color:var(--pro)}
+  .chip.perso{background:rgba(194,69,44,.12);color:var(--perso)}
+  .niv{font-family:"Cormorant Garamond",serif;font-size:1.25rem;font-weight:600;min-width:42px;text-align:right;flex:none}
+  .niv.pos{color:var(--pos)}.niv.neg{color:var(--neg)}.niv.zero{color:#9aa4ad}
+  .iconbtn{background:none;border:0;cursor:pointer;color:#9aa4ad;padding:6px;border-radius:6px;font-size:.95rem;transition:color .15s}
+  .iconbtn:hover{color:var(--azur-dark)} .iconbtn.del:hover{color:#b4452f}
+  .empty-steps{padding:26px 4px;color:#9aa4ad;font-size:.95rem;text-align:center}
+
+  #chart svg{width:100%;height:auto;display:block}
+  .legend{display:flex;flex-wrap:wrap;gap:24px;align-items:center;margin-top:16px;font-size:.9rem;color:#52606b}
+  .legend .key{display:flex;align-items:center;gap:9px;font-weight:500}
+  .legend svg{flex:none}
+  .legend .note{font-size:.82rem;color:#8a939c;font-style:italic;font-weight:400}
+  .repere-cols{display:grid;grid-template-columns:1fr 1fr;gap:30px;margin-top:22px;padding-top:18px;border-top:1px solid var(--trait)}
+  .repere-cols h5{font-size:.76rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin:0 0 8px;padding-bottom:6px;border-bottom:2px solid}
+  .repere-cols .pro h5{color:var(--pro);border-color:var(--pro)}
+  .repere-cols .perso h5{color:var(--perso);border-color:var(--perso)}
+  .repere-cols .r{display:flex;gap:10px;align-items:baseline;padding:5px 0;font-size:.88rem}
+  .repere-cols .rn{width:21px;height:21px;flex:none;display:grid;place-items:center;color:#fff;font-size:.7rem;font-weight:700;transform:translateY(2px)}
+  .repere-cols .pro .rn{background:var(--pro);border-radius:50%}
+  .repere-cols .perso .rn{background:var(--perso)}
+  .repere-cols .rt b{font-weight:600}
+  .repere-cols .rt span{color:#8a939c}
+  .repere-cols .empty{font-size:.85rem;color:#b0b8bf;font-style:italic}
+
+  .scn{border:1px solid var(--trait);border-radius:12px;margin-top:18px;overflow:hidden}
+  .scn-head{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--creme);border-bottom:1px solid var(--trait)}
+  .scn-head .badge{width:28px;height:28px;display:grid;place-items:center;color:#fff;font-size:.82rem;font-weight:700;flex:none}
+  .scn-head .badge.pro{background:var(--pro);border-radius:50%}
+  .scn-head .badge.perso{background:var(--perso)}
+  .scn-head .t{flex:1}
+  .scn-head .t b{font-family:"Cormorant Garamond",serif;font-size:1.2rem;font-weight:600;color:var(--azur-dark)}
+  .scn-head .t span{display:block;font-size:.8rem;color:#8a939c}
+  .scn-head .toggle{font-size:.78rem;color:#7a8590;display:flex;align-items:center;gap:7px;cursor:pointer}
+  .scn-body{padding:18px 18px 8px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .scn-body.off{display:none}
+  .qfield{margin-bottom:14px}
+  .qfield label{display:block;font-size:.78rem;font-weight:600;color:var(--azur-dark);margin-bottom:5px}
+  .qfield label em{font-style:normal;font-weight:400;color:#8a939c;display:block;font-size:.74rem}
+  .freefield{margin-top:6px}
+  .freefield label{display:block;font-weight:600;color:var(--azur-dark);margin-bottom:7px;font-size:.97rem}
+  .freefield label em{font-style:italic;font-weight:400;color:#8a939c;font-size:.86rem;display:block;margin-top:2px}
+  .synthgrid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:6px}
+  .analyse-empty{color:#9aa4ad;font-size:.93rem;padding:14px 0;font-style:italic}
+  h3.sub{font-family:'Cormorant Garamond',serif;color:var(--azur-dark);font-size:1.35rem;font-weight:600;margin:32px 0 4px}
+
+  .export-bar{position:sticky;bottom:0;z-index:30;background:rgba(250,245,240,.92);backdrop-filter:blur(8px);
+    border-top:1px solid var(--trait);padding:16px 24px;margin-top:30px}
+  .export-inner{max-width:1120px;margin:0 auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .export-inner .msg{font-size:.88rem;color:#6b7680;flex:1;min-width:200px}
+  .export-inner .msg b{color:var(--azur-dark)}
+  .qualiopi{font-size:.78rem;color:#9aa4ad;text-align:center;margin-top:30px;line-height:1.5}
+
+  @media(max-width:760px){
+    .versants{grid-template-columns:1fr}
+    .scn-body,.synthgrid,.repere-cols{grid-template-columns:1fr}
+    section{padding:24px 20px 28px}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="brandline"><span class="wordmark">Attribut Conseils</span><span class="rule"></span></div>
+  <h1>Votre courbe de satisfaction</h1>
+  <p class="lede">La courbe de satisfaction est un outil de prise de recul. En revisitant les grandes étapes de votre parcours, vous faites apparaître la ligne de votre histoire — ses sommets, ses creux, ses élans et ses ruptures — pour mieux préparer la suite.</p>
+</header>
+
+<div class="wrap">
+
+  <!-- INTRO -->
+  <section class="intro">
+    <p class="intro-lead">Pour chacune des étapes que vous allez poser, vous noterez votre niveau de satisfaction du moment, de −10 à +10. L'objectif n'est pas de juger ce qui a été, mais de comprendre ce qui vous a porté, ce qui vous a éprouvé, et les ressources que vous avez su mobiliser. Ce que cette relecture révèle — vos fils rouges, vos moteurs, vos points d'appui — devient une matière précieuse pour éclairer votre projet et construire la suite.</p>
+    <div class="callout">
+      <h3>Pourquoi deux courbes sur le même repère ?</h3>
+      <p>Parce que nos vies professionnelle et personnelle ne sont jamais tout à fait étanches. Les tracer ensemble, c'est donner à voir leurs résonances : les instants où elles s'élèvent de concert, les périodes où elles se croisent, et celles où elles s'éloignent. C'est dans ces mouvements que se dessine votre histoire.</p>
+    </div>
+  </section>
+
+  <!-- 1 -->
+  <section>
+    <div class="eyebrow"><span class="num">1</span><h2>Avant de commencer</h2></div>
+    <p class="hint">Renseignez votre nom (il figurera sur le document), puis choisissez la manière dont vous souhaitez situer vos moments dans le temps. Ce choix s'applique aux deux courbes.</p>
+    <div class="toprow">
+      <div class="field" style="flex:1;min-width:220px">
+        <label for="who">Prénom et nom</label>
+        <input type="text" id="who" placeholder="Ex. Camille Durand" autocomplete="name">
+      </div>
+      <div class="field">
+        <label>Situer mes moments par</label>
+        <div class="seg" id="modeSeg" role="group" aria-label="Repère temporel">
+          <button data-mode="annee" aria-pressed="true">Années</button>
+          <button data-mode="age" aria-pressed="false">Âges</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section>
+    <div class="eyebrow"><span class="num">2</span><h2>Ajouter un moment</h2></div>
+    <p class="hint">Renseignez un versant, l'autre, ou les deux. Chaque colonne a sa propre date : un événement professionnel et un événement personnel n'ont pas à tomber au même moment. Explorer les deux côtés reste ce qui fait la richesse de l'exercice.</p>
+
+    <div class="versants">
+      <div class="versant pro" id="colPro">
+        <h4><svg class="mk" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6" fill="#0F3A5F"/></svg>Côté professionnel</h4>
+        <p class="sublabel" id="proRepLabel">Année</p>
+        <input class="rep" type="number" id="proRep" placeholder="2008">
+        <p class="sublabel">Que se passait-il ?</p>
+        <input type="text" id="proLib" placeholder="Ex. Entreprise Dupont, une promotion, un départ…">
+        <div class="slider-wrap">
+          <span style="font-size:.78rem;color:#9aa4ad">−10</span>
+          <input type="range" id="proNiv" min="-10" max="10" step="1" value="5">
+          <span style="font-size:.78rem;color:#9aa4ad">+10</span>
+          <span class="nivval" id="proNivVal">+5</span>
+        </div>
+        <div class="scale-cap"><span>Difficile</span><span>Neutre</span><span>Épanouissant</span></div>
+        <button class="btn col-btn pro" id="addPro">Ajouter ce moment pro</button>
+      </div>
+
+      <div class="versant perso" id="colPerso">
+        <h4><svg class="mk" viewBox="0 0 16 16"><path d="M8 1 L15 8 L8 15 L1 8 Z" fill="#C2452C"/></svg>Côté personnel</h4>
+        <p class="sublabel" id="persoRepLabel">Année</p>
+        <input class="rep" type="number" id="persoRep" placeholder="2009">
+        <p class="sublabel">Que se passait-il ?</p>
+        <input type="text" id="persoLib" placeholder="Ex. Mariage, naissance, déménagement, deuil…">
+        <div class="slider-wrap">
+          <span style="font-size:.78rem;color:#9aa4ad">−10</span>
+          <input type="range" id="persoNiv" min="-10" max="10" step="1" value="5">
+          <span style="font-size:.78rem;color:#9aa4ad">+10</span>
+          <span class="nivval" id="persoNivVal">+5</span>
+        </div>
+        <div class="scale-cap"><span>Difficile</span><span>Neutre</span><span>Épanouissant</span></div>
+        <button class="btn col-btn perso" id="addPerso">Ajouter ce moment perso</button>
+      </div>
+    </div>
+
+    <div class="formactions" id="editBar">
+      <button class="btn btn-ghost" id="cancelEdit">Annuler la modification</button>
+      <span class="editing-note" id="editNote" style="display:inline">Modification en cours…</span>
+    </div>
+
+    <div class="nudge" id="nudge"><span class="ic">✦</span><span id="nudgeText"></span></div>
+    <div class="balance" id="balance"></div>
+
+    <div class="steps" id="stepsList"></div>
+  </section>
+
+  <!-- 3 -->
+  <section class="chartcard">
+    <div class="eyebrow"><span class="num">3</span><h2>Votre courbe</h2></div>
+    <p class="hint">Les deux courbes partagent la même ligne de temps mais gardent leur propre rythme. La ligne d'horizon marque le point neutre. Quand un moment professionnel et un moment personnel tombent ensemble, un trait les relie.</p>
+    <div id="chart"></div>
+    <div class="legend">
+      <div class="key"><svg width="34" height="14" viewBox="0 0 34 14"><line x1="2" y1="7" x2="32" y2="7" stroke="#0F3A5F" stroke-width="3"/><circle cx="17" cy="7" r="5" fill="#0F3A5F"/></svg>Vie professionnelle</div>
+      <div class="key"><svg width="34" height="14" viewBox="0 0 34 14"><line x1="2" y1="7" x2="32" y2="7" stroke="#C2452C" stroke-width="3"/><path d="M17 2 L22 7 L17 12 L12 7 Z" fill="#C2452C"/></svg>Vie personnelle</div>
+      <div class="note">Les numéros renvoient à la liste ci-dessous.</div>
+    </div>
+    <div class="repere-cols" id="repereCols"></div>
+  </section>
+
+  <!-- 4 -->
+  <section>
+    <div class="eyebrow"><span class="num">4</span><h2>Votre analyse</h2></div>
+    <p class="hint">La courbe n'est qu'un point de départ. Le regard que vous portez sur elle est le cœur du travail.</p>
+
+    <div class="freefield">
+      <label>Quelle réflexion vous faites-vous en regardant votre courbe ?
+        <em>Ce qui vous frappe, vous surprend, vous touche. Les moments où vos deux vies se répondent. Aucune bonne réponse attendue.</em></label>
+      <textarea id="reflexion" placeholder="Je remarque que…"></textarea>
+    </div>
+
+    <h3 class="sub">Vos scénarios de réussite</h3>
+    <p class="hint" style="margin-bottom:6px">Pour chaque sommet — ces moments où la satisfaction était haute, d'un côté ou de l'autre — revenez sur ce qui en faisait la richesse. Ces ressources-là sont toujours les vôtres.</p>
+    <div id="reussiteCards"></div>
+
+    <h3 class="sub">Vos scénarios de difficulté</h3>
+    <p class="hint" style="margin-bottom:6px">Pour chaque creux, sans s'y attarder : ce que la période a mobilisé en vous, et ce que vous en retirez aujourd'hui.</p>
+    <div id="difficulteCards"></div>
+
+    <h3 class="sub" style="margin-bottom:14px">Ce que vous en retenez</h3>
+    <div class="synthgrid">
+      <div class="freefield"><label>Quelles compétences sont déjà acquises, transposables, utilisables dès aujourd'hui ?</label><textarea id="s_comp" placeholder="…"></textarea></div>
+      <div class="freefield"><label>Qu'est-ce qui, au fond, vous plaît profondément ?</label><textarea id="s_plaisir" placeholder="…"></textarea></div>
+      <div class="freefield"><label>Que retenez-vous de cette analyse ?</label><textarea id="s_retenir" placeholder="…"></textarea></div>
+      <div class="freefield"><label>Dans cette période de transition, comment l'utiliser ?</label><textarea id="s_transition" placeholder="…"></textarea></div>
+    </div>
+  </section>
+
+  <p class="qualiopi">Document de co-construction, élaboré par vos soins en préparation de votre bilan de compétences.<br>
+  Confidentiel — il vous appartient, et ne sera partagé qu'avec votre consultant(e) référent(e).</p>
+</div>
+
+<div class="export-bar">
+  <div class="export-inner">
+    <p class="msg" id="exportMsg"><b>Une fois vos moments posés</b>, téléchargez votre document et déposez-le dans votre dossier partagé avant le premier entretien.</p>
+    <button class="btn btn-or" id="pdfBtn">Télécharger mon document (PDF)</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+/* ============================================================
+   COURBE DE SATISFACTION — ATTRIBUT CONSEILS
+   Deux chronologies INDÉPENDANTES (pro / perso), chacune avec sa propre date.
+   Couleurs très contrastées + marqueurs de formes distinctes.
+   Autonome, sans back-end. Génération PDF côté client.
+   ============================================================ */
+const C={pro:'#0F3A5F',perso:'#C2452C',or:'#DBBE3F',creme:'#FAF5F0',azur:'#5996B2',encre:'#243B4A',trait:'#E3D8CC',pos:'#3F7A57',neg:'#B0533A'};
+
+let events=[];      // {id, cat:'pro'|'perso', x:Number, lib, niv}
+let mode='annee';
+let editingId=null, editingCat=null;
+let uid=1;
+const analysis={};  // analysis['__reflexion'] ; analysis['<id>'][fieldKey] ; analysis['<id>'].__inc
+
+const REUSSITE_FIELDS=[
+  ['env','Environnement','Où étiez-vous ?'],
+  ['comport','Comportements','Que faisiez-vous ?'],
+  ['ress','Ressources, talents, compétences','De quoi étiez-vous capable ?'],
+  ['valeurs','Valeurs associées, croyances positives',''],
+  ['vision','Vision de votre identité','Qui étiez-vous, à ce moment ?'],
+  ['plaisir','Plaisir, besoins satisfaits, motivations','']
+];
+const DIFFICULTE_FIELDS=[
+  ['env','Environnement','Où étiez-vous ? Quel contexte ?'],
+  ['comport','Ce que vous avez mis en place','Comment avez-vous réagi ?'],
+  ['ress','Ressources mobilisées','Sur quoi vous êtes-vous appuyé(e) pour traverser ?'],
+  ['revele','Ce que la situation a révélé','Une valeur, un besoin, une limite…'],
+  ['vision','Votre regard sur vous-même','Qui étiez-vous, à ce moment ?'],
+  ['apprend','Ce que vous en retirez aujourd\u2019hui','']
+];
+
+const $=s=>document.querySelector(s);
+const elNS=(t,a={},p=null)=>{const e=document.createElementNS('http://www.w3.org/2000/svg',t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e;};
+const esc=s=>(s||'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const fmtNiv=v=>(v>0?'+':'')+v;
+const repLabels={annee:'Année',age:'Âge'};
+const repPlaceholders={annee:'2008',age:'25'};
+const axisLabel={annee:'Années',age:'Âges'};
+const nivCls=v=>v>0?'pos':v<0?'neg':'zero';
+function repText(x){ if(mode==='age')return x+' ans'; return String(x); }
+function series(cat){ return events.filter(e=>e.cat===cat).sort((a,b)=>a.x-b.x); }
+/* items : versants à analyser/lister, n° par série */
+function items(){
+  const out=[];
+  series('pro').forEach((e,i)=>out.push({key:String(e.id),num:i+1,x:e.x,cat:'pro',lib:e.lib,niv:e.niv}));
+  series('perso').forEach((e,i)=>out.push({key:String(e.id),num:i+1,x:e.x,cat:'perso',lib:e.lib,niv:e.niv}));
+  return out;
+}
+function numberOf(ev){ return series(ev.cat).findIndex(e=>e.id===ev.id)+1; }
+
+/* ---------- repère temporel ---------- */
+$('#modeSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  mode=b.dataset.mode;
+  [...$('#modeSeg').children].forEach(x=>x.setAttribute('aria-pressed',x===b));
+  $('#proRepLabel').textContent=repLabels[mode];
+  $('#persoRepLabel').textContent=repLabels[mode];
+  $('#proRep').placeholder=repPlaceholders[mode];
+  $('#persoRep').placeholder=mode==='annee'?'2009':repPlaceholders[mode];
+  renderAll();
+});
+
+/* ---------- sliders ---------- */
+function paintNiv(input,valEl){
+  const v=+input.value; valEl.textContent=fmtNiv(v);
+  valEl.style.color = v>0?C.pos : v<0?C.neg : '#9aa4ad';
+}
+const proNiv=$('#proNiv'),proNivVal=$('#proNivVal'),persoNiv=$('#persoNiv'),persoNivVal=$('#persoNivVal');
+proNiv.addEventListener('input',()=>paintNiv(proNiv,proNivVal));
+persoNiv.addEventListener('input',()=>paintNiv(persoNiv,persoNivVal));
+paintNiv(proNiv,proNivVal); paintNiv(persoNiv,persoNivVal);
+
+/* ---------- ajout / édition ---------- */
+function addFrom(cat){
+  const repEl=$(cat==='pro'?'#proRep':'#persoRep');
+  const libEl=$(cat==='pro'?'#proLib':'#persoLib');
+  const nivEl=cat==='pro'?proNiv:persoNiv;
+  const lib=libEl.value.trim(), x=repEl.value.trim();
+  if(!lib){ flash(libEl); libEl.focus(); nudge('Indiquez ce qui se passait '+(cat==='pro'?'côté professionnel':'côté personnel')+' pour ajouter ce moment.'); return; }
+  if(x===''){ flash(repEl); repEl.focus(); return; }
+  events.push({id:uid++,cat,x:Number(x),lib,niv:+nivEl.value});
+  clearCol(cat); renderAll();
+}
+function onAdd(cat){ if(editingId){ if(editingCat===cat) commitEdit(); return; } addFrom(cat); }
+$('#addPro').addEventListener('click',()=>onAdd('pro'));
+$('#addPerso').addEventListener('click',()=>onAdd('perso'));
+$('#cancelEdit').addEventListener('click',exitEdit);
+
+function commitEdit(){
+  const ev=events.find(e=>e.id===editingId); if(!ev){exitEdit();return;}
+  const col=ev.cat;
+  const repEl=$(col==='pro'?'#proRep':'#persoRep');
+  const libEl=$(col==='pro'?'#proLib':'#persoLib');
+  const nivEl=col==='pro'?proNiv:persoNiv;
+  const lib=libEl.value.trim(), x=repEl.value.trim();
+  if(!lib){ flash(libEl); libEl.focus(); return; }
+  if(x===''){ flash(repEl); repEl.focus(); return; }
+  ev.x=Number(x); ev.lib=lib; ev.niv=+nivEl.value;
+  exitEdit(); renderAll();
+}
+function clearCol(cat){
+  if(cat==='pro'){ $('#proRep').value=''; $('#proLib').value=''; proNiv.value=5; paintNiv(proNiv,proNivVal); }
+  else { $('#persoRep').value=''; $('#persoLib').value=''; persoNiv.value=5; paintNiv(persoNiv,persoNivVal); }
+}
+function resetForm(){
+  clearCol('pro'); clearCol('perso');
+  $('#colPro').classList.remove('muted'); $('#colPerso').classList.remove('muted');
+  $('#addPro').disabled=false; $('#addPerso').disabled=false;
+  $('#addPro').textContent='Ajouter ce moment pro';
+  $('#addPerso').textContent='Ajouter ce moment perso';
+  $('#editBar').classList.remove('show');
+}
+function startEdit(id){
+  const ev=events.find(e=>e.id===id); if(!ev)return;
+  resetForm(); editingId=id; editingCat=ev.cat;
+  if(ev.cat==='pro'){
+    $('#proRep').value=ev.x; $('#proLib').value=ev.lib; proNiv.value=ev.niv; paintNiv(proNiv,proNivVal);
+    $('#colPerso').classList.add('muted'); $('#addPerso').disabled=true;
+    $('#addPro').textContent='Mettre à jour';
+  }else{
+    $('#persoRep').value=ev.x; $('#persoLib').value=ev.lib; persoNiv.value=ev.niv; paintNiv(persoNiv,persoNivVal);
+    $('#colPro').classList.add('muted'); $('#addPro').disabled=true;
+    $('#addPerso').textContent='Mettre à jour';
+  }
+  $('#editBar').classList.add('show');
+  $('#editNote').textContent='Vous modifiez un point — '+(ev.cat==='pro'?'vie professionnelle':'vie personnelle');
+  $('#colPro').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function exitEdit(){
+  editingId=null; editingCat=null;
+  resetForm();
+}
+function delEvent(id){
+  events=events.filter(e=>e.id!==id);
+  delete analysis[String(id)];
+  if(editingId===id) exitEdit();
+  renderAll();
+}
+function flash(n){ n.style.borderColor='#b4452f'; setTimeout(()=>n.style.borderColor='',900); }
+
+/* ---------- incitation à équilibrer ---------- */
+function nudge(msg){
+  const box=$('#nudge'),txt=$('#nudgeText');
+  if(msg){ txt.textContent=msg; box.classList.add('show'); } else box.classList.remove('show');
+}
+function updateBalance(){
+  const np=series('pro').length, ne=series('perso').length;
+  $('#balance').textContent=(np+ne)?`${np} moment(s) pro · ${ne} moment(s) perso`:'';
+  if(np>=3 && ne===0)
+    nudge('Votre courbe est entièrement professionnelle. Et côté personnel, sur cette même période — qu\u2019en était-il ? C\u2019est souvent là que la courbe révèle le plus.');
+  else if(ne>=3 && np===0)
+    nudge('Votre courbe est entièrement personnelle. Et côté professionnel, sur cette même période — où en étiez-vous ? Mettre les deux en regard fait apparaître des liens inattendus.');
+  else if((np>=4 && ne>0 && np>=ne*4)||(ne>=4 && np>0 && ne>=np*4))
+    nudge('Un versant domine nettement l\u2019autre. Pensez à équilibrer : c\u2019est la mise en regard des deux vies qui rend cette courbe parlante.');
+  else nudge(null);
+}
+
+/* ---------- liste des moments ---------- */
+function renderSteps(){
+  const list=$('#stepsList');
+  const all=[...events].sort((a,b)=>a.x-b.x||(a.cat<b.cat?-1:1));
+  if(!all.length){ list.innerHTML='<div class="empty-steps">Aucun moment pour l\u2019instant. Ajoutez votre premier moment ci-dessus.</div>'; return; }
+  list.innerHTML='';
+  all.forEach(ev=>{
+    const n=numberOf(ev);
+    const row=document.createElement('div'); row.className='step';
+    row.innerHTML=`<span class="badge ${ev.cat}">${n}</span>
+      <div class="lib"><b>${esc(ev.lib)}</b><span>${repText(ev.x)}</span></div>
+      <span class="chip ${ev.cat}">${ev.cat==='pro'?'Pro':'Perso'}</span>
+      <span class="niv ${nivCls(ev.niv)}">${fmtNiv(ev.niv)}</span>
+      <button class="iconbtn" title="Modifier" data-edit="${ev.id}">&#9998;</button>
+      <button class="iconbtn del" title="Supprimer" data-del="${ev.id}">&#10005;</button>`;
+    list.appendChild(row);
+  });
+  list.querySelectorAll('[data-edit]').forEach(b=>b.onclick=()=>startEdit(+b.dataset.edit));
+  list.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>delEvent(+b.dataset.del));
+}
+
+/* ---------- géométrie ---------- */
+const VB={w:1100,h:580,l:64,r:34,t:46,b:54};
+function plot(){return{x0:VB.l,x1:VB.w-VB.r,y0:VB.t,y1:VB.h-VB.b,mid:(VB.t+(VB.h-VB.b))/2};}
+function yOf(v){const p=plot();const half=(p.y1-p.y0)/2;return p.mid-(v/10)*half;}
+function xScale(){
+  const p=plot(),xs=events.map(e=>e.x);
+  let min=Math.min(...xs),max=Math.max(...xs);
+  if(!isFinite(min)){min=0;max=1;}
+  if(min===max){min-=1;max+=1;}
+  const pad=(p.x1-p.x0)*0.04;
+  return v=>p.x0+pad+(v-min)/(max-min)*(p.x1-p.x0-2*pad);
+}
+function monotonePath(pts){
+  const n=pts.length;
+  if(n===0)return''; if(n===1)return`M ${pts[0].x} ${pts[0].y}`;
+  if(n===2)return`M ${pts[0].x} ${pts[0].y} L ${pts[1].x} ${pts[1].y}`;
+  const dx=[],dy=[],m=[];
+  for(let i=0;i<n-1;i++){dx[i]=pts[i+1].x-pts[i].x;dy[i]=pts[i+1].y-pts[i].y;m[i]=dy[i]/dx[i];}
+  const t=new Array(n);t[0]=m[0];t[n-1]=m[n-2];
+  for(let i=1;i<n-1;i++)t[i]=(m[i-1]*m[i]<=0)?0:(m[i-1]+m[i])/2;
+  for(let i=0;i<n-1;i++){if(m[i]===0){t[i]=0;t[i+1]=0;}else{const a=t[i]/m[i],b=t[i+1]/m[i],h=Math.hypot(a,b);if(h>3){const k=3/h;t[i]=k*a*m[i];t[i+1]=k*b*m[i];}}}
+  let d=`M ${pts[0].x} ${pts[0].y}`;
+  for(let i=0;i<n-1;i++){const x1=pts[i].x+dx[i]/3,y1=pts[i].y+t[i]*dx[i]/3,x2=pts[i+1].x-dx[i]/3,y2=pts[i+1].y-t[i+1]*dx[i]/3;
+    d+=` C ${x1.toFixed(1)} ${y1.toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)} ${pts[i+1].x} ${pts[i+1].y}`;}
+  return d;
+}
+function diamond(cx,cy,r){return `M ${cx} ${cy-r} L ${cx+r} ${cy} L ${cx} ${cy+r} L ${cx-r} ${cy} Z`;}
+/* écarte d'un cheveu les points de même abscisse : évite dx=0 (tracé invalide) */
+function strictX(pts){
+  const out=pts.map(p=>({x:p.x,y:p.y}));
+  for(let i=1;i<out.length;i++){ if(out[i].x<=out[i-1].x) out[i].x=out[i-1].x+0.5; }
+  return out;
+}
+
+function buildSVG(){
+  const p=plot(),xs=xScale();
+  const svg=elNS('svg',{viewBox:`0 0 ${VB.w} ${VB.h}`,'font-family':'Inter, Helvetica, Arial, sans-serif',role:'img','aria-label':'Courbe de satisfaction'});
+  elNS('rect',{x:p.x0,y:p.y0,width:p.x1-p.x0,height:p.mid-p.y0,fill:C.or,'fill-opacity':.06},svg);
+  elNS('rect',{x:p.x0,y:p.mid,width:p.x1-p.x0,height:p.y1-p.mid,fill:C.azur,'fill-opacity':.07},svg);
+  for(let v=-10;v<=10;v+=2){const y=yOf(v);
+    if(v!==0) elNS('line',{x1:p.x0,y1:y,x2:p.x1,y2:y,stroke:C.encre,'stroke-opacity':.09,'stroke-width':1},svg);
+    elNS('text',{x:p.x0-12,y:y+4,'text-anchor':'end','font-size':14,fill:'#9aa4ad'},svg).textContent=fmtNiv(v);
+  }
+  elNS('line',{x1:p.x0,y1:p.mid,x2:p.x1,y2:p.mid,stroke:C.encre,'stroke-width':1.6,'stroke-opacity':.85},svg);
+  elNS('text',{x:p.x1,y:p.mid-9,'text-anchor':'end','font-size':12.5,fill:'#8a939c','font-style':'italic'},svg).textContent='ligne d\u2019horizon — neutre';
+  elNS('text',{x:(p.x0+p.x1)/2,y:VB.h-14,'text-anchor':'middle','font-size':13,fill:'#8a939c','letter-spacing':'.04em'},svg).textContent=axisLabel[mode].toUpperCase();
+
+  if(!events.length){
+    elNS('text',{x:(p.x0+p.x1)/2,y:p.mid-16,'text-anchor':'middle','font-size':17,fill:'#b8c0c7','font-family':'Cormorant Garamond, serif'},svg).textContent='Vos moments feront apparaître la courbe ici';
+    return svg;
+  }
+
+  const proS=series('pro'), persoS=series('perso');
+  const proPts=proS.map(e=>({x:+xs(e.x).toFixed(1),y:+yOf(e.niv).toFixed(1)}));
+  const persoPts=persoS.map(e=>({x:+xs(e.x).toFixed(1),y:+yOf(e.niv).toFixed(1)}));
+
+  // connecteurs aux moments coïncidents
+  proS.forEach(pe=>{persoS.filter(ee=>ee.x===pe.x).forEach(ee=>{
+    elNS('line',{x1:+xs(pe.x).toFixed(1),y1:yOf(pe.niv),x2:+xs(ee.x).toFixed(1),y2:yOf(ee.niv),
+      stroke:C.encre,'stroke-opacity':.22,'stroke-width':1.2,'stroke-dasharray':'2 3'},svg);
+  });});
+
+  if(proPts.length)   elNS('path',{d:monotonePath(strictX(proPts)),fill:'none',stroke:C.pro,'stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'},svg);
+  if(persoPts.length) elNS('path',{d:monotonePath(strictX(persoPts)),fill:'none',stroke:C.perso,'stroke-width':3,'stroke-linecap':'round','stroke-linejoin':'round'},svg);
+
+  // pro : ronds, badge au-dessus
+  proS.forEach((e,i)=>{const x=+xs(e.x).toFixed(1),y=+yOf(e.niv).toFixed(1);
+    elNS('circle',{cx:x,cy:y,r:6,fill:C.pro,stroke:'#fff','stroke-width':2},svg);
+    let by=y-19; if(by<p.y0+9)by=y+19;
+    elNS('circle',{cx:x,cy:by,r:10.5,fill:C.pro},svg);
+    elNS('text',{x:x,y:by+4.3,'text-anchor':'middle','font-size':12,fill:'#fff','font-weight':700},svg).textContent=(i+1);
+  });
+  // perso : losanges, badge en dessous
+  persoS.forEach((e,i)=>{const x=+xs(e.x).toFixed(1),y=+yOf(e.niv).toFixed(1);
+    elNS('path',{d:diamond(x,y,7),fill:C.perso,stroke:'#fff','stroke-width':2},svg);
+    let by=y+19; if(by>p.y1-9)by=y-19;
+    elNS('path',{d:diamond(x,by,11),fill:C.perso},svg);
+    elNS('text',{x:x,y:by+4.3,'text-anchor':'middle','font-size':12,fill:'#fff','font-weight':700},svg).textContent=(i+1);
+  });
+  return svg;
+}
+function renderChart(){const h=$('#chart');h.innerHTML='';h.appendChild(buildSVG());}
+
+function renderRepereCols(){
+  const host=$('#repereCols');
+  function colHTML(cat,title){
+    const s=series(cat);
+    let inner = s.length ? s.map((e,i)=>`<div class="r"><span class="rn">${i+1}</span><span class="rt"><b>${esc(e.lib)}</b> <span>· ${repText(e.x)} · ${fmtNiv(e.niv)}</span></span></div>`).join('')
+                         : '<div class="empty">Aucun moment renseigné.</div>';
+    return `<div class="${cat}"><h5>${title}</h5>${inner}</div>`;
+  }
+  if(!events.length){ host.innerHTML=''; return; }
+  host.innerHTML = colHTML('pro','Vie professionnelle') + colHTML('perso','Vie personnelle');
+}
+
+/* ---------- analyse ---------- */
+function getA(key,f){return (analysis[key]&&analysis[key][f])||'';}
+function setA(key,f,v){(analysis[key]=analysis[key]||{})[f]=v;}
+function scenarioCard(item,idx,fields){
+  const inc=!(analysis[item.key]&&analysis[item.key].__inc===false);
+  const body=fields.map(([k,lab,sub])=>`
+    <div class="qfield"><label>${lab}${sub?`<em>${sub}</em>`:''}</label>
+      <textarea data-akey="${item.key}" data-afield="${k}" placeholder="…">${esc(getA(item.key,k))}</textarea></div>`).join('');
+  const card=document.createElement('div');card.className='scn';
+  card.innerHTML=`<div class="scn-head">
+      <span class="badge ${item.cat}">${item.num}</span>
+      <div class="t"><b>${esc(item.lib)}</b><span>${repText(item.x)} · satisfaction ${fmtNiv(item.niv)} · ${item.cat==='pro'?'vie professionnelle':'vie personnelle'}</span></div>
+      <label class="toggle"><input type="checkbox" data-inc="${item.key}" ${inc?'checked':''}> analyser</label>
+    </div><div class="scn-body ${inc?'':'off'}">${body}</div>`;
+  card.querySelectorAll('textarea[data-akey]').forEach(t=>t.addEventListener('input',()=>setA(t.dataset.akey,t.dataset.afield,t.value)));
+  const chk=card.querySelector('[data-inc]');
+  chk.addEventListener('change',()=>{setA(item.key,'__inc',chk.checked);card.querySelector('.scn-body').classList.toggle('off',!chk.checked);});
+  return card;
+}
+function renderAnalyse(){
+  const it=items();
+  const sommets=it.filter(s=>s.niv>=1).sort((a,b)=>b.niv-a.niv);
+  const creux=it.filter(s=>s.niv<=-1).sort((a,b)=>a.niv-b.niv);
+  const r=$('#reussiteCards');r.innerHTML='';
+  if(!sommets.length)r.innerHTML='<p class="analyse-empty">Ajoutez des moments au-dessus de la ligne d\u2019horizon pour faire apparaître vos scénarios de réussite.</p>';
+  else sommets.forEach((x,i)=>r.appendChild(scenarioCard(x,i+1,REUSSITE_FIELDS)));
+  const d=$('#difficulteCards');d.innerHTML='';
+  if(!creux.length)d.innerHTML='<p class="analyse-empty">Les moments situés sous la ligne d\u2019horizon apparaîtront ici.</p>';
+  else creux.forEach((x,i)=>d.appendChild(scenarioCard(x,i+1,DIFFICULTE_FIELDS)));
+}
+
+['reflexion','s_comp','s_plaisir','s_retenir','s_transition'].forEach(id=>{
+  $('#'+id).addEventListener('input',e=>{analysis['__'+id]=e.target.value;});
+});
+
+function renderAll(){renderSteps();renderChart();renderRepereCols();renderAnalyse();updateBalance();}
+renderAll();
+
+/* ============================================================ PDF ============================================================ */
+function svgToPng(svg,scale){
+  return new Promise((res,rej)=>{
+    const c=svg.cloneNode(true);c.setAttribute('width',VB.w);c.setAttribute('height',VB.h);
+    const xml=new XMLSerializer().serializeToString(c);
+    const url='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml);
+    const img=new Image();
+    img.onload=()=>{const cv=document.createElement('canvas');cv.width=VB.w*scale;cv.height=VB.h*scale;
+      const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,cv.width,cv.height);
+      ctx.drawImage(img,0,0,cv.width,cv.height);res(cv.toDataURL('image/png'));};
+    img.onerror=rej;img.src=url;
+  });
+}
+$('#pdfBtn').addEventListener('click',generatePDF);
+async function generatePDF(){
+  if(!events.length){const m=$('#exportMsg'),o=m.innerHTML;m.innerHTML='<b>Ajoutez au moins un moment</b> avant de générer votre document.';setTimeout(()=>m.innerHTML=o,3200);return;}
+  const btn=$('#pdfBtn');btn.disabled=true;const lbl=btn.textContent;btn.textContent='Préparation…';
+  try{
+    const {jsPDF}=window.jspdf;
+    const doc=new jsPDF({orientation:'landscape',unit:'mm',format:'a4'});
+    const Wl=297,Hl=210,M=16;
+    const who=($('#who').value.trim())||'';
+    const today=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
+    const rgb={azur:[26,61,92],pro:[15,58,95],perso:[194,69,44],or:[219,190,63],ink:[36,59,74],grey:[120,130,140],soft:[140,148,156]};
+    function header(land){const W=land?Wl:210;doc.setDrawColor(...rgb.or);doc.setLineWidth(.6);doc.line(M,14,W-M,14);
+      doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(...rgb.azur);doc.text('ATTRIBUT CONSEILS',M,11);
+      doc.setFont('helvetica','normal');doc.setTextColor(...rgb.soft);doc.text('Courbe de satisfaction — Histoire de vie',W-M,11,{align:'right'});}
+    function footer(land,pg){const W=land?Wl:210,H=land?Hl:297;doc.setDrawColor(...rgb.or);doc.setLineWidth(.4);doc.line(M,H-12,W-M,H-12);
+      doc.setFont('helvetica','normal');doc.setFontSize(7.2);doc.setTextColor(...rgb.soft);
+      doc.text('Document de co-construction confidentiel'+(who?' — '+who:''),M,H-8);
+      doc.text(today+'   ·   p. '+pg,W-M,H-8,{align:'right'});}
+    let page=1;
+    const Wp=210,Hp=297,bottom=Hp-18;
+    // ---- Couverture (paysage) : titre + courbe ----
+    header(true);
+    doc.setFont('times','normal');doc.setFontSize(23);doc.setTextColor(...rgb.azur);doc.text('Votre courbe de satisfaction',M,26);
+    let yc=32;
+    if(who){doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(...rgb.grey);doc.text(who,M,yc);yc+=4.6;}
+    doc.setFont('helvetica','italic');doc.setFontSize(8.4);doc.setTextColor(...rgb.soft);
+    doc.text('Au-dessus de la ligne d\u2019horizon : satisfaction. En dessous : insatisfaction.  ·  Rond = vie professionnelle, losange = vie personnelle.',M,yc);yc+=4;
+    const png=await svgToPng($('#chart svg'),2.4);
+    const imgW=Wl-2*M,imgH=imgW*(VB.h/VB.w);
+    doc.addImage(png,'PNG',M,yc,imgW,imgH,undefined,'FAST');
+    footer(true,page);
+
+    // ---- Repères : page(s) portrait dédiée(s), pagination sûre ----
+    const colGap=12, colW=(Wp-2*M-colGap)/2, xL=M, xR=M+colW+colGap;
+    const proL=series('pro'), persoL=series('perso');
+    function repHeaders(showP,showE){
+      header(false);let yy=26;
+      doc.setFont('times','normal');doc.setFontSize(17);doc.setTextColor(...rgb.azur);doc.text('Repères chronologiques',M,yy);yy+=3;
+      doc.setDrawColor(...rgb.or);doc.setLineWidth(.5);doc.line(M,yy,M+26,yy);yy+=8;
+      doc.setFont('helvetica','bold');doc.setFontSize(9);
+      if(showP){doc.setTextColor(...rgb.pro);doc.text('VIE PROFESSIONNELLE',xL,yy);doc.setDrawColor(...rgb.pro);doc.setLineWidth(.5);doc.line(xL,yy+2,xL+colW,yy+2);}
+      if(showE){doc.setTextColor(...rgb.perso);doc.text('VIE PERSONNELLE',xR,yy);doc.setDrawColor(...rgb.perso);doc.setLineWidth(.5);doc.line(xR,yy+2,xR+colW,yy+2);}
+      return yy+7;
+    }
+    doc.addPage('a4','portrait');page++;
+    let sy=repHeaders(proL.length>0,persoL.length>0),yL=sy,yR=sy,iL=0,iR=0;
+    doc.setFont('helvetica','normal');doc.setFontSize(8.6);
+    while(iL<proL.length || iR<persoL.length){
+      let moved=false;
+      if(iL<proL.length){const e=proL[iL];const t=`${iL+1}. ${e.lib} · ${repText(e.x)} (${fmtNiv(e.niv)})`;const ls=doc.splitTextToSize(t,colW);
+        if(yL+ls.length*4.5<=bottom){doc.setTextColor(...rgb.ink);ls.forEach(l=>{doc.text(l,xL,yL);yL+=4.5;});iL++;moved=true;}}
+      if(iR<persoL.length){const e=persoL[iR];const t=`${iR+1}. ${e.lib} · ${repText(e.x)} (${fmtNiv(e.niv)})`;const ls=doc.splitTextToSize(t,colW);
+        if(yR+ls.length*4.5<=bottom){doc.setTextColor(...rgb.ink);ls.forEach(l=>{doc.text(l,xR,yR);yR+=4.5;});iR++;moved=true;}}
+      if(!moved){footer(false,page);doc.addPage('a4','portrait');page++;sy=repHeaders(iL<proL.length,iR<persoL.length);yL=sy;yR=sy;doc.setFont('helvetica','normal');doc.setFontSize(8.6);}
+    }
+    footer(false,page);
+
+    // ---- Analyse (portrait) ----
+    doc.addPage('a4','portrait');page++;header(false);let py=26;
+    function ensure(h){if(py+h>Hp-18){footer(false,page);doc.addPage('a4','portrait');page++;header(false);py=24;}}
+    function title(t){ensure(16);doc.setFont('times','normal');doc.setFontSize(17);doc.setTextColor(...rgb.azur);doc.text(t,M,py);py+=3;doc.setDrawColor(...rgb.or);doc.setLineWidth(.5);doc.line(M,py,M+26,py);py+=7;}
+    function para(label,val,sub){ensure(14);doc.setFont('helvetica','bold');doc.setFontSize(9.3);doc.setTextColor(...rgb.azur);doc.text(label,M,py);py+=4.6;
+      if(sub){doc.setFont('helvetica','italic');doc.setFontSize(7.6);doc.setTextColor(...rgb.soft);doc.text(sub,M,py);py+=4;}
+      doc.setFont('helvetica','normal');doc.setFontSize(9.4);doc.setTextColor(...rgb.ink);
+      const txt=(val&&val.trim())?val.trim():'…';doc.splitTextToSize(txt,Wp-2*M).forEach(ln=>{ensure(5.4);doc.text(ln,M,py);py+=5.0;});py+=3.5;}
+    function scnBlock(item,idx,fields){ensure(22);
+      const col=item.cat==='pro'?rgb.pro:rgb.perso;
+      if(item.cat==='pro'){doc.setFillColor(...col);doc.circle(M+3,py-2.4,3,'F');}
+      else{doc.setFillColor(...col);doc.triangle(M+3,py-5,M+6,py-1.6,M,py-1.6,'F');doc.triangle(M+3,py+.2,M+6,py-1.6,M,py-1.6,'F');}
+      doc.setFont('helvetica','bold');doc.setFontSize(7.5);doc.setTextColor(255,255,255);doc.text(String(idx),M+3,py-1,{align:'center'});
+      doc.setFont('times','normal');doc.setFontSize(12.5);doc.setTextColor(...rgb.azur);doc.text(item.lib,M+10,py);py+=4.4;
+      doc.setFont('helvetica','normal');doc.setFontSize(7.8);doc.setTextColor(...rgb.soft);
+      doc.text(`${repText(item.x)} · satisfaction ${fmtNiv(item.niv)} · ${item.cat==='pro'?'vie professionnelle':'vie personnelle'}`,M+10,py);py+=6;
+      fields.forEach(([k,lab,sub])=>para(lab,getA(item.key,k),sub));py+=2;}
+
+    const it=items();
+    title('Votre réflexion');
+    para('Quelle réflexion vous faites-vous en regardant votre courbe ?',analysis['__reflexion']);
+    const sommets=it.filter(s=>s.niv>=1&&!(analysis[s.key]&&analysis[s.key].__inc===false)).sort((a,b)=>b.niv-a.niv);
+    title('Vos scénarios de réussite');
+    if(!sommets.length)para('—','Aucun sommet sélectionné.');
+    sommets.forEach((x,i)=>scnBlock(x,i+1,REUSSITE_FIELDS));
+    const creux=it.filter(s=>s.niv<=-1&&!(analysis[s.key]&&analysis[s.key].__inc===false)).sort((a,b)=>a.niv-b.niv);
+    title('Vos scénarios de difficulté');
+    if(!creux.length)para('—','Aucun creux sélectionné.');
+    creux.forEach((x,i)=>scnBlock(x,i+1,DIFFICULTE_FIELDS));
+    title('Ce que vous en retenez');
+    para('Quelles compétences sont déjà acquises, transposables, utilisables dès aujourd\u2019hui ?',analysis['__s_comp']);
+    para('Qu\u2019est-ce qui, au fond, vous plaît profondément ?',analysis['__s_plaisir']);
+    para('Que retenez-vous de cette analyse ?',analysis['__s_retenir']);
+    para('Dans cette période de transition, comment l\u2019utiliser ?',analysis['__s_transition']);
+    footer(false,page);
+
+    const safe=(who||'histoire-de-vie').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9]+/g,'_').replace(/^_|_$/g,'');
+    doc.save('Courbe_de_satisfaction_'+safe+'.pdf');
+    const m=$('#exportMsg'),o=m.innerHTML;m.innerHTML='<b>Document généré.</b> Pensez à le déposer dans votre dossier partagé avant le premier entretien.';setTimeout(()=>m.innerHTML=o,5000);
+  }catch(err){console.error(err);$('#exportMsg').innerHTML='<b>La génération a échoué.</b> Réessayez ; si cela persiste, signalez-le à votre consultant(e).';}
+  finally{btn.disabled=false;btn.textContent=lbl;}
+}
+</script>
+</body>
+</html>

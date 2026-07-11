@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NEO PI-R — Attribut Conseils</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: Georgia, serif;
+  background: #f8f6f1;
+  color: #1a1a2e;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.header {
+  background: #1a1a2e;
+  padding: 18px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-brand { color: #d4b896; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-family: Georgia, serif; }
+.header-title { color: #f8f6f1; font-size: 18px; font-weight: normal; }
+.progress-bar-bg { width: 180px; height: 2px; background: rgba(255,255,255,0.2); border-radius: 1px; }
+.progress-bar-fill { height: 2px; background: #b8966a; border-radius: 1px; transition: width 0.3s; width: 0%; }
+
+/* SCREENS */
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* INTRO */
+.center-wrap {
+  max-width: 620px;
+  margin: 70px auto;
+  padding: 0 24px;
+  text-align: center;
+}
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #b8966a;
+  margin-bottom: 16px;
+  font-family: Georgia, serif;
+}
+.big-title {
+  font-size: 38px;
+  font-weight: normal;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: #1a1a2e;
+}
+.intro-text {
+  font-size: 15px;
+  line-height: 1.8;
+  color: #5a5a7a;
+  margin-bottom: 36px;
+  font-family: Arial, sans-serif;
+}
+.field-label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #5a5a7a;
+  margin-bottom: 8px;
+  font-family: Arial, sans-serif;
+  text-align: left;
+}
+.text-input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #ede9e0;
+  border-radius: 3px;
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  color: #1a1a2e;
+  background: #ffffff;
+  outline: none;
+  margin-bottom: 8px;
+}
+.text-input:focus { border-color: #b8966a; }
+.input-error { border-color: #c4817a !important; }
+.error-msg { color: #c4817a; font-size: 13px; font-family: Arial, sans-serif; margin-bottom: 20px; display: none; }
+
+.btn-primary {
+  background: #1a1a2e;
+  color: #f8f6f1;
+  border: none;
+  padding: 16px 48px;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 3px;
+  margin-top: 12px;
+  transition: background 0.2s;
+  width: 100%;
+  max-width: 340px;
+}
+.btn-primary:hover { background: #b8966a; }
+
+/* SCALE LEGEND */
+.scale-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+.scale-pill {
+  padding: 7px 14px;
+  border-radius: 30px;
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+  font-weight: 500;
+}
+.pill-1 { background: #e8e0f0; color: #5a4a7e; }
+.pill-2 { background: #e0eee8; color: #3a6a5a; }
+.pill-3 { background: #f0ece0; color: #6a5a3a; }
+.pill-4 { background: #f0e8e0; color: #7a4a3a; }
+.pill-5 { background: #dceaf4; color: #3a5a7a; }
+
+/* QUESTIONS */
+.q-wrap {
+  max-width: 700px;
+  margin: 50px auto;
+  padding: 0 24px;
+}
+.q-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+}
+.q-num {
+  font-size: 40px;
+  font-weight: normal;
+  color: #b8966a;
+  line-height: 1;
+}
+.q-num small { font-size: 16px; color: #9a9ab0; }
+.q-facet {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #9a9ab0;
+  background: #ede9e0;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-family: Arial, sans-serif;
+}
+.q-text {
+  font-size: 24px;
+  font-weight: normal;
+  line-height: 1.5;
+  margin-bottom: 44px;
+  min-height: 80px;
+}
+.options {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 10px;
+  margin-bottom: 44px;
+}
+.opt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 6px;
+  border: 2px solid #ede9e0;
+  background: #ffffff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: Arial, sans-serif;
+}
+.opt:hover { border-color: #b8966a; background: #fffdf8; transform: translateY(-2px); }
+.opt.sel { border-color: #b8966a; background: #fdf6ec; }
+.opt-icon {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: 2px solid #ede9e0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  transition: all 0.15s;
+}
+.opt.sel .opt-icon { background: #b8966a; border-color: #b8966a; color: white; }
+.opt-lbl { font-size: 10px; text-align: center; color: #7a7a9a; line-height: 1.3; font-weight: 500; }
+.opt.sel .opt-lbl { color: #1a1a2e; }
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-nav {
+  border: 2px solid #1a1a2e;
+  background: none;
+  color: #1a1a2e;
+  padding: 11px 26px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.15s;
+}
+.btn-nav:hover { background: #1a1a2e; color: #f8f6f1; }
+.btn-nav:disabled { opacity: 0.2; cursor: default; }
+.btn-nav.solid { background: #1a1a2e; color: #f8f6f1; }
+.btn-nav.solid:hover { background: #b8966a; border-color: #b8966a; }
+
+/* DONE */
+.done-icon {
+  width: 72px; height: 72px;
+  background: #1a1a2e;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; color: white;
+  margin: 0 auto 28px;
+}
+.btn-send {
+  width: 100%; max-width: 380px;
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  padding: 22px 40px;
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+  margin-top: 8px;
+}
+.btn-send:hover { background: #b8966a; }
+.btn-send:disabled { background: #7a9e8e; cursor: default; }
+.send-box {
+  background: #ede9e0;
+  border-radius: 6px;
+  padding: 28px;
+  margin: 20px 0;
+  max-width: 460px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.send-confirm {
+  display: none;
+  margin-top: 16px;
+  color: #7a9e8e;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+/* CONSULTANT */
+.btn-consultant {
+  display: none;
+  position: fixed;
+  bottom: 24px; right: 24px;
+  background: #1a1a2e;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  z-index: 999;
+}
+.btn-consultant:hover { background: #b8966a; }
+
+.panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,26,46,0.8);
+  z-index: 1000;
+  overflow-y: auto;
+}
+.panel.open { display: block; }
+.panel-inner {
+  background: white;
+  margin: 24px auto;
+  max-width: 1000px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+.panel-head {
+  background: #1a1a2e;
+  color: white;
+  padding: 20px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.panel-head h2 { font-size: 20px; font-weight: normal; }
+.btn-close {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  padding: 7px 18px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.panel-body { padding: 28px; }
+
+.domains-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.d-block { background: #f8f6f1; border-radius: 4px; overflow: hidden; }
+.d-head { padding: 10px 14px; color: white; font-size: 13px; font-weight: bold; letter-spacing: 0.04em; }
+.d-total { padding: 10px 14px 4px; font-size: 26px; color: #1a1a2e; }
+.d-total span { font-size: 12px; color: #9a9ab0; }
+.d-facets { padding: 0 14px 10px; }
+.d-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+  border-top: 1px solid #ede9e0;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+.d-row-name { color: #7a7a9a; flex: 1; }
+.d-row-bar { width: 40px; height: 3px; background: #ede9e0; border-radius: 2px; margin: 0 6px; }
+.d-row-fill { height: 3px; border-radius: 2px; }
+.d-row-score { font-weight: bold; font-size: 13px; color: #1a1a2e; }
+
+.profile-wrap { overflow-x: auto; }
+.profile-table { width: 100%; border-collapse: collapse; min-width: 800px; font-size: 11px; font-family: Arial, sans-serif; }
+.profile-table th { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: #9a9ab0; padding: 3px 4px; text-align: center; }
+.profile-table th.lbl { text-align: left; min-width: 110px; }
+.profile-table td { padding: 2px 3px; text-align: center; }
+.profile-table td.lbl { text-align: left; font-size: 10px; color: #7a7a9a; white-space: nowrap; }
+.dom-row td { padding-top: 10px; font-weight: bold; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+@media(max-width:600px){
+  .options { gap: 6px; }
+  .opt { padding: 10px 4px; }
+  .opt-icon { width: 30px; height: 30px; font-size: 12px; }
+  .opt-lbl { font-size: 9px; }
+  .q-text { font-size: 19px; }
+  .domains-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-brand">Attribut Conseils</div>
+  <div class="header-title">NEO PI-R</div>
+  <div>
+    <div style="font-size:10px;color:#d4b896;letter-spacing:0.1em;text-align:right;margin-bottom:5px;" id="prog-label">0 / 240</div>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="prog-bar"></div></div>
+  </div>
+</header>
+
+<!-- INTRO -->
+<div class="screen active" id="s-intro">
+  <div class="center-wrap">
+    <div class="eyebrow">Inventaire de Personnalité Révisé</div>
+    <h1 class="big-title">240 affirmations<br>sur vous-même</h1>
+    <p class="intro-text">
+      Pour chaque affirmation, indiquez dans quelle mesure elle vous correspond.<br>
+      Il n'y a ni bonne ni mauvaise réponse. Répondez spontanément.
+    </p>
+    <div class="scale-row">
+      <div class="scale-pill pill-1">Fortement en désaccord</div>
+      <div class="scale-pill pill-2">Désaccord</div>
+      <div class="scale-pill pill-3">Neutre</div>
+      <div class="scale-pill pill-4">Accord</div>
+      <div class="scale-pill pill-5">Fortement d'accord</div>
+    </div>
+    <div style="max-width:380px;margin:0 auto 8px;text-align:left;">
+      <label class="field-label" for="inp-name">Votre nom et prénom</label>
+      <input class="text-input" id="inp-name" type="text" placeholder="Ex : Marie Dupont" autocomplete="name" />
+      <div class="error-msg" id="name-error">Merci d'indiquer votre nom avant de commencer.</div>
+    </div>
+    <button class="btn-primary" id="btn-start" onclick="doStart()">Commencer le test</button>
+  </div>
+</div>
+
+<!-- QUESTIONS -->
+<div class="screen" id="s-questions">
+  <div class="q-wrap">
+    <div class="q-meta">
+      <div class="q-num" id="q-num">1 <small>/ 240</small></div>
+      <div class="q-facet" id="q-facet">—</div>
+    </div>
+    <div class="q-text" id="q-text">…</div>
+    <div class="options" id="q-options"></div>
+    <div class="nav">
+      <button class="btn-nav" id="btn-prev" onclick="goPrev()" disabled>← Précédent</button>
+      <button class="btn-nav solid" id="btn-next" onclick="goNext()">Suivant →</button>
+    </div>
+  </div>
+</div>
+
+<!-- DONE -->
+<div class="screen" id="s-done">
+  <div class="center-wrap" style="max-width:700px;">
+    <div class="done-icon">✓</div>
+    <div class="eyebrow">Test terminé</div>
+    <h1 class="big-title" id="done-title" style="font-size:32px;">Merci pour vos réponses</h1>
+
+    <!-- BOUTON ENVOI CANDIDAT -->
+    <div class="send-box">
+      <p style="font-size:15px;line-height:1.7;color:#1a1a2e;margin-bottom:8px;font-family:Arial,sans-serif;">
+        <strong>Une dernière étape :</strong> envoyez vos résultats à votre conseillère.
+      </p>
+      <p style="font-size:13px;color:#7a7a9a;margin-bottom:22px;line-height:1.6;font-family:Arial,sans-serif;">
+        Cliquez sur le bouton. Votre messagerie s'ouvre avec le message déjà rédigé.<br>
+        <strong>Saisissez l'adresse de votre conseillère et cliquez Envoyer.</strong>
+      </p>
+      <button class="btn-send" id="btn-send" onclick="doSend()">✉&nbsp; Envoyer mes résultats</button>
+      <div class="send-confirm" id="send-confirm">
+        ✓ Votre messagerie est ouverte.<br>Pensez à cliquer <strong>Envoyer</strong>.
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- PANEL CONSULTANT -->
+<div class="panel" id="panel">
+  <div class="panel-inner">
+    <div class="panel-head">
+      <h2 id="panel-title">Feuille de profil — Usage interne</h2>
+      <button class="btn-close" onclick="closePanel()">Fermer ✕</button>
+    </div>
+    <div class="panel-body">
+      <!-- RECAP 5 DOMAINES -->
+      <div id="recap-domains" style="display:flex;gap:12px;margin-bottom:28px;flex-wrap:wrap;"></div>
+      <!-- DETAIL DOMAINES + FACETTES -->
+      <div class="domains-grid" id="domains-grid"></div>
+      <h3 style="font-size:16px;font-weight:normal;margin-bottom:16px;font-family:Georgia,serif;color:#1a1a2e;">Profil des 30 facettes</h3>
+      <div class="profile-wrap">
+        <table class="profile-table" id="profile-table"></table>
+      </div>
+      <div style="margin-top:24px;">
+        <button class="btn-primary" style="max-width:200px;" onclick="window.print()">🖨 Imprimer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════
+// DONNÉES
+// ══════════════════════════════════════════
+var ITEMS = [{"num": 1, "q": "Je ne suis pas du genre à me faire du souci", "reversed": true, "dim": "N1"}, {"num": 2, "q": "J'aime vraiment bien la plupart des gens que je rencontre", "reversed": false, "dim": "E1"}, {"num": 3, "q": "J'ai une imagination très active", "reversed": false, "dim": "O1"}, {"num": 4, "q": "J'ai tendance à être cynique et sceptique en ce qui concerne les intentions des autres", "reversed": true, "dim": "A1"}, {"num": 5, "q": "Je suis réputé pour ma prudence et mon bon sens", "reversed": false, "dim": "C1"}, {"num": 6, "q": "Je me mets souvent en colère à cause de la manière dont les gens me traitent", "reversed": false, "dim": "N2"}, {"num": 7, "q": "J'essaie d'éviter les foules", "reversed": true, "dim": "E2"}, {"num": 8, "q": "Les préoccupations esthétiques et artistiques ne sont pas très importantes pour moi", "reversed": true, "dim": "O2"}, {"num": 9, "q": "Je ne suis ni rusé(e) ni sournois(e)", "reversed": false, "dim": "A2"}, {"num": 10, "q": "Je préfère me garder des possibilités de choix plutôt que tout planifier à l'avance", "reversed": true, "dim": "C2"}, {"num": 11, "q": "Il est rare que je me sente trop seul(e) et cafardeux(se)", "reversed": true, "dim": "N3"}, {"num": 12, "q": "Je suis autoritaire, énergique et je n'hésite pas à m'affirmer", "reversed": false, "dim": "E3"}, {"num": 13, "q": "Sans émotions fortes, la vie serait sans intérêt pour moi", "reversed": false, "dim": "O3"}, {"num": 14, "q": "Certains trouvent que je suis égoïste et que je ne pense qu'à moi", "reversed": true, "dim": "A3"}, {"num": 15, "q": "J'essaie d'accomplir consciencieusement toutes les tâches qui me sont confiées", "reversed": false, "dim": "C3"}, {"num": 16, "q": "Quand j'ai affaire à d'autres personnes, je redoute toujours de faire une gaffe", "reversed": false, "dim": "N4"}, {"num": 17, "q": "Dans le travail et dans les loisirs, je prends tout mon temps", "reversed": true, "dim": "E4"}, {"num": 18, "q": "Je suis bien installé(e) dans mes habitudes", "reversed": true, "dim": "O4"}, {"num": 19, "q": "Je préférerais coopérer avec les autres plutôt que me mettre en compétition avec eux", "reversed": false, "dim": "A4"}, {"num": 20, "q": "Je suis nonchalant(e) et pas très ambitieux(se)", "reversed": true, "dim": "C4"}, {"num": 21, "q": "Je fais rarement des excès en quoi que ce soit.", "reversed": true, "dim": "N5"}, {"num": 22, "q": "J'ai souvent une forte envie de quelque chose qui romprait la monotonie", "reversed": false, "dim": "E5"}, {"num": 23, "q": "Je prends souvent plaisir à jouer avec des théories ou des idées abstraites", "reversed": false, "dim": "O5"}, {"num": 24, "q": "Cela ne me gêne pas de me vanter de mes talents et de ce que j'ai réalisé", "reversed": true, "dim": "A5"}, {"num": 25, "q": "J 'arrive assez bien à m'organiser pour faire les choses à temps", "reversed": false, "dim": "C5"}, {"num": 26, "q": "Je me sens souvent désespéré(e) et je voudrais que  quelqu'un d'autre résolve mes problèmes", "reversed": false, "dim": "N6"}, {"num": 27, "q": "Je n'ai jamais sauté de joie au sens littéral du terme", "reversed": true, "dim": "E6"}, {"num": 28, "q": "Je crois que laisser les étudiants écouter des orateurs controversés ne peut que les embrouiller et les égarer", "reversed": true, "dim": "O6"}, {"num": 29, "q": "Les dirigeants politiques doivent être plus attentifs à l'aspect humain de leur politique.", "reversed": false, "dim": "A6"}, {"num": 30, "q": "Au fil des années, j'ai fait un certain nombre e choses plutôt stupides.", "reversed": true, "dim": "C6"}, {"num": 31, "q": "Il est facile de me faire peur.", "reversed": false, "dim": "N1"}, {"num": 32, "q": "Je n'ai pas beaucoup de plaisir à bavarder avec les gens.", "reversed": true, "dim": "E1"}, {"num": 33, "q": "J'essaie de maintenir toutes mes pensées dans une direction réaliste et d'éviter les envolées de l'imagination", "reversed": true, "dim": "O1"}, {"num": 34, "q": "Je crois que la plupart des gens sont fondamentalement bien intentionnés", "reversed": false, "dim": "A1"}, {"num": 35, "q": "Je ne prends pas les devoirs civiques, comme le vote, très au sérieux", "reversed": true, "dim": "C1"}, {"num": 36, "q": "Je suis une personne d'humeur égale", "reversed": true, "dim": "N2"}, {"num": 37, "q": "J'aime avoir beaucoup de gens autour de moi", "reversed": false, "dim": "E2"}, {"num": 38, "q": "Il m'arrive quelquefois de m'absorber complètement dans la musique que j'écoute", "reversed": false, "dim": "O2"}, {"num": 39, "q": "Si c'est nécessaire, je suis disposé(e) à manipuler les gens pour obtenir ce que je veux.", "reversed": true, "dim": "A2"}, {"num": 40, "q": "Je maintiens mes affaire nettes et propres", "reversed": false, "dim": "C2"}, {"num": 41, "q": "Quelquefois, je me sens complètement sans valeur", "reversed": false, "dim": "N3"}, {"num": 42, "q": "Je ne m'affirme pas toujours autant que je devrais", "reversed": true, "dim": "E3"}, {"num": 43, "q": "J'éprouve rarement des émotions fortes", "reversed": true, "dim": "O3"}, {"num": 44, "q": "J'essaie d'être poli(e) avec chaque personne que je rencontre", "reversed": false, "dim": "A3"}, {"num": 45, "q": "Il m'arrive parfois de ne pas tenir mes engagements ou de ne pas assumer mes responsabilités comme je le devrais", "reversed": true, "dim": "C3"}, {"num": 46, "q": "Je me sens rarement mal à l'aise quand je suis avec des gens", "reversed": true, "dim": "N4"}, {"num": 47, "q": "Quand je fais quelque chose, je le fais avec énergie ", "reversed": false, "dim": "E4"}, {"num": 48, "q": "Je pense qu'il est intéressant d'apprendre de nouvelles activités de loisir et de s'y perfectionner", "reversed": false, "dim": "O4"}, {"num": 49, "q": "Je peux être sarcastique et cassant(e) si besoin est.", "reversed": true, "dim": "A4"}, {"num": 50, "q": "J'ai un ensemble bien défini d'objectifs et je travaille pour les atteindre de façon ordonnée", "reversed": false, "dim": "C4"}, {"num": 51, "q": "J'ai du mal à résister à mes désirs", "reversed": false, "dim": "N5"}, {"num": 52, "q": "Je n'aimerai pas passer mes vacances à Las Vegas", "reversed": true, "dim": "E5"}, {"num": 53, "q": "Je trouve les discussions philosophiques ennuyeuses", "reversed": true, "dim": "O5"}, {"num": 54, "q": "Je préfère ne pas parler de moi-même ni de ce que j'ai accompli", "reversed": false, "dim": "A5"}, {"num": 55, "q": "Je perds beaucoup de temps avant de me mettre au travail", "reversed": true, "dim": "C5"}, {"num": 56, "q": "Je me sens capable de faire face à la plupart de mes problèmes", "reversed": true, "dim": "N6"}, {"num": 57, "q": "J'ai quelquefois éprouvé une joie intense ou de l'extase", "reversed": false, "dim": "E6"}, {"num": 58, "q": "Je crois que les lois et les politiques sociales devraient changer pour refléter les besoins du monde qui change", "reversed": false, "dim": "O6"}, {"num": 59, "q": "J'ai la tête dure et je ne suis pas sentimental(e) dans mes attitudes", "reversed": true, "dim": "A6"}, {"num": 60, "q": "J'examine les choses en détail avant d'arriver à une décision", "reversed": false, "dim": "C6"}, {"num": 61, "q": "Il est rare que je me sente craintif(ve) ou anxieux(se)", "reversed": true, "dim": "N1"}, {"num": 62, "q": "J'ai la réputation d'être une personne chaleureuse et amicale", "reversed": false, "dim": "E1"}, {"num": 63, "q": "J'ai une vie imaginaire active", "reversed": false, "dim": "O1"}, {"num": 64, "q": "Je crois que la plupart des gens vont profiter de vous si vous les laissez faire.", "reversed": true, "dim": "A1"}, {"num": 65, "q": "Je me tiens au courant et je prends habituellement des décisions intelligentes", "reversed": false, "dim": "C1"}, {"num": 66, "q": "J'ai la réputation d'avoir le sang chaud et de me mettre facilement en colère", "reversed": false, "dim": "N2"}, {"num": 67, "q": "Je préfère habituellement faire les choses seul(e)", "reversed": true, "dim": "E2"}, {"num": 68, "q": "Assister à des spectacles de ballet ou de danse moderne m'ennuie", "reversed": true, "dim": "O2"}, {"num": 69, "q": "Je ne pourrais tromper personne, même si je le voulais", "reversed": false, "dim": "A2"}, {"num": 70, "q": "Je ne suis pas quelqu'un de très méthodique", "reversed": true, "dim": "C2"}, {"num": 71, "q": "Je suis rarement triste ou déprimé(e)", "reversed": true, "dim": "N3"}, {"num": 72, "q": "J'ai souvent dirigé les groupes auxquels j'ai appartenu", "reversed": false, "dim": "E3"}, {"num": 73, "q": "La manière dont je sens les choses est importante pour moi", "reversed": false, "dim": "O3"}, {"num": 74, "q": "Certains me trouvent froid(e) et calculateur(trice)", "reversed": true, "dim": "A3"}, {"num": 75, "q": "Je paie mes dettes rapidement et dans leur totalité", "reversed": false, "dim": "C3"}, {"num": 76, "q": "Certaines fois, j'ai eu tellement honte que j'aurais voulu me cacher", "reversed": false, "dim": "N4"}, {"num": 77, "q": "J'ai tendance à travailler lentement mais sûrement", "reversed": true, "dim": "E4"}, {"num": 78, "q": "Une fois que j'ai trouvé la bonne manière de faire quelque chose, je m'y tiens", "reversed": true, "dim": "O4"}, {"num": 79, "q": "J'hésite à exprimer ma colère, même quand elle est justifiée.", "reversed": false, "dim": "A4"}, {"num": 80, "q": "Quand je commence un programme d'amélioration personnelle ( faire de la gymnastique, faire une régime...), j'abandonne habituellement au bout de quelques jours.", "reversed": true, "dim": "C4"}, {"num": 81, "q": "J'ai peu de difficulté à résister à la tentation", "reversed": true, "dim": "N5"}, {"num": 82, "q": "Il m'est arrivé de faire des choses rien que pour l'excitation ou le frisson", "reversed": false, "dim": "E5"}, {"num": 83, "q": "Je prends plaisir à résoudre des problèmes ou des énigmes", "reversed": false, "dim": "O5"}, {"num": 84, "q": "Je suis meilleur(e) que la plupart des gens et je le sais.", "reversed": true, "dim": "A5"}, {"num": 85, "q": "Je suis quelqu'un d'efficace qui vient toujours à bout du travail", "reversed": false, "dim": "C5"}, {"num": 86, "q": "Quand je suis sous la pression de situations trop difficiles, j'ai quelques fois l'impression que je vais m’effondrer.", "reversed": false, "dim": "N6"}, {"num": 87, "q": "Je ne suis pas un(e) optimistes souriant(e).", "reversed": true, "dim": "E6"}, {"num": 88, "q": "Je crois que nous devrions nous tourner vers nos autorités religieuses pour les décisions concernant les questions morales.", "reversed": true, "dim": "O6"}, {"num": 89, "q": "On n'en fait jamais trop pour les pauvres et les personnes âgées", "reversed": false, "dim": "A6"}, {"num": 90, "q": "Il m'arrive à l'occasion d'agir d'abord et de réfléchir ensuite.", "reversed": true, "dim": "C6"}, {"num": 91, "q": "Je me sens souvent tendu(e) et nerveux(se)", "reversed": false, "dim": "N1"}, {"num": 92, "q": "Beaucoup de gens me trouvent assez froid(e) et distant(e)", "reversed": true, "dim": "E1"}, {"num": 93, "q": "Je n'aime pas perdre mon temps à rêvasser", "reversed": true, "dim": "O1"}, {"num": 94, "q": "Je pense que la plupart des gens auxquels j'ai affaire sont honnêtes et dignes de confiance", "reversed": false, "dim": "A1"}, {"num": 95, "q": "Je me mets souvent dans des situations sans y être complètement préparé(e)", "reversed": true, "dim": "C1"}, {"num": 96, "q": "On ne me considère pas comme une personne susceptible et ombrageuse", "reversed": true, "dim": "N2"}, {"num": 97, "q": "J'ai vraiment besoin des autres si je reste longtemps seul(e)", "reversed": false, "dim": "E2"}, {"num": 98, "q": "Je suis intrigué(e) par les formes et les motifs que je trouve dans l'art et dans la nature", "reversed": false, "dim": "O2"}, {"num": 99, "q": "Être parfaitement honnête est une mauvaise façon de faire des affaires.", "reversed": true, "dim": "A2"}, {"num": 100, "q": "J'aime bien garder chaque chose à sa place, comme cela je sais exactement où elle est", "reversed": false, "dim": "C2"}, {"num": 101, "q": "J'ai quelquefois éprouvé un sentiment profond de culpabilité ou de péché", "reversed": false, "dim": "N3"}, {"num": 102, "q": "Dans les réunions, je laisse d'habitudes les autres parler", "reversed": true, "dim": "E3"}, {"num": 103, "q": "Il est rare que j'accorde beaucoup d'attention à mes sentiments du moment", "reversed": true, "dim": "O3"}, {"num": 104, "q": "J'essaie en général d'être attentionné(e) et prévenant(e)", "reversed": false, "dim": "A3"}, {"num": 105, "q": "Il m'arrive de tricher quand je joue seul(e) (par exemple: quand je joue au solitaire, quand je fais des réussites...)", "reversed": true, "dim": "C3"}, {"num": 106, "q": "Ça ne me gène pas trop si les gens se moquent de moi ou me taquinent", "reversed": true, "dim": "N4"}, {"num": 107, "q": "J'ai souvent le sentiment de déborder d'énergie", "reversed": false, "dim": "E4"}, {"num": 108, "q": "J'essaie souvent des plats nouveaux et exotiques", "reversed": false, "dim": "O4"}, {"num": 109, "q": "Si je n'aime pas les gens, je le leur fais savoir", "reversed": true, "dim": "A4"}, {"num": 110, "q": "Je travaille dur pour atteindre mes objectifs", "reversed": false, "dim": "C4"}, {"num": 111, "q": "Quand je suis devant mes plats favoris, j'ai tendance à trop manger", "reversed": false, "dim": "N5"}, {"num": 112, "q": "J'ai tendance à éviter les films choquants ou effrayants", "reversed": true, "dim": "E5"}, {"num": 113, "q": "Je perds quelquefois tout intérêt quand les gens parlent de sujets très abstraits et théoriques", "reversed": true, "dim": "O5"}, {"num": 114, "q": "J'essaie d'être modeste", "reversed": false, "dim": "A5"}, {"num": 115, "q": "J'ai du mal à me forcer à faire ce que je devrais", "reversed": true, "dim": "C5"}, {"num": 116, "q": "Je garde la tête froide dans les situations d'urgence", "reversed": true, "dim": "N6"}, {"num": 117, "q": "Quelquefois, je déborde de bonheur", "reversed": false, "dim": "E6"}, {"num": 118, "q": "Je crois que les idées différentes du bon (bien, beau, vrai) et du mauvais (mal, laid, faux) que les gens ont dans d'autres sociétés peuvent être valables pour eux.", "reversed": false, "dim": "O6"}, {"num": 119, "q": "Je n'ai aucune sympathie pour les mendiants", "reversed": true, "dim": "A6"}, {"num": 120, "q": "Avant d'agir, je réfléchis toujours aux conséquences de mon action", "reversed": false, "dim": "C6"}, {"num": 121, "q": "Je ressens rarement de l'appréhension au sujet de l'avenir", "reversed": true, "dim": "N1"}, {"num": 122, "q": "Je prends réellement plaisir à parler avec les gens", "reversed": false, "dim": "E1"}, {"num": 123, "q": "Je prends plaisir à me concentrer sur une image intérieure ou une rêverie et à explorer toutes ses possibilités en les laissant croitre et se développer", "reversed": false, "dim": "O1"}, {"num": 124, "q": "Je suis méfiant(e) quand quelqu'un fait quelque chose de gentil pour moi", "reversed": true, "dim": "A1"}, {"num": 125, "q": "Je suis fier(e) de la sûreté de mon jugement", "reversed": false, "dim": "C1"}, {"num": 126, "q": "J'en arrive souvent ) être dégouté(e) par les gens auxquels je dois avoir affaire", "reversed": false, "dim": "N2"}, {"num": 127, "q": "Je préfère un travail qui me permet de travailler seul(e) sans être embêté(e) par les autres.", "reversed": true, "dim": "E2"}, {"num": 128, "q": "La poésie a peu ou pas d' effet sur moi", "reversed": true, "dim": "O2"}, {"num": 129, "q": "Je détesterais qu'on me prenne pour un(e) hypocrite", "reversed": false, "dim": "A2"}, {"num": 130, "q": "il me semble que je ne serai jamais capable de m'organiser", "reversed": true, "dim": "C2"}, {"num": 131, "q": "J'ai tendance à me faire des reproches quand quelque chose va de travers", "reversed": false, "dim": "N3"}, {"num": 132, "q": "Les autres se tournent souvent vers moi pour prendre des décisions", "reversed": false, "dim": "E3"}, {"num": 133, "q": "J'éprouve une grande variété d'émotions ou de sentiments", "reversed": false, "dim": "O3"}, {"num": 134, "q": "Je n'ai pas la réputation d'être généreux(se)", "reversed": true, "dim": "A3"}, {"num": 135, "q": "Quand je prends un engagement, on peut toujours compter sur moi pour aller jusqu'au bout", "reversed": false, "dim": "C3"}, {"num": 136, "q": "Je me sens souvent inférieur(e) aux autres", "reversed": false, "dim": "N4"}, {"num": 137, "q": "Je ne suis pas aussi rapide et dynamique que les autres", "reversed": true, "dim": "E4"}, {"num": 138, "q": "Je préfère passer mon temps dans un entourage familier", "reversed": true, "dim": "O4"}, {"num": 139, "q": "Quand on m'a insulté(e), j'essaie simplement de pardonner et d'oublier", "reversed": false, "dim": "A4"}, {"num": 140, "q": "Je ne ressens pas un besoin intense de promotion", "reversed": true, "dim": "C4"}, {"num": 141, "q": "Je m'abandonne rarement à mes impulsions", "reversed": true, "dim": "N5"}, {"num": 142, "q": "J'aime bien être là où il y a de l'action", "reversed": false, "dim": "E5"}, {"num": 143, "q": "Je prends plaisir à travailler sur des énigmes du genre « casse-tête » ou « sport cérébral »", "reversed": false, "dim": "O5"}, {"num": 144, "q": "J'ai une très haute opinion de moi-même", "reversed": true, "dim": "A5"}, {"num": 145, "q": "Une fois que je démarre un projet, je le termine presque toujours", "reversed": false, "dim": "C5"}, {"num": 146, "q": "Il est souvent difficile pour moi de prendre une décision", "reversed": false, "dim": "N6"}, {"num": 147, "q": "Je ne me trouve pas particulièrement insouciant(e) et gai(e)", "reversed": true, "dim": "E6"}, {"num": 148, "q": "Je crois que la fidélité à ses propres idéaux et principes est plus importante que « l'ouverture d'esprit »", "reversed": true, "dim": "O6"}, {"num": 149, "q": "Les besoins humains devraient toujours avoir la priorité sur les considérations économiques ", "reversed": false, "dim": "A6"}, {"num": 150, "q": "Je fais souvent des choses sur l'impulsion du moment", "reversed": true, "dim": "C6"}, {"num": 151, "q": "Je me fais souvent du souci à propos de choses qui pourraient mal tourner", "reversed": false, "dim": "N1"}, {"num": 152, "q": "Je trouve facile de sourire et d'être agréable avec des inconnus", "reversed": false, "dim": "E1"}, {"num": 153, "q": "Si je sens que mon esprit commence à dériver vers des rêveries, j'ai l'habitude de m'occuper et de me mettre à me concentrer sur un travail ou une activité", "reversed": true, "dim": "O1"}, {"num": 154, "q": "Ma première réaction est de faire confiance aux gens", "reversed": false, "dim": "A1"}, {"num": 155, "q": "Je n'ai pas l'impression de réussir complètement en quoi que ce soit", "reversed": true, "dim": "C1"}, {"num": 156, "q": "Il en faut beaucoup pour me rendre furieux(se)", "reversed": true, "dim": "N2"}, {"num": 157, "q": "Je préférerais des vacances sur une plage à la mode plutôt que dans une cabane isolée dans les bois", "reversed": false, "dim": "E2"}, {"num": 158, "q": "Certains genres de musique exercent sur moi une fascination sans fin", "reversed": false, "dim": "O2"}, {"num": 159, "q": "Parfois, j'utilise la ruse pour amener les gens à faire ce que je veux,", "reversed": true, "dim": "A2"}, {"num": 160, "q": "J'ai tendance à être quelque peu méticuleux(se) et exigeant(e)", "reversed": false, "dim": "C2"}, {"num": 161, "q": "J'ai une mauvaise opinion de moi-même", "reversed": false, "dim": "N3"}, {"num": 162, "q": "Je préfère suivre mon propre chemin plutôt que diriger les autres", "reversed": true, "dim": "E3"}, {"num": 163, "q": "Je remarque rarement les changements d'humeurs ou les sentiments que provoquent des environnements différents", "reversed": true, "dim": "O3"}, {"num": 164, "q": "La plupart des gens que je connais m'aiment bien", "reversed": false, "dim": "A3"}, {"num": 165, "q": "J'ai des principes moraux et j'y adhère strictement", "reversed": false, "dim": "C3"}, {"num": 166, "q": "Je me sens à l'aise en présence de mes patrons ou d'autres autorités", "reversed": true, "dim": "N4"}, {"num": 167, "q": "J'ai habituellement l'impression d'être pressé(e)", "reversed": false, "dim": "E4"}, {"num": 168, "q": "Je fais parfois des changements dans la maison, juste pour essayer quelque chose de différent", "reversed": false, "dim": "O4"}, {"num": 169, "q": "Si quelqu'un me provoque une bagarre, je suis prêt(e) à riposter", "reversed": true, "dim": "A4"}, {"num": 170, "q": "Je m'efforce de réussir ce que je peux", "reversed": false, "dim": "C4"}, {"num": 171, "q": "Je mange quelquefois à m'en rendre malade", "reversed": false, "dim": "N5"}, {"num": 172, "q": "J'adore le frisson qu'on ressent dans les montagnes russes", "reversed": false, "dim": "E5"}, {"num": 173, "q": "J'ai peu d'intérêt pour la réflexion sur la nature de l'univers ou sur la condition humaine", "reversed": true, "dim": "O5"}, {"num": 174, "q": "Je n'ai pas l'impression d'être meilleur(e) que les autres, quelle que soit leur situation", "reversed": false, "dim": "A5"}, {"num": 175, "q": "Quand un projet devient trop difficile, j'ai tendance à en démarrer un autre", "reversed": true, "dim": "C5"}, {"num": 176, "q": "Je me débrouille assez bien dans une situation de crise", "reversed": true, "dim": "N6"}, {"num": 177, "q": "Je suis une personne joyeuse et pleine de bonne humeur", "reversed": false, "dim": "E6"}, {"num": 178, "q": "Je me trouve large d'esprit et tolérant(e) pour les façons de vivre des autres", "reversed": false, "dim": "O6"}, {"num": 179, "q": "Je crois que tous les êtres humains sont dignes de respect", "reversed": false, "dim": "A6"}, {"num": 180, "q": "Il est rare que je prenne des décisions hâtives", "reversed": false, "dim": "C6"}, {"num": 181, "q": "J'ai moins de peurs que la plupart des gens", "reversed": true, "dim": "N1"}, {"num": 182, "q": "J'ai des liens affectifs forts avec mes amis", "reversed": false, "dim": "E1"}, {"num": 183, "q": "Quand j'étais enfant, il était rare que je prenne plaisir à « jouer à faire semblant »", "reversed": true, "dim": "O1"}, {"num": 184, "q": "J'ai tendance à supposer le meilleur chez les gens", "reversed": false, "dim": "A1"}, {"num": 185, "q": "Je suis quelqu'un de très compétent", "reversed": false, "dim": "C1"}, {"num": 186, "q": "Il m'est parfois arrivé d'être amer(ère) et plein(e) de ressentiment", "reversed": false, "dim": "N2"}, {"num": 187, "q": "Habituellement, les réunions qui rassemblent un grand nombre de personnes m'ennuient", "reversed": true, "dim": "E2"}, {"num": 188, "q": "Quelquefois, quand je lis de la poésie ou quand je regarde une œuvre d'art, je ressens un frisson ou j'ai la chair de poule", "reversed": false, "dim": "O2"}, {"num": 189, "q": "Il m'arrive de faire faire aux gens ce que je veux en les menaçant ou en les flattant", "reversed": true, "dim": "A2"}, {"num": 190, "q": "Je ne suis pas un(e) maniaque du nettoyage", "reversed": true, "dim": "C2"}, {"num": 191, "q": "Quelquefois, les choses me semblent plutôt mornes et sans espoir", "reversed": false, "dim": "N3"}, {"num": 192, "q": "Dans les conversations, j'ai tendance à parler plus que les autres", "reversed": false, "dim": "E3"}, {"num": 193, "q": "Je trouve facile d'avoir de l'empathie, c'est-à-dire de ressentir moi-même ce que les autres ressentent", "reversed": false, "dim": "O3"}, {"num": 194, "q": "Je me considère comme une personne charitable ", "reversed": false, "dim": "A3"}, {"num": 195, "q": "Ce que je fais, j'essaie de le faire soigneusement, comme ça il n'y a pas à le refaire", "reversed": false, "dim": "C3"}, {"num": 196, "q": "Si j'ai dit ou fait quelque chose de mal à quelqu'un, je peux à peine supporter de le regarder en face à nouveau", "reversed": false, "dim": "N4"}, {"num": 197, "q": "Mon rythme de vie est rapide", "reversed": false, "dim": "E4"}, {"num": 198, "q": "En vacances, je préfère retourner dans un endroit que je connais bien plutôt qu'aller dans un nouvel endroit", "reversed": true, "dim": "O4"}, {"num": 199, "q": "Je suis dur(e) et inflexible", "reversed": true, "dim": "A4"}, {"num": 200, "q": "Je m'efforce à l'excellence dans tout ce que je fais", "reversed": false, "dim": "C4"}, {"num": 201, "q": "Quelquefois, je fais sur une impulsion des choses que je regrette par la suite", "reversed": false, "dim": "N5"}, {"num": 202, "q": "Je suis attiré(e) par les couleurs vives et les styles voyants", "reversed": false, "dim": "E5"}, {"num": 203, "q": "J'ai beaucoup de curiosité intellectuelle", "reversed": false, "dim": "O5"}, {"num": 204, "q": "J'aime mieux faire l'éloge des autres plutôt que recevoir moi même des éloges", "reversed": false, "dim": "A5"}, {"num": 205, "q": "Il y a tant de petits travaux qu'il faudrait faire que parfois, tout simplement, je les ignore tous", "reversed": true, "dim": "C5"}, {"num": 206, "q": "Quand tout a l'air d'aller de travers, je reste capable de prendre les bonnes décisions", "reversed": true, "dim": "N6"}, {"num": 207, "q": "J'emploie rarement des mots tels que « fantastique » ou « sensationnel » pour décrire ce qui m'est arrivé", "reversed": true, "dim": "E6"}, {"num": 208, "q": "Je pense que si les gens ne savent à quoi ils croient quand ils ont 25 ans, il y a quelque chose qui ne tourne pas rond chez eux", "reversed": true, "dim": "O6"}, {"num": 209, "q": "J'ai de la compassion pour ceux qui ont moins de chance que moi", "reversed": false, "dim": "A6"}, {"num": 210, "q": "Quand je pars en voyage, je prépare à l'avance un programme minutieux", "reversed": false, "dim": "C6"}, {"num": 211, "q": "Des pensées effrayantes s'introduisent quelquefois dans ma tête", "reversed": false, "dim": "N1"}, {"num": 212, "q": "Je m'intéresse vraiment aux gens avec lesquels je travaille", "reversed": false, "dim": "E1"}, {"num": 213, "q": "J'aurais du mal à laisser simplement mon esprit vagabonder sans contrôle ni direction", "reversed": true, "dim": "E2"}, {"num": 214, "q": "J'ai une grande confiance dans la nature humaine", "reversed": false, "dim": "A1"}, {"num": 215, "q": "Je suis efficace et productif(ve) dans mon travail", "reversed": false, "dim": "C1"}, {"num": 216, "q": "Pour moi, même des petites contrariétés peuvent être irritantes", "reversed": false, "dim": "N2"}, {"num": 217, "q": "J'aime les « fêtes » avec plein de gens", "reversed": false, "dim": "?"}, {"num": 218, "q": "J'aime lire de la poésie qui met l'accent sur les sentiments et les images plutôt que sur le déroulement de l'histoire", "reversed": false, "dim": "O2"}, {"num": 219, "q": "Je suis fière de l'habileté avec laquelle je manipule les gens", "reversed": true, "dim": "A2"}, {"num": 220, "q": "Je passe beaucoup de temps à chercher des choses que j'ai mal rangées", "reversed": true, "dim": "C2"}, {"num": 221, "q": "Trop souvent, quand les choses vont mal, je me décourage et j'ai envie d'abandonner", "reversed": false, "dim": "N3"}, {"num": 222, "q": "Je ne trouve pas facile de prendre une situation en main", "reversed": true, "dim": "E3"}, {"num": 223, "q": "Des choses étranges -comme certains parfums ou des noms d'endroits lointains- peuvent provoquer en moi des émotions puissantes", "reversed": false, "dim": "O3"}, {"num": 224, "q": "Si je peux, je fais un effort pour aider les autres", "reversed": false, "dim": "A3"}, {"num": 225, "q": "Il faudrait réellement que je sois malade pour manquer une journée de travailler", "reversed": false, "dim": "C3"}, {"num": 226, "q": "Quand des gens que je connais font des choses idiotes, j'en suis gêné(e) pour eux", "reversed": false, "dim": "N4"}, {"num": 227, "q": "Je suis une personne très active", "reversed": false, "dim": "E4"}, {"num": 228, "q": "Je prends toujours le même chemin quand je vais quelque part", "reversed": true, "dim": "O4"}, {"num": 229, "q": "Je m'engage souvent dans des disputes avec ma famille ou mes collègues de travail", "reversed": true, "dim": "A4"}, {"num": 230, "q": "Je consacre trop de temps au travail en négligeant la famille, les amis et les loisirs", "reversed": false, "dim": "C4"}, {"num": 231, "q": "Je suis toujours capable de garder le contrôle de mes sentiments", "reversed": true, "dim": "N5"}, {"num": 232, "q": "J'aime bien faire partie de la foule dans les manifestations sportives", "reversed": false, "dim": "E5"}, {"num": 233, "q": "J'aie une grande variété d'intérêts intellectuels", "reversed": false, "dim": "O5"}, {"num": 234, "q": "Je suis quelqu'un de supérieur", "reversed": true, "dim": "A5"}, {"num": 235, "q": "J'ai beaucoup d'autodiscipline", "reversed": false, "dim": "C5"}, {"num": 236, "q": "Je suis assez stable émotionnellement", "reversed": true, "dim": "N6"}, {"num": 237, "q": "Je ris facilement", "reversed": false, "dim": "E6"}, {"num": 238, "q": "Je crois que la « nouvelle morale » à base de permissivité n'est pas du tout une morale", "reversed": true, "dim": "O6"}, {"num": 239, "q": "Je préférerais avoir de la réputation de pardonner plutôt que celle d'être juste", "reversed": false, "dim": "A6"}, {"num": 240, "q": "Avant de répondre à une question, j'y réfléchis à deux fois", "reversed": false, "dim": "C6"}];
+
+var DOMAINS = {
+  N: { label: 'Névrosisme',   color: '#7a6b9e', facets: ['N1','N2','N3','N4','N5','N6'] },
+  E: { label: 'Extraversion', color: '#7a9e8e', facets: ['E1','E2','E3','E4','E5','E6'] },
+  O: { label: 'Ouverture',    color: '#9e8a5a', facets: ['O1','O2','O3','O4','O5','O6'] },
+  A: { label: 'Agréabilité',  color: '#c4817a', facets: ['A1','A2','A3','A4','A5','A6'] },
+  C: { label: 'Conscience',   color: '#5a7a9e', facets: ['C1','C2','C3','C4','C5','C6'] }
+};
+
+var FACETS = {
+  N1:'Anxiété', N2:'Colère/Hostilité', N3:'Dépression', N4:'Timidité sociale', N5:'Impulsivité', N6:'Vulnérabilité',
+  E1:'Chaleur', E2:'Grégarité', E3:'Assertivité', E4:'Activité', E5:'Rech. sensations', E6:'Émotions positives',
+  O1:'Rêveries', O2:'Esthétique', O3:'Sentiments', O4:'Actions', O5:'Idées', O6:'Valeurs',
+  A1:'Confiance', A2:'Droiture', A3:'Altruisme', A4:'Compliance', A5:'Modestie', A6:'Sensibilité',
+  C1:'Compétence', C2:'Ordre', C3:'Sens du devoir', C4:'Rech. réussite', C5:'Autodiscipline', C6:'Délibération'
+};
+
+var OPT_ICONS  = ['✗✗', '✗', '○', '✓', '✓✓'];
+var OPT_LABELS = ['Fortement en désaccord', 'Désaccord', 'Neutre', 'Accord', "Fortement d'accord"];
+
+// ══════════════════════════════════════════
+// ÉTAT
+// ══════════════════════════════════════════
+var cur = 0;
+var answers = new Array(240).fill(null);
+var candidateName = '';
+
+// ══════════════════════════════════════════
+// UTILITAIRES
+// ══════════════════════════════════════════
+function showScreen(id) {
+  var screens = document.querySelectorAll('.screen');
+  for (var i = 0; i < screens.length; i++) screens[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+}
+
+// ══════════════════════════════════════════
+// INTRO
+// ══════════════════════════════════════════
+function doStart() {
+  var inp = document.getElementById('inp-name');
+  var err = document.getElementById('name-error');
+  var name = inp.value.trim();
+  if (!name) {
+    inp.classList.add('input-error');
+    err.style.display = 'block';
+    inp.focus();
+    return;
+  }
+  inp.classList.remove('input-error');
+  err.style.display = 'none';
+  candidateName = name;
+  showScreen('s-questions');
+  renderQ(0);
+}
+
+// Permettre Entrée pour démarrer
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('inp-name').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doStart();
+  });
+});
+
+// ══════════════════════════════════════════
+// QUESTIONS
+// ══════════════════════════════════════════
+function renderQ(idx) {
+  cur = idx;
+  var item = ITEMS[idx];
+
+  document.getElementById('q-num').innerHTML = (idx + 1) + ' <small>/ 240</small>';
+  document.getElementById('q-facet').textContent = FACETS[item.dim] || item.dim;
+  document.getElementById('q-text').textContent = item.q;
+
+  var container = document.getElementById('q-options');
+  container.innerHTML = '';
+  for (var v = 0; v < 5; v++) {
+    var btn = document.createElement('button');
+    btn.className = 'opt' + (answers[idx] === v ? ' sel' : '');
+    btn.setAttribute('data-v', v);
+    btn.innerHTML =
+      '<div class="opt-icon">' + OPT_ICONS[v] + '</div>' +
+      '<div class="opt-lbl">' + OPT_LABELS[v] + '</div>';
+    btn.onclick = (function(val) {
+      return function() { pick(val); };
+    })(v);
+    container.appendChild(btn);
+  }
+
+  document.getElementById('btn-prev').disabled = (idx === 0);
+  var btnNext = document.getElementById('btn-next');
+  btnNext.textContent = (idx === 239) ? 'Terminer ✓' : 'Suivant →';
+
+  var done = 0;
+  for (var i = 0; i < answers.length; i++) if (answers[i] !== null) done++;
+  var pct = Math.round(done / 240 * 100);
+  document.getElementById('prog-bar').style.width = pct + '%';
+  document.getElementById('prog-label').textContent = done + ' / 240';
+}
+
+function pick(v) {
+  answers[cur] = v;
+  renderQ(cur);
+}
+
+function goNext() {
+  if (cur === 239) { doFinish(); return; }
+  renderQ(cur + 1);
+}
+
+function goPrev() {
+  if (cur > 0) renderQ(cur - 1);
+}
+
+// ══════════════════════════════════════════
+// FIN DU TEST
+// ══════════════════════════════════════════
+function doFinish() {
+  showScreen('s-done');
+  document.getElementById('prog-bar').style.width = '100%';
+  document.getElementById('prog-label').textContent = '240 / 240';
+  var dt = document.getElementById('done-title');
+  if (candidateName) dt.textContent = 'Merci, ' + candidateName + ' !';
+  // bouton consultant intégré dans l'écran
+}
+
+// ══════════════════════════════════════════
+// ENVOI MAIL COMPLET
+// ══════════════════════════════════════════
+function niv(sc) {
+  return sc <= 6 ? 'Très faible' : sc <= 12 ? 'Faible' : sc <= 20 ? 'Moyen' : sc <= 26 ? 'Élevé' : 'Très élevé';
+}
+
+function barASCII(sc, max, width) {
+  var filled = Math.round(sc / max * width);
+  var bar = '';
+  for (var i = 0; i < width; i++) bar += (i < filled) ? '█' : '░';
+  return bar;
+}
+
+function doSend() {
+  var scores = calcScores();
+  var fs = scores.facets;
+  var ds = scores.domains;
+  var now = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+  var LINE = '================================================\r\n';
+  var line = '------------------------------------------------\r\n';
+
+  var body = LINE;
+  body += '  NEO PI-R — RÉSULTATS COMPLETS\r\n';
+  body += LINE;
+  body += '  Candidat : ' + candidateName + '\r\n';
+  body += '  Date     : ' + now + '\r\n';
+  body += LINE + '\r\n';
+
+  // ── BLOC 1 : VUE D'ENSEMBLE DES 5 DOMAINES ──
+  body += '>>> VUE D\'ENSEMBLE — 5 GRANDS DOMAINES\r\n' + line;
+  var dkeys = Object.keys(DOMAINS);
+  for (var di = 0; di < dkeys.length; di++) {
+    var dk = dkeys[di];
+    var dom = DOMAINS[dk];
+    var tot = ds[dk];
+    var bar = barASCII(tot, 192, 20);
+    var label = (dom.label + '          ').substring(0, 14);
+    body += '  ' + label + ' ' + bar + '  ' + tot + '/192  [' + niv(tot) + ']\r\n';
+  }
+  body += '\r\n';
+
+  // ── BLOC 2 : DÉTAIL PAR DOMAINE ──
+  body += '>>> DÉTAIL DES 30 FACETTES\r\n';
+  for (var di = 0; di < dkeys.length; di++) {
+    var dk = dkeys[di];
+    var dom = DOMAINS[dk];
+    body += line;
+    body += '  ' + dom.label.toUpperCase() + '  —  Score global : ' + ds[dk] + ' / 192  [' + niv(ds[dk]) + ']\r\n' + line;
+    var flist = dom.facets;
+    for (var fi = 0; fi < flist.length; fi++) {
+      var f = flist[fi];
+      var sc = fs[f];
+      var bar = barASCII(sc, 32, 16);
+      var fname = (FACETS[f] + '                  ').substring(0, 20);
+      body += '  ' + fname + ' ' + bar + '  ' + sc + '/32  [' + niv(sc) + ']\r\n';
+    }
+    body += '\r\n';
+  }
+
+  body += LINE;
+  body += '  Document généré par NEO PI-R — Attribut Conseils\r\n';
+  body += LINE;
+
+  var subj = encodeURIComponent('NEO PI-R — ' + candidateName + ' — ' + now);
+  var bod  = encodeURIComponent(body);
+  window.location.href = 'mailto:?subject=' + subj + '&body=' + bod;
+
+  setTimeout(function() {
+    document.getElementById('send-confirm').style.display = 'block';
+    var b = document.getElementById('btn-send');
+    b.innerHTML = '&#10003;&nbsp; Messagerie ouverte — cliquez Envoyer';
+    b.style.background = '#7a9e8e';
+    b.disabled = true;
+  }, 900);
+}
+
+// ══════════════════════════════════════════
+// CALCUL SCORES
+// ══════════════════════════════════════════
+function calcScores() {
+  var fs = {};
+  var fkeys = Object.keys(FACETS);
+  for (var i = 0; i < fkeys.length; i++) fs[fkeys[i]] = 0;
+
+  for (var i = 0; i < ITEMS.length; i++) {
+    var item = ITEMS[i];
+    var ans = answers[i];
+    if (ans === null) continue;
+    var sc = item.reversed ? (4 - ans) : ans;
+    if (fs[item.dim] !== undefined) fs[item.dim] += sc;
+  }
+
+  var ds = {};
+  var dkeys = Object.keys(DOMAINS);
+  for (var i = 0; i < dkeys.length; i++) {
+    var dk = dkeys[i];
+    var total = 0;
+    var flist = DOMAINS[dk].facets;
+    for (var j = 0; j < flist.length; j++) total += fs[flist[j]];
+    ds[dk] = total;
+  }
+  return { facets: fs, domains: ds };
+}
+
+// ══════════════════════════════════════════
+// PANEL CONSULTANT
+// ══════════════════════════════════════════
+function openPanel() {
+  var scores = calcScores();
+  var fs = scores.facets;
+  var ds = scores.domains;
+
+  // RECAP 5 DOMAINES en haut
+  var recap = document.getElementById('recap-domains');
+  recap.innerHTML = '';
+  var dkeys2 = Object.keys(DOMAINS);
+  for (var ri = 0; ri < dkeys2.length; ri++) {
+    var rk = dkeys2[ri];
+    var rdom = DOMAINS[rk];
+    var rtot = ds[rk];
+    var rpct = Math.round(rtot / 192 * 100);
+    var div = document.createElement('div');
+    div.style.cssText = 'flex:1;min-width:120px;background:#f8f6f1;border-radius:6px;overflow:hidden;border-top:4px solid ' + rdom.color;
+    div.innerHTML =
+      '<div style="padding:12px 16px;">' +
+      '<div style="font-size:11px;font-weight:bold;letter-spacing:0.1em;text-transform:uppercase;color:' + rdom.color + ';margin-bottom:6px;font-family:Arial,sans-serif;">' + rdom.label + '</div>' +
+      '<div style="font-size:34px;font-weight:normal;font-family:Georgia,serif;color:#1a1a2e;line-height:1;">' + rtot + '</div>' +
+      '<div style="font-size:11px;color:#9a9ab0;font-family:Arial,sans-serif;margin-bottom:8px;">/ 192</div>' +
+      '<div style="height:5px;background:#ede9e0;border-radius:3px;"><div style="height:5px;width:' + rpct + '%;background:' + rdom.color + ';border-radius:3px;transition:width 0.4s;"></div></div>' +
+      '</div>';
+    recap.appendChild(div);
+  }
+
+  document.getElementById('panel-title').textContent =
+    candidateName ? 'Profil de ' + candidateName : 'Feuille de profil — Usage interne';
+
+  // Domaines
+  var grid = document.getElementById('domains-grid');
+  grid.innerHTML = '';
+  var dkeys = Object.keys(DOMAINS);
+  for (var di = 0; di < dkeys.length; di++) {
+    var dk = dkeys[di];
+    var dom = DOMAINS[dk];
+    var rows = '';
+    for (var fi = 0; fi < dom.facets.length; fi++) {
+      var f = dom.facets[fi];
+      var sc = fs[f];
+      var pct = Math.round(sc / 32 * 100);
+      rows += '<div class="d-row"><span class="d-row-name">' + FACETS[f] + '</span>' +
+        '<div class="d-row-bar"><div class="d-row-fill" style="width:' + pct + '%;background:' + dom.color + ';height:3px;border-radius:2px;"></div></div>' +
+        '<span class="d-row-score">' + sc + '</span></div>';
+    }
+    var block = document.createElement('div');
+    block.className = 'd-block';
+    block.innerHTML =
+      '<div class="d-head" style="background:' + dom.color + '">' + dom.label + '</div>' +
+      '<div class="d-total">' + ds[dk] + ' <span>/ 192</span></div>' +
+      '<div class="d-facets">' + rows + '</div>';
+    grid.appendChild(block);
+  }
+
+  // Table profil
+  var tbl = document.getElementById('profile-table');
+  var html = '<thead><tr><th class="lbl">Facette</th><th>Score</th>';
+  for (var n = 0; n <= 32; n += 2) html += '<th>' + (n || '') + '</th>';
+  html += '<th>Niveau</th></tr></thead><tbody>';
+
+  for (var di = 0; di < dkeys.length; di++) {
+    var dk = dkeys[di];
+    var dom = DOMAINS[dk];
+    html += '<tr class="dom-row"><td colspan="20" style="color:' + dom.color + '">' + dom.label.toUpperCase() + '</td></tr>';
+    for (var fi = 0; fi < dom.facets.length; fi++) {
+      var f = dom.facets[fi];
+      var sc = fs[f];
+      var niv = sc <= 6 ? 'Très faible' : sc <= 12 ? 'Faible' : sc <= 20 ? 'Moyen' : sc <= 26 ? 'Élevé' : 'Très élevé';
+      var cells = 17;
+      var filled = Math.round(sc / 32 * cells);
+      html += '<tr><td class="lbl">' + FACETS[f] + '</td><td style="font-weight:bold">' + sc + '</td>';
+      for (var ci = 0; ci < cells; ci++) {
+        if (ci === filled - 1 && filled > 0) {
+          html += '<td><div style="width:15px;height:15px;border-radius:50%;background:' + dom.color + ';margin:auto;display:flex;align-items:center;justify-content:center;font-size:8px;color:white;font-weight:bold">' + sc + '</div></td>';
+        } else if (ci < filled) {
+          html += '<td><div style="width:14px;height:3px;background:' + dom.color + ';opacity:0.3;margin:auto;border-radius:2px"></div></td>';
+        } else {
+          html += '<td><div style="width:14px;height:3px;background:#ede9e0;margin:auto;border-radius:2px"></div></td>';
+        }
+      }
+      html += '<td style="font-size:10px;font-weight:bold;color:' + dom.color + ';white-space:nowrap">' + niv + '</td></tr>';
+    }
+  }
+  html += '</tbody>';
+  tbl.innerHTML = html;
+
+  document.getElementById('panel').classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+}
+</script>
+</body>
+</html>

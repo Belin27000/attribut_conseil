@@ -369,7 +369,7 @@ const Fontainebleau = () => {
       <GoogleWidget />
       <TelButton number="06 98 88 15 55" />
       <div className="Qualiopi_stats">
-        <DownloadFile file={[allFiles.vae()[1]]} dot={false} />
+        <DownloadFile file={[allFiles.fileList()[1]]} dot={false} />
       </div>
       <Questions tag="all" ville="Fontainebleau" />
       <Dday />

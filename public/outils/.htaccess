@@ -1,0 +1,13 @@
+Options -Indexes
+
+RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Aliases matching legacy React private routes
+RewriteRule ^360/?$ v6360_traits_personnalite.html [L,NC]
+RewriteRule ^360pro/?$ 360_competences_professionnel.html [L,NC]
+RewriteRule ^neo/?$ neopir3.html [L,NC]
+RewriteRule ^mbti/?$ mbti_attribut_conseils%20(2).html [L,NC]
+RewriteRule ^valeursetcroyances/?$ valeurs-croyances.html [L,NC]
+RewriteRule ^courbe-de-satisfaction/?$ courbe_de_satisfaction_attribut.html [L,NC]

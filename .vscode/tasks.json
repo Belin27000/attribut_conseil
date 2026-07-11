@@ -1,0 +1,23 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "compare-html-files",
+      "type": "shell",
+      "command": "sh",
+      "args": [
+        "-c",
+        "repo=\"/Users/yann/FromNas/Projet_Web/Attribut_conseils/attribut_conseil_react\"; pairs='src/test/v2360_traits_personnalite (1).html|public/v6360_traits_personnalite.html\nsrc/test/360_competences_professionnel.html|public/360_competences_professionnel.html\nsrc/test/NEOPIR3_Attribut_Conseils 090626.html|public/neopir3.html\nsrc/test/valeurs-croyances (4).html|public/valeurs-croyances.html'; echo \"$pairs\" | while IFS='|' read -r left right; do l=\"$repo/$left\"; r=\"$repo/$right\"; if [ ! -f \"$l\" ] || [ ! -f \"$r\" ]; then echo \"MISSING|$left|$right\"; continue; fi; if cmp -s \"$l\" \"$r\"; then st='IDENTIQUES'; else st='DIFFERENTS'; fi; lsum=$(shasum -a 256 \"$l\" | awk '{print $1}'); rsum=$(shasum -a 256 \"$r\" | awk '{print $1}'); echo \"$st|$left|$right|$lsum|$rsum\"; done"
+      ]
+    },
+    {
+      "label": "compare-html-files-2",
+      "type": "shell",
+      "command": "sh",
+      "args": [
+        "-c",
+        "repo=\"/Users/yann/FromNas/Projet_Web/Attribut_conseils/attribut_conseil_react\"; compare(){ left=\"$1\"; right=\"$2\"; l=\"$repo/$left\"; r=\"$repo/$right\"; if [ ! -f \"$l\" ] || [ ! -f \"$r\" ]; then echo \"MISSING|$left|$right\"; return; fi; if cmp -s \"$l\" \"$r\"; then st=\"IDENTIQUES\"; else st=\"DIFFERENTS\"; fi; lsum=$(shasum -a 256 \"$l\" | awk '{print $1}'); rsum=$(shasum -a 256 \"$r\" | awk '{print $1}'); echo \"$st|$left|$right|$lsum|$rsum\"; }; compare \"src/test/v2360_traits_personnalite (1).html\" \"public/v6360_traits_personnalite.html\"; compare \"src/test/360_competences_professionnel.html\" \"public/360_competences_professionnel.html\"; compare \"src/test/NEOPIR3_Attribut_Conseils 090626.html\" \"public/neopir3.html\"; compare \"src/test/valeurs-croyances (4).html\" \"public/valeurs-croyances.html\";"
+      ]
+    }
+  ]
+}

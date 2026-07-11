@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Évaluation 360° — Traits de personnalité</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f7f6f3;color:#1a1a1a;font-size:15px;line-height:1.6}
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+
+.logo-bar{display:flex;align-items:center;gap:10px}
+.logo-dot{width:9px;height:9px;border-radius:50%;background:#2563a8}
+.logo-name{font-size:12px;font-weight:700;letter-spacing:.14em;color:#2563a8;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .15s;font-family:inherit}
+.btn-primary{background:#2563a8;color:#fff}
+.btn-primary:hover{background:#1d4f8a}
+.btn-primary:disabled{background:#b0c4de;cursor:not-allowed}
+.warn-box{font-size:13px;color:#b45309;background:#fef9ee;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:none}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:#999;cursor:pointer;margin-bottom:28px;background:none;border:none;padding:0;font-family:inherit}
+.nav-back:hover{color:#1a1a1a}
+
+/* ACCUEIL */
+.welcome{max-width:600px;margin:0 auto;padding:60px 24px}
+.welcome .logo-bar{margin-bottom:48px}
+.welcome h1{font-size:30px;font-weight:300;margin-bottom:10px;line-height:1.3}
+.welcome h1 strong{font-weight:700}
+.welcome .subtitle{font-size:15px;color:#666;margin-bottom:36px;line-height:1.75}
+.card{background:#fff;border-radius:12px;padding:28px 32px;margin-bottom:16px;border:1px solid #e8e8e4}
+.instr-item{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+.instr-item:last-child{margin-bottom:0}
+.instr-num{width:26px;height:26px;border-radius:50%;background:#eef3fb;color:#2563a8;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.instr-num.alt{background:#fef9ee;color:#b45309}
+.instr-text{font-size:14px;color:#555;line-height:1.65}
+.instr-text strong{color:#1a1a1a}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;color:#999;text-transform:uppercase;margin-bottom:7px}
+.field input,.field select{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;color:#1a1a1a;background:#fff;outline:none;transition:border-color .15s;font-family:inherit}
+.field input:focus,.field select:focus{border-color:#2563a8}
+
+/* ÉTAPE 1 : SÉLECTION */
+.select-wrap{max-width:780px;margin:0 auto;padding:32px 24px 80px}
+.sticky-bar{position:sticky;top:0;z-index:20;background:rgba(247,246,243,.97);backdrop-filter:blur(4px);border-bottom:1px solid #e8e8e4;padding:12px 0;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.counter-val{font-size:22px;font-weight:700;color:#2563a8;margin:0 2px}
+.counter-sub{font-size:13px;color:#bbb}
+.counter-label{font-size:13px;color:#888}
+.progress-bar{height:5px;background:#e8e8e4;border-radius:3px;overflow:hidden;width:160px}
+.progress-fill{height:5px;background:#2563a8;border-radius:3px;transition:width .2s}
+
+/* Grille des traits */
+.traits-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:24px}
+.trait-chip{border:1.5px solid #e8e8e4;border-radius:8px;background:#fff;padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .12s;user-select:none}
+.trait-chip:hover{border-color:#93b4d6;background:#f5f9ff}
+.trait-chip.sel{border-color:#2563a8;background:#eef3fb;border-width:2px}
+.trait-chip.sel .chk{background:#2563a8;border-color:#2563a8}
+.trait-chip.sel .chk svg{display:block}
+.trait-chip.locked:not(.sel){opacity:.4;cursor:not-allowed;pointer-events:none}
+.chk{width:18px;height:18px;border:1.5px solid #ccc;border-radius:4px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s}
+.chk svg{display:none}
+.trait-label{font-size:13px;font-weight:500;color:#1a1a1a;line-height:1.3}
+
+/* ÉTAPE 2 : COMMENTAIRES */
+.comment-wrap{max-width:720px;margin:0 auto;padding:32px 24px 80px}
+.step2-header{background:#fff;border:1px solid #e8e8e4;border-radius:12px;padding:20px 24px;margin-bottom:24px}
+.step2-header h2{font-size:17px;font-weight:600;margin-bottom:4px}
+.step2-header p{font-size:13px;color:#888;line-height:1.6}
+
+.comment-card{background:#fff;border:1px solid #e8e8e4;border-radius:10px;padding:20px 22px;margin-bottom:12px;transition:border-color .15s}
+.comment-card.incomplete{border-color:#e07b00;border-width:1.5px}
+.comment-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.comment-num{width:26px;height:26px;border-radius:50%;background:#eef3fb;color:#2563a8;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.comment-card.incomplete .comment-num{background:#fef2e0;color:#e07b00}
+.comment-trait-name{font-size:16px;font-weight:600;color:#1a1a1a}
+.comment-hint{font-size:13px;color:#aaa;background:#f7f6f3;border-radius:6px;padding:8px 12px;margin-bottom:10px;line-height:1.55;font-style:italic}
+.comment-card.incomplete .comment-hint{background:#fef9ee;color:#b45309}
+.comment-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#bbb;margin-bottom:5px}
+.comment-card.incomplete .comment-label{color:#e07b00}
+.comment-card textarea{width:100%;border:1px solid #e0e0e0;border-radius:7px;padding:10px 12px;font-size:13px;color:#1a1a1a;background:#fafaf8;resize:vertical;min-height:72px;line-height:1.6;font-family:inherit;outline:none;transition:border-color .15s}
+.comment-card textarea:focus{border-color:#2563a8;background:#fff}
+.comment-card.incomplete textarea{border-color:#f0a060}
+.missing-msg{font-size:12px;color:#e07b00;margin-top:6px;display:none}
+.comment-card.incomplete .missing-msg{display:block}
+
+/* ENVOI */
+.send-wrap{max-width:560px;margin:0 auto;padding:60px 24px}
+.send-wrap h2{font-size:22px;font-weight:600;margin-bottom:8px}
+.send-desc{font-size:14px;color:#666;line-height:1.75;margin-bottom:28px}
+.summary-chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:24px}
+.chip{background:#eef3fb;color:#1d4f8a;border-radius:20px;padding:5px 13px;font-size:13px;font-weight:500}
+.send-field{margin-bottom:20px}
+.send-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;color:#999;text-transform:uppercase;margin-bottom:7px}
+.send-field input{width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;color:#1a1a1a;outline:none;transition:border-color .15s;font-family:inherit}
+.send-field input:focus{border-color:#2563a8}
+
+/* MERCI */
+.thanks-wrap{max-width:520px;margin:0 auto;padding:80px 24px;text-align:center}
+.thanks-icon{width:72px;height:72px;border-radius:50%;background:#eef3fb;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:32px}
+.thanks-wrap h2{font-size:24px;font-weight:600;margin-bottom:10px}
+.thanks-wrap p{font-size:15px;color:#666;line-height:1.75;margin-bottom:6px}
+
+@media(max-width:600px){
+  .traits-grid{grid-template-columns:repeat(2,1fr)}
+  .field-row{grid-template-columns:1fr}
+  .welcome,.select-wrap,.comment-wrap,.send-wrap,.thanks-wrap{padding-left:16px;padding-right:16px}
+}
+@media(max-width:380px){
+  .traits-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ÉCRAN 1 : ACCUEIL -->
+<div id="screen-welcome" class="screen active">
+<div class="welcome">
+  <div class="logo-bar"><div class="logo-dot"></div><span class="logo-name">Attribut Conseils</span></div>
+  <div style="margin-top:48px;margin-bottom:10px"><span style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#2563a8;background:#eef3fb;padding:4px 12px;border-radius:20px">Évaluation 360°</span></div>
+  <h1>Traits de<br><strong>personnalité</strong></h1>
+  <p class="subtitle">Vous avez été invité(e) à partager votre regard sur quelqu'un qui compte.<br>Votre retour est précieux — prenez le temps d'argumenter.</p>
+  <div class="card">
+    <div class="instr-item">
+      <div class="instr-num">1</div>
+      <div class="instr-text"><strong>Parcourez les 72 traits</strong> et cochez exactement les 8 qui caractérisent le mieux cette personne. Lisez-les tous avant de choisir — la vue d'ensemble est importante.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">2</div>
+      <div class="instr-text">Une fois vos 8 traits sélectionnés, vous passerez à l'étape suivante où vous pourrez <strong>commenter chacun avec un exemple concret</strong>.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">3</div>
+      <div class="instr-text">À la fin, <strong>envoyez vos résultats</strong> par email directement. Votre messagerie s'ouvrira automatiquement.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num alt">!</div>
+      <div class="instr-text">Soyez bienveillant(e) et honnête. <strong>Le commentaire est obligatoire</strong> — c'est l'exemple concret qui donne de la valeur au choix.</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="field-row">
+      <div class="field"><label>Votre prénom</label><input type="text" id="w-prenom" placeholder="ex : Sophie" /></div>
+      <div class="field">
+        <label>Votre lien</label>
+        <select id="w-lien">
+          <option value="">— Choisir —</option>
+          <option>Collègue</option>
+          <option>Ancien(ne) collègue</option>
+          <option>Manager / N+1</option>
+          <option>Collaborateur / Collaboratrice</option>
+          <option>Ami(e)</option>
+          <option>Famille</option>
+          <option>Autre</option>
+        </select>
+      </div>
+    </div>
+    <div id="w-warn" class="warn-box">Merci de renseigner votre prénom et votre lien avant de commencer.</div>
+    <button class="btn btn-primary" onclick="startSelect()">Voir les 72 traits &rarr;</button>
+  </div>
+</div>
+</div>
+
+<!-- ÉCRAN 2 : SÉLECTION DES 72 TRAITS -->
+<div id="screen-select" class="screen">
+<div class="select-wrap">
+  <button class="nav-back" onclick="goScreen('welcome')">&#8592; Retour</button>
+  <h2 style="font-size:18px;font-weight:600;margin-bottom:4px">Choisissez 8 traits</h2>
+  <p style="font-size:13px;color:#999;margin-bottom:20px">Parcourez la liste complète, puis cochez exactement 8 traits</p>
+  <div class="sticky-bar">
+    <div><span class="counter-label">Sélectionnés : </span><span class="counter-val" id="cnt">0</span><span class="counter-sub"> / 8</span></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+      <button class="btn btn-primary" id="btn-next" onclick="goComment()" disabled style="padding:8px 16px;font-size:13px">Commenter mes 8 choix &rarr;</button>
+    </div>
+  </div>
+  <div class="traits-grid" id="traits-grid"></div>
+  <div id="select-warn" class="warn-box"></div>
+</div>
+</div>
+
+<!-- ÉCRAN 3 : COMMENTAIRES -->
+<div id="screen-comment" class="screen">
+<div class="comment-wrap">
+  <button class="nav-back" onclick="goScreen('select')">&#8592; Modifier mes choix</button>
+  <div class="step2-header">
+    <h2>Commentez vos 8 traits</h2>
+    <p>Pour chaque trait, racontez une situation concrète, un comportement observé, un exemple vécu.<br>Le commentaire est <strong>obligatoire</strong> — c'est lui qui donne du sens à votre choix.</p>
+  </div>
+  <div id="comment-cards"></div>
+  <div style="margin-top:24px;text-align:right">
+    <div id="comment-warn" class="warn-box" style="text-align:left;margin-bottom:12px"></div>
+    <button class="btn btn-primary" onclick="goSend()">Continuer vers l'envoi &rarr;</button>
+  </div>
+</div>
+</div>
+
+<!-- ÉCRAN 4 : ENVOI -->
+<div id="screen-send" class="screen">
+<div class="send-wrap">
+  <button class="nav-back" onclick="goScreen('comment')">&#8592; Retour</button>
+  <h2>Envoyer mes résultats</h2>
+  <p class="send-desc">Tout est complet. Saisissez l'adresse email de la personne concernée — votre messagerie s'ouvrira avec les résultats pré-remplis.</p>
+  <div style="margin-bottom:8px;font-size:11px;font-weight:700;letter-spacing:.08em;color:#bbb;text-transform:uppercase">Vos 8 traits</div>
+  <div class="summary-chips" id="summary-chips"></div>
+  <div class="send-field"><label>Adresse email du destinataire</label><input type="email" id="dest-email" placeholder="prenom.nom@exemple.com" /></div>
+  <div id="send-warn" class="warn-box"></div>
+  <button class="btn btn-primary" onclick="sendMail()">Envoyer par email &rarr;</button>
+  <p style="font-size:12px;color:#bbb;margin-top:12px">Votre messagerie habituelle s'ouvrira avec les résultats pré-remplis.</p>
+</div>
+</div>
+
+<!-- ÉCRAN 5 : MERCI -->
+<div id="screen-thanks" class="screen">
+<div class="thanks-wrap">
+  <div class="thanks-icon">✉</div>
+  <h2>Merci pour votre contribution !</h2>
+  <p>Votre messagerie s'est ouverte avec les résultats pré-remplis.<br>Il ne vous reste qu'à envoyer.</p>
+  <p style="margin-top:8px;font-size:14px;color:#aaa">Votre retour contribue à un portrait riche et nuancé.</p>
+  <div style="margin-top:48px;padding-top:28px;border-top:1px solid #e8e8e4">
+    <div class="logo-bar" style="justify-content:center"><div class="logo-dot"></div><span class="logo-name">Attribut Conseils</span></div>
+  </div>
+</div>
+</div>
+
+<script>
+const TRAITS = [
+  "Affirmatif","Autonome","Capable d'écoute","Consciencieux","Courtois","D'abord facile",
+  "Sens de l'humour","Spontané","Sûr de soi","Positif","Ambitieux","Bienveillant",
+  "Loyal","Ordonné","Persévérant","Prudent","Réservé","Sens des responsabilités",
+  "Idéaliste","Intuitif","Maître de soi","Modeste","Original","Perspicace",
+  "Déterminé","Dynamique","Équitable","Esprit d'équipe","Exigeant","Fonceur",
+  "Chaleureux","Conservateur","Créatif","Diplomate","Émotif","Esprit d'analyse",
+  "Stable émotivement","Tolérant","Audacieux","Calme","Conciliant","Convaincant",
+  "Esprit de compétition","Rationnel","Sens artistique","Souple","Stratège","Transparent",
+  "Indépendant","Leader","Méthodique","Optimiste","Ouvert d'esprit","Réaliste",
+  "Expressif","Généreux","Intègre","Débrouillard","Esprit d'initiative","Minutieux",
+  "Curieux","Délicat","Direct","Énergique","Esprit critique","Ferme",
+  "Volontaire","Franc","Posé","Râleur","Rigide","Réfléchi"
+];
+
+const HINTS = {
+  "Affirmatif":"Dans quelle situation avez-vous vu cette personne s'exprimer clairement et défendre sa position ?",
+  "Autonome":"Donnez un exemple où elle a pris en main une situation sans attendre qu'on lui dise quoi faire.",
+  "Capable d'écoute":"Racontez un moment où elle vous a vraiment écouté(e) — comment cela s'est traduit concrètement ?",
+  "Consciencieux":"Quel soin particulier apporte-t-elle à son travail ou à ses engagements ? Donnez un exemple.",
+  "Courtois":"Comment se manifeste sa politesse ou son respect envers les autres au quotidien ?",
+  "D'abord facile":"Dans quel contexte est-il/elle facile à aborder ? Décrivez une interaction qui l'illustre.",
+  "Sens de l'humour":"Racontez une situation où son humour a détendu une atmosphère ou mis à l'aise.",
+  "Spontané":"Donnez un exemple d'une réaction ou décision prise sans calcul, sur le vif.",
+  "Sûr de soi":"Dans quel type de situation sa confiance en lui/elle est-elle particulièrement visible ?",
+  "Positif":"Comment réagit-il/elle face à une difficulté ou un échec ? Donnez un exemple.",
+  "Ambitieux":"Qu'est-ce qui vous a montré que cette personne vise haut ? Un projet, une démarche ?",
+  "Bienveillant":"Racontez un moment où vous avez ressenti sa bienveillance — un geste, une attention.",
+  "Loyal":"Dans quelle situation avez-vous pu compter sur elle inconditionnellement ?",
+  "Ordonné":"Comment cela se manifeste dans son quotidien, son espace de travail, ou sa façon de s'organiser ?",
+  "Persévérant":"Face à quel obstacle ou difficulté a-t-il/elle continué malgré tout ?",
+  "Prudent":"Donnez un exemple de décision où sa prudence a évité un problème ou un risque.",
+  "Réservé":"Comment se traduit cette réserve — dans les groupes, en public, lors de premières rencontres ?",
+  "Sens des responsabilités":"Racontez une situation où il/elle a assumé pleinement les conséquences de ses actes.",
+  "Idéaliste":"Quelle conviction ou valeur défend-il/elle, parfois au-delà du réalisme apparent ?",
+  "Intuitif":"Racontez un moment où son intuition s'est révélée juste, avant même les faits.",
+  "Maître de soi":"Dans quelle situation stressante ou tendue a-t-il/elle su garder son calme ?",
+  "Modeste":"Comment cette modestie se manifeste-t-elle, notamment dans ses réussites ?",
+  "Original":"Qu'est-ce qui vous frappe comme singulier ou inattendu dans sa façon de penser ou d'agir ?",
+  "Perspicace":"Racontez une situation où il/elle a vu ou compris quelque chose que les autres n'avaient pas saisi.",
+  "Déterminé":"Donnez un exemple de but qu'il/elle a poursuivi avec une constance remarquable.",
+  "Dynamique":"Comment son énergie ou sa vitalité se manifeste-t-elle dans le travail ou la vie quotidienne ?",
+  "Équitable":"Dans quel contexte avez-vous observé sa capacité à traiter les gens de façon juste ?",
+  "Esprit d'équipe":"Racontez un exemple où il/elle a mis le collectif avant lui/elle-même.",
+  "Exigeant":"Envers qui cette exigence s'exerce-t-elle surtout — lui/elle-même, les autres ? Donnez un exemple.",
+  "Fonceur":"Décrivez une situation où il/elle s'est lancé(e) sans hésiter, là où d'autres auraient reculé.",
+  "Chaleureux":"Comment cette chaleur se manifeste-t-elle dans ses relations, ses mots, ses gestes ?",
+  "Conservateur":"Sur quoi tient-il/elle à préserver les choses telles qu'elles sont ? Donnez un contexte.",
+  "Créatif":"Racontez une idée ou une solution originale qu'il/elle a proposée et qui vous a surpris(e).",
+  "Diplomate":"Dans quelle situation délicate a-t-il/elle su trouver les bons mots pour désamorcer ou réconcilier ?",
+  "Émotif":"Comment ses émotions transparaissent-elles — dans le travail, dans les relations, dans les moments forts ?",
+  "Esprit d'analyse":"Donnez un exemple où sa capacité à décortiquer un problème a fait la différence.",
+  "Stable émotivement":"Racontez une situation de pression ou de tension dans laquelle il/elle est resté(e) ancré(e).",
+  "Tolérant":"Face à une opinion ou un comportement différent du sien, comment réagit-il/elle généralement ?",
+  "Audacieux":"Quelle prise de risque vous a surpris(e) ou impressionné(e) chez cette personne ?",
+  "Calme":"Dans quelle situation difficile son calme a-t-il eu un effet sur vous ou sur le groupe ?",
+  "Conciliant":"Racontez un désaccord où il/elle a su faire un pas vers l'autre pour trouver un terrain commun.",
+  "Convaincant":"À quelle occasion vous a-t-il/elle convaincu(e) de quelque chose ? Comment s'y est-il/elle pris(e) ?",
+  "Esprit de compétition":"Comment se manifeste son goût pour la performance ou le dépassement ?",
+  "Rationnel":"Donnez un exemple où il/elle a mis les émotions de côté pour raisonner avec clarté.",
+  "Sens artistique":"Comment ce sens esthétique ou créatif se traduit-il dans sa vie ou son travail ?",
+  "Souple":"Racontez une situation où il/elle a su s'adapter rapidement à un changement inattendu.",
+  "Stratège":"Donnez un exemple où vous avez vu sa capacité à anticiper, planifier ou manœuvrer intelligemment.",
+  "Transparent":"Comment son honnêteté ou son absence de calcul se manifeste-t-elle au quotidien ?",
+  "Indépendant":"Dans quel contexte préfère-t-il/elle travailler seul(e) ou avancer sans validation ?",
+  "Leader":"Racontez une situation où il/elle a naturellement pris la tête du groupe ou guidé les autres.",
+  "Méthodique":"Décrivez sa façon de s'organiser ou d'aborder un projet — qu'est-ce qui vous frappe ?",
+  "Optimiste":"Face à une mauvaise nouvelle ou un obstacle, quelle est sa réaction habituelle ?",
+  "Ouvert d'esprit":"Racontez un moment où il/elle a accueilli une idée ou un point de vue très différent du sien.",
+  "Réaliste":"Donnez un exemple où son sens du concret a ramené les pieds sur terre — le sien ou celui des autres.",
+  "Expressif":"Comment s'exprime-t-il/elle ? Avec les mots, le corps, l'émotion ? Donnez une image.",
+  "Généreux":"Racontez un exemple de générosité — de temps, d'énergie, d'attention ou de ressources.",
+  "Intègre":"Dans quelle situation ses valeurs ou sa droiture ont-elles été particulièrement visibles ?",
+  "Débrouillard":"Racontez une situation où il/elle a trouvé une solution là où d'autres auraient abandonné.",
+  "Esprit d'initiative":"Donnez un exemple où il/elle a lancé quelque chose sans y être invité(e) ou poussé(e).",
+  "Minutieux":"Dans quel domaine ou type de tâche ce souci du détail est-il le plus frappant ?",
+  "Curieux":"De quoi cette curiosité se nourrit-elle ? Donnez un exemple de sujet ou de situation.",
+  "Délicat":"Racontez un moment où il/elle a abordé un sujet sensible avec beaucoup de tact.",
+  "Direct":"Donnez un exemple de situation où sa franchise a été tranchante — positivement ou non.",
+  "Énergique":"Comment son niveau d'énergie se ressent-il dans le groupe ou dans son travail ?",
+  "Esprit critique":"Racontez une situation où son regard critique a permis d'éviter une erreur ou d'améliorer quelque chose.",
+  "Ferme":"Sur quoi ne cède-t-il/elle pas ? Dans quel contexte cette fermeté est-elle apparue ?",
+  "Volontaire":"Donnez un exemple d'une tâche difficile qu'il/elle a prise en charge sans se plaindre.",
+  "Franc":"Racontez un moment où sa franchise vous a surpris(e) ou marqué(e), même si c'était difficile à entendre.",
+  "Posé":"Dans quelle situation sa façon de prendre le temps a-t-elle eu un effet positif sur vous ou la situation ?",
+  "Râleur":"Dans quel contexte cette tendance à se plaindre apparaît-elle le plus souvent ?",
+  "Rigide":"Donnez un exemple de situation où son manque de souplesse a créé une friction ou un blocage.",
+  "Réfléchi":"Racontez une décision importante où vous avez vu qu'il/elle avait bien pesé le pour et le contre."
+};
+
+let state = { prenom:'', lien:'', selected:[], comments:{} };
+
+function goScreen(n) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+n).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function startSelect() {
+  const p = document.getElementById('w-prenom').value.trim();
+  const l = document.getElementById('w-lien').value;
+  if (!p||!l) { document.getElementById('w-warn').style.display='block'; return; }
+  document.getElementById('w-warn').style.display='none';
+  state.prenom=p; state.lien=l;
+  buildTraitsGrid();
+  goScreen('select');
+}
+
+function buildTraitsGrid() {
+  const grid = document.getElementById('traits-grid');
+  grid.innerHTML = TRAITS.map(t => {
+    const sel = state.selected.includes(t);
+    return `<div class="trait-chip${sel?' sel':''}" id="chip-${uid(t)}" onclick="toggleTrait('${esc(t)}')">
+      <div class="chk">
+        <svg width="11" height="9" viewBox="0 0 11 9">
+          <polyline points="1,4.5 4,7.5 10,1" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        </svg>
+      </div>
+      <span class="trait-label">${t}</span>
+    </div>`;
+  }).join('');
+  updateLocked();
+  updateCounter();
+}
+
+function uid(t){ return t.replace(/[^a-zA-Z0-9]/g,'_'); }
+function esc(t){ return t.replace(/'/g,"\\'"); }
+
+function toggleTrait(t) {
+  const idx = state.selected.indexOf(t);
+  if (idx >= 0) {
+    state.selected.splice(idx, 1);
+  } else {
+    if (state.selected.length >= 8) return;
+    state.selected.push(t);
+  }
+  const chip = document.getElementById('chip-'+uid(t));
+  if (chip) chip.className = 'trait-chip' + (state.selected.includes(t) ? ' sel' : '');
+  updateLocked();
+  updateCounter();
+}
+
+function updateLocked() {
+  const full = state.selected.length >= 8;
+  TRAITS.forEach(t => {
+    const chip = document.getElementById('chip-'+uid(t));
+    if (!chip) return;
+    if (full && !state.selected.includes(t)) chip.classList.add('locked');
+    else chip.classList.remove('locked');
+  });
+}
+
+function updateCounter() {
+  const n = state.selected.length;
+  document.getElementById('cnt').textContent = n;
+  document.getElementById('prog').style.width = Math.round(n/8*100)+'%';
+  document.getElementById('btn-next').disabled = n !== 8;
+}
+
+function goComment() {
+  if (state.selected.length !== 8) return;
+  buildCommentCards();
+  goScreen('comment');
+}
+
+function buildCommentCards() {
+  const container = document.getElementById('comment-cards');
+  container.innerHTML = state.selected.map((t, i) => {
+    const hint = HINTS[t] || "Racontez une situation concrète où vous avez observé ce trait chez cette personne.";
+    const existing = state.comments[t] || '';
+    return `<div class="comment-card" id="cc-${uid(t)}">
+      <div class="comment-card-header">
+        <div class="comment-num">${i+1}</div>
+        <div class="comment-trait-name">${t}</div>
+      </div>
+      <div class="comment-hint">${hint}</div>
+      <div class="comment-label">Votre commentaire <span style="color:#e07b00">*</span></div>
+      <textarea placeholder="Écrivez ici votre exemple…" oninput="updateComment('${esc(t)}',this.value)">${existing}</textarea>
+      <div class="missing-msg">Un exemple concret est obligatoire pour continuer.</div>
+    </div>`;
+  }).join('');
+}
+
+function updateComment(t, v) {
+  state.comments[t] = v;
+  const card = document.getElementById('cc-'+uid(t));
+  if (card) {
+    if (v.trim()) card.classList.remove('incomplete');
+  }
+}
+
+function goSend() {
+  const missing = state.selected.filter(t => !state.comments[t] || !state.comments[t].trim());
+  if (missing.length > 0) {
+    missing.forEach(t => {
+      const card = document.getElementById('cc-'+uid(t));
+      if (card) card.classList.add('incomplete');
+    });
+    const warn = document.getElementById('comment-warn');
+    warn.textContent = missing.length === 1
+      ? `Le trait "${missing[0]}" n'a pas de commentaire. Un exemple concret est obligatoire.`
+      : `${missing.length} traits sans commentaire : ${missing.join(', ')}. Merci de compléter avant de continuer.`;
+    warn.style.display = 'block';
+    const firstCard = document.getElementById('cc-'+uid(missing[0]));
+    if (firstCard) firstCard.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  document.getElementById('comment-warn').style.display = 'none';
+  document.getElementById('summary-chips').innerHTML = state.selected.map(t=>`<div class="chip">${t}</div>`).join('');
+  goScreen('send');
+}
+
+function sendMail() {
+  const email = document.getElementById('dest-email').value.trim();
+  const warn = document.getElementById('send-warn');
+  if (!email||!email.includes('@')) { warn.textContent='Merci de saisir une adresse email valide.'; warn.style.display='block'; return; }
+  warn.style.display='none';
+  const subject = encodeURIComponent('Évaluation 360° — Retour de '+state.prenom+' ('+state.lien+')');
+  let body = 'Bonjour,\n\nVoici mon évaluation 360° :\n\n';
+  body += 'Répondant(e) : '+state.prenom+' — '+state.lien+'\n';
+  body += '─────────────────────────────────\n\n';
+  state.selected.forEach((t,i) => {
+    body += (i+1)+'. '+t+'\n';
+    body += '   → '+(state.comments[t]||'').trim()+'\n\n';
+  });
+  body += '─────────────────────────────────\n';
+  body += 'Réalisé dans le cadre d\'un Bilan de Compétences — Attribut Conseils\n';
+  window.location.href = 'mailto:'+email+'?subject='+subject+'&body='+encodeURIComponent(body);
+  setTimeout(()=>goScreen('thanks'), 600);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Évaluation 360° Compétences Professionnelles</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f7f6f3;color:#1a1a1a;font-size:15px;line-height:1.6}
+.screen{display:none;min-height:100vh}
+.screen.active{display:block}
+
+/* COMMUN */
+.logo-bar{display:flex;align-items:center;gap:10px}
+.logo-dot{width:9px;height:9px;border-radius:50%;background:#2563a8}
+.logo-name{font-size:12px;font-weight:700;letter-spacing:.14em;color:#2563a8;text-transform:uppercase}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;border:none;transition:all .15s;font-family:inherit}
+.btn-primary{background:#2563a8;color:#fff}
+.btn-primary:hover{background:#1d4f8a}
+.btn-primary:disabled{background:#b0c4de;cursor:not-allowed}
+.btn-secondary{background:#fff;color:#1a1a1a;border:1px solid #ddd}
+.btn-secondary:hover{background:#f5f5f3}
+.warn-box{font-size:13px;color:#b45309;background:#fef9ee;border:1px solid #fde68a;border-radius:8px;padding:10px 14px;margin-bottom:14px;display:none}
+.nav-back{display:flex;align-items:center;gap:6px;font-size:13px;color:#999;cursor:pointer;margin-bottom:28px;background:none;border:none;padding:0;font-family:inherit}
+.nav-back:hover{color:#1a1a1a}
+.field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;color:#999;text-transform:uppercase;margin-bottom:7px}
+.field input,.field select{width:100%;padding:10px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;color:#1a1a1a;background:#fff;outline:none;transition:border-color .15s;font-family:inherit}
+.field input:focus,.field select:focus{border-color:#2563a8}
+
+/* ACCUEIL */
+.welcome{max-width:640px;margin:0 auto;padding:60px 24px}
+.welcome .logo-bar{margin-bottom:48px}
+.welcome h1{font-size:28px;font-weight:300;margin-bottom:10px;line-height:1.3}
+.welcome h1 strong{font-weight:700}
+.welcome .subtitle{font-size:15px;color:#666;margin-bottom:36px;line-height:1.75}
+.card{background:#fff;border-radius:12px;padding:28px 32px;margin-bottom:16px;border:1px solid #e8e8e4}
+.instr-item{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start}
+.instr-item:last-child{margin-bottom:0}
+.instr-num{width:26px;height:26px;border-radius:50%;background:#eef3fb;color:#2563a8;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.instr-num.alt{background:#fef9ee;color:#b45309}
+.instr-text{font-size:14px;color:#555;line-height:1.65}
+.instr-text strong{color:#1a1a1a}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{margin-bottom:16px}
+
+/* SCALE LEGEND */
+.scale-legend{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px;padding-top:16px;border-top:1px solid #f0f0ec}
+.scale-item{display:flex;align-items:center;gap:5px;font-size:12px;color:#666}
+.scale-dot{width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.s1{background:#e24b4a}.s2{background:#e07b00}.s3{background:#888}.s4{background:#1D9E75}.s5{background:#0f6e56}
+
+/* FORMULAIRE */
+.form-wrap{max-width:780px;margin:0 auto;padding:32px 24px 80px}
+.sticky-bar{position:sticky;top:0;z-index:20;background:rgba(247,246,243,.97);backdrop-filter:blur(4px);border-bottom:1px solid #e8e8e4;padding:12px 0;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.sticky-info{font-size:13px;color:#888}
+.sticky-info strong{color:#1a1a1a}
+.progress-wrap{display:flex;align-items:center;gap:10px}
+.progress-bar{height:5px;background:#e8e8e4;border-radius:3px;overflow:hidden;width:120px}
+.progress-fill{height:5px;background:#2563a8;border-radius:3px;transition:width .2s}
+.progress-label{font-size:12px;color:#aaa;white-space:nowrap}
+
+.group-block{margin-bottom:36px}
+.group-header{padding:14px 20px;background:#fff;border:1px solid #e8e8e4;border-radius:10px 10px 0 0;border-bottom:none}
+.group-title{font-size:16px;font-weight:600;color:#1a1a1a;margin-bottom:2px}
+.group-desc{font-size:13px;color:#888;line-height:1.5}
+
+.comp-row{background:#fff;border:1px solid #e8e8e4;border-top:none;padding:16px 20px}
+.comp-row:last-child{border-radius:0 0 10px 10px}
+.comp-row.incomplete{border-left:3px solid #e07b00}
+.comp-name{font-size:14px;font-weight:600;color:#1a1a1a;margin-bottom:3px}
+.comp-desc{font-size:12px;color:#999;margin-bottom:12px;line-height:1.5}
+
+.rating-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.rating-btn{width:36px;height:36px;border-radius:7px;border:1.5px solid #ddd;background:#fff;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;color:#888;flex-shrink:0}
+.rating-btn:hover{border-color:#2563a8;color:#2563a8}
+.rating-btn.active-1{background:#e24b4a;border-color:#e24b4a;color:#fff}
+.rating-btn.active-2{background:#e07b00;border-color:#e07b00;color:#fff}
+.rating-btn.active-3{background:#888;border-color:#888;color:#fff}
+.rating-btn.active-4{background:#1D9E75;border-color:#1D9E75;color:#fff}
+.rating-btn.active-5{background:#0f6e56;border-color:#0f6e56;color:#fff}
+.rating-btn.na-btn{font-size:11px;width:auto;padding:0 10px;letter-spacing:.03em}
+.rating-btn.active-na{background:#f0f0ec;border-color:#ccc;color:#666}
+
+.comp-comment textarea{width:100%;border:1px solid #e0e0e0;border-radius:7px;padding:10px 12px;font-size:13px;color:#1a1a1a;background:#fafaf8;resize:vertical;min-height:64px;line-height:1.55;font-family:inherit;outline:none;transition:border-color .15s}
+.comp-comment textarea:focus{border-color:#2563a8;background:#fff}
+.comp-comment textarea::placeholder{color:#ccc}
+.comp-row.incomplete .comp-comment textarea{border-color:#f0a060}
+.comp-label-comment{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#bbb;margin-bottom:5px}
+.comp-row.incomplete .comp-label-comment{color:#e07b00}
+.comp-hint{font-size:12px;color:#aaa;font-style:italic;background:#f7f6f3;border-radius:5px;padding:6px 10px;margin-bottom:7px;line-height:1.5}
+.comp-row.incomplete .comp-hint{background:#fef9ee;color:#b45309}
+.missing-note{font-size:12px;color:#e07b00;margin-top:5px;display:none}
+.comp-row.incomplete .missing-note{display:block}
+
+/* ENVOI */
+.send-wrap{max-width:560px;margin:0 auto;padding:60px 24px}
+.send-wrap h2{font-size:22px;font-weight:600;margin-bottom:8px}
+.send-desc{font-size:14px;color:#666;line-height:1.75;margin-bottom:28px}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:24px}
+.summary-card{background:#fff;border:1px solid #e8e8e4;border-radius:8px;padding:12px 14px}
+.summary-card-title{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:#bbb;margin-bottom:6px}
+.summary-avg{font-size:20px;font-weight:700;color:#2563a8}
+.summary-avg-label{font-size:12px;color:#aaa;margin-left:4px}
+.send-field{margin-bottom:20px}
+.send-field label{display:block;font-size:11px;font-weight:700;letter-spacing:.08em;color:#999;text-transform:uppercase;margin-bottom:7px}
+.send-field input{width:100%;padding:11px 14px;border:1px solid #ddd;border-radius:8px;font-size:14px;color:#1a1a1a;outline:none;transition:border-color .15s;font-family:inherit}
+.send-field input:focus{border-color:#2563a8}
+
+/* MERCI */
+.thanks-wrap{max-width:520px;margin:0 auto;padding:80px 24px;text-align:center}
+.thanks-icon{width:72px;height:72px;border-radius:50%;background:#eef3fb;display:flex;align-items:center;justify-content:center;margin:0 auto 28px;font-size:32px}
+.thanks-wrap h2{font-size:24px;font-weight:600;margin-bottom:10px}
+.thanks-wrap p{font-size:15px;color:#666;line-height:1.75;margin-bottom:6px}
+
+@media(max-width:560px){
+  .field-row{grid-template-columns:1fr}
+  .summary-grid{grid-template-columns:1fr}
+  .welcome,.form-wrap,.send-wrap,.thanks-wrap{padding-left:16px;padding-right:16px}
+  .rating-row{gap:4px}
+  .rating-btn{width:32px;height:32px;font-size:12px}
+}
+</style>
+</head>
+<body>
+
+<!-- ÉCRAN 1 : ACCUEIL -->
+<div id="screen-welcome" class="screen active">
+<div class="welcome">
+  <div class="logo-bar"><div class="logo-dot"></div><span class="logo-name">Attribut Conseils</span></div>
+  <div style="margin-top:48px;margin-bottom:10px">
+    <span style="font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#2563a8;background:#eef3fb;padding:4px 12px;border-radius:20px">Évaluation 360°</span>
+  </div>
+  <h1>Compétences<br><strong>Professionnelles</strong></h1>
+  <p class="subtitle">Vous contribuez à une évaluation multi-sources.<br>Votre regard compte — soyez précis et bienveillant.</p>
+
+  <div class="card">
+    <div class="instr-item">
+      <div class="instr-num">1</div>
+      <div class="instr-text">Pour chacune des <strong>37 compétences</strong> réparties en 6 groupes, attribuez une note de 1 à 5 — ou indiquez si vous n'avez pas pu observer ce comportement.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">2</div>
+      <div class="instr-text"><strong>Commentez chaque compétence</strong> avec un exemple concret. Le commentaire est obligatoire — c'est lui qui donne du sens à la note.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num">3</div>
+      <div class="instr-text">À la fin, <strong>envoyez vos résultats</strong> par email. Votre messagerie s'ouvrira automatiquement avec tout pré-rempli.</div>
+    </div>
+    <div class="instr-item">
+      <div class="instr-num alt">!</div>
+      <div class="instr-text">Les notes reflètent votre <strong>perception personnelle</strong>. Il n'y a pas de bonne ou mauvaise réponse — seule l'honnêteté compte.</div>
+    </div>
+    <div class="scale-legend">
+      <div class="scale-item"><div class="scale-dot s1">1</div> Très insatisfaisant</div>
+      <div class="scale-item"><div class="scale-dot s2">2</div> Peu satisfaisant</div>
+      <div class="scale-item"><div class="scale-dot s3">3</div> Moyen</div>
+      <div class="scale-item"><div class="scale-dot s4">4</div> Bien</div>
+      <div class="scale-item"><div class="scale-dot s5">5</div> Excellent</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="field-row">
+      <div class="field"><label>Votre prénom</label><input type="text" id="w-prenom" placeholder="ex : Sophie" /></div>
+      <div class="field">
+        <label>Votre rôle vis-à-vis de la personne</label>
+        <select id="w-lien">
+          <option value="">— Choisir —</option>
+          <option>Manager / N+1</option>
+          <option>Externe (client, partenaire…)</option>
+          <option>Collègue</option>
+          <option>Auto-évaluation</option>
+        </select>
+      </div>
+    </div>
+    <div id="w-warn" class="warn-box">Merci de renseigner votre prénom et votre rôle avant de commencer.</div>
+    <button class="btn btn-primary" onclick="startForm()">Commencer l'évaluation &rarr;</button>
+  </div>
+</div>
+</div>
+
+<!-- ÉCRAN 2 : FORMULAIRE -->
+<div id="screen-form" class="screen">
+<div class="form-wrap">
+  <button class="nav-back" onclick="goScreen('welcome')">&#8592; Retour</button>
+  <h2 style="font-size:18px;font-weight:600;margin-bottom:4px">Évaluation des compétences</h2>
+  <p style="font-size:13px;color:#999;margin-bottom:20px">Notez chaque compétence et illustrez avec un exemple concret</p>
+  <div class="sticky-bar">
+    <div class="sticky-info">Répondant : <strong id="s-name"></strong> · <strong id="s-role"></strong></div>
+    <div class="progress-wrap">
+      <div class="progress-bar"><div class="progress-fill" id="prog" style="width:0%"></div></div>
+      <span class="progress-label" id="prog-label">0 / 37</span>
+    </div>
+  </div>
+  <div id="form-body"></div>
+  <div style="margin-top:24px;text-align:right">
+    <div id="form-warn" class="warn-box" style="text-align:left;margin-bottom:12px"></div>
+    <button class="btn btn-primary" id="btn-next" onclick="goSend()">Continuer &rarr;</button>
+  </div>
+</div>
+</div>
+
+<!-- ÉCRAN 3 : ENVOI -->
+<div id="screen-send" class="screen">
+<div class="send-wrap">
+  <button class="nav-back" onclick="goScreen('form')">&#8592; Retour</button>
+  <h2>Envoyer mes résultats</h2>
+  <p class="send-desc">Vérifiez les moyennes par groupe ci-dessous, puis saisissez l'adresse email du destinataire.</p>
+  <div class="summary-grid" id="summary-grid"></div>
+  <div class="send-field"><label>Adresse email du destinataire</label><input type="email" id="dest-email" placeholder="prenom.nom@exemple.com" /></div>
+  <div id="send-warn" class="warn-box"></div>
+  <button class="btn btn-primary" onclick="sendMail()">Envoyer par email &rarr;</button>
+  <p style="font-size:12px;color:#bbb;margin-top:12px">Votre messagerie habituelle s'ouvrira avec les résultats pré-remplis.</p>
+</div>
+</div>
+
+<!-- ÉCRAN 4 : MERCI -->
+<div id="screen-thanks" class="screen">
+<div class="thanks-wrap">
+  <div class="thanks-icon">✉</div>
+  <h2>Merci pour votre contribution !</h2>
+  <p>Votre messagerie s'est ouverte avec les résultats pré-remplis.<br>Il ne vous reste qu'à envoyer.</p>
+  <p style="margin-top:8px;font-size:14px;color:#aaa">Votre retour contribue à une évaluation riche et fiable.</p>
+  <div style="margin-top:48px;padding-top:28px;border-top:1px solid #e8e8e4">
+    <div class="logo-bar" style="justify-content:center"><div class="logo-dot"></div><span class="logo-name">Attribut Conseils</span></div>
+  </div>
+</div>
+</div>
+
+<script>
+const GROUPS = [
+  {
+    id:"analyse",
+    title:"Analyse et expertise",
+    desc:"Rassembler, évaluer et utiliser les informations pertinentes pour comprendre son environnement et agir efficacement.",
+    comps:[
+      {id:"prise_decision", name:"Prise de décision", desc:"Faire le meilleur choix possible en fonction des informations dont on dispose et être capable d'expliquer cette décision.", hint:"Dans quelle situation l'avez-vous vu prendre une décision difficile et l'expliquer clairement ?"},
+      {id:"raisonnement_analytique", name:"Raisonnement analytique", desc:"Décomposer et examiner les problèmes et situations complexes afin de définir les solutions appropriées.", hint:"Donnez un exemple où sa capacité d'analyse a permis de résoudre un problème complexe."},
+      {id:"agilite_apprentissage", name:"Agilité d'apprentissage", desc:"Montrer un esprit investigateur, curieux, et un grand intérêt pour la nouveauté.", hint:"Comment se manifeste sa curiosité ou son envie d'apprendre dans le travail ?"},
+      {id:"gestion_connaissances", name:"Gestion des connaissances", desc:"Suivre l'évolution des connaissances dans son domaine et se mettre à jour pour s'assurer d'en rester expert.", hint:"Comment maintient-il/elle son niveau d'expertise dans son domaine ?"},
+      {id:"prise_recul", name:"Prise de recul", desc:"Prendre de la distance pour analyser les faits et situations de manière objective avant d'agir ou de décider.", hint:"Racontez une situation où il/elle a su prendre du recul avant de réagir."},
+      {id:"partage_connaissances", name:"Partage de connaissances", desc:"Transmettre ses aptitudes et son expertise aux autres.", hint:"Comment partage-t-il/elle son savoir avec son entourage professionnel ?"}
+    ]
+  },
+  {
+    id:"planification",
+    title:"Planification et Vision",
+    desc:"Cerner son environnement de façon à pouvoir organiser le travail de façon efficace et anticiper les conséquences de ses actions.",
+    comps:[
+      {id:"gestion_temps", name:"Gestion du temps", desc:"Prioriser les tâches de façon cohérente afin de respecter les échéances.", hint:"Comment gère-t-il/elle les priorités et les délais dans son travail ?"},
+      {id:"sens_organisation", name:"Sens de l'organisation", desc:"Planifier chaque action d'un projet en le décomposant de manière à suivre une approche systématique.", hint:"Donnez un exemple de sa façon de structurer ou organiser un projet."},
+      {id:"planification_strategique", name:"Planification stratégique", desc:"Élaborer des plans d'action pour anticiper le développement futur.", hint:"A-t-il/elle déjà anticipé une évolution et adapté sa stratégie en conséquence ?"},
+      {id:"gestion_risques", name:"Gestion des risques", desc:"Identifier les opportunités, les priorités et les risques, dans le but de minimiser la probabilité d'échec.", hint:"Racontez une situation où il/elle a identifié un risque et pris des mesures pour le limiter."},
+      {id:"innovation_creativite", name:"Innovation-Créativité", desc:"Penser différemment, sortir des sentiers battus et examiner les choses à travers de nouvelles perspectives.", hint:"Quelle idée originale ou approche créative lui avez-vous vu proposer ?"},
+      {id:"vision_globale", name:"Vision globale", desc:"Prendre de la hauteur pour saisir les choses dans leur ensemble.", hint:"Comment démontre-t-il/elle sa capacité à voir au-delà des détails et à penser globalement ?"}
+    ]
+  },
+  {
+    id:"gestion_soi",
+    title:"Connaissance et gestion de soi",
+    desc:"S'interroger de façon intentionnelle et pertinente sur ses pensées et actions et savoir les gérer de façon appropriée.",
+    comps:[
+      {id:"respect_instructions", name:"Respect des instructions", desc:"Respecter des procédures en suivant et mettant en œuvre les directives.", hint:"Comment respecte-t-il/elle les règles et consignes établies ?"},
+      {id:"adaptation_changement", name:"Adaptation au changement", desc:"Savoir s'adapter aux changements et ajuster son comportement en fonction d'un environnement ou d'une personne.", hint:"Racontez une situation de changement dans laquelle il/elle a su s'adapter."},
+      {id:"perseverance", name:"Persévérance", desc:"Faire preuve de détermination et garder un haut niveau d'énergie dans l'exercice de ses fonctions.", hint:"Face à quel obstacle ou difficulté a-t-il/elle tenu bon ?"},
+      {id:"gestion_stress", name:"Gestion du stress", desc:"Être calme et gérer efficacement ses émotions dans les situations exigeantes.", hint:"Dans quelle situation de pression avez-vous observé sa gestion du stress ?"},
+      {id:"auto_evaluation", name:"Auto-évaluation", desc:"Porter un regard critique et lucide sur son propre travail.", hint:"Comment réagit-il/elle face à ses propres erreurs ou limites ?"},
+      {id:"reactivite", name:"Réactivité", desc:"S'adapter rapidement aux imprévus, aux projets et situations.", hint:"Donnez un exemple de sa capacité à réagir vite face à un imprévu."}
+    ]
+  },
+  {
+    id:"valeurs",
+    title:"Valeurs et Intégrité",
+    desc:"Suivre les normes et principes éthiques dans son comportement, contribuant ainsi à créer et à maintenir un climat de travail positif.",
+    comps:[
+      {id:"sens_devoir", name:"Sens du devoir", desc:"Suivre les règles et codes de conduite en restant authentique et fiable.", hint:"En quoi est-il/elle quelqu'un de fiable et d'authentique dans ses engagements ?"},
+      {id:"humilite", name:"Humilité", desc:"Rester modeste en ce qui concerne ses capacités et s'apprécier à sa juste valeur.", hint:"Comment cette modestie se manifeste-t-elle, notamment dans ses réussites ?"},
+      {id:"ouverture_diversite", name:"Ouverture à la diversité", desc:"Faire preuve de tolérance et d'ouverture à d'autres manières de penser, à d'autres cultures et valeurs.", hint:"Racontez une situation où il/elle a accueilli un point de vue très différent du sien."},
+      {id:"discretion", name:"Discrétion", desc:"Respecter la confidentialité et faire preuve de retenue dans la divulgation d'informations.", hint:"Comment gère-t-il/elle les informations confidentielles ou sensibles ?"},
+      {id:"impartialite", name:"Impartialité", desc:"Traiter les autres de façon juste et baser ses décisions sur des critères objectifs.", hint:"Donnez un exemple où il/elle a traité une situation de façon équitable."},
+      {id:"respect_autres", name:"Respect des autres", desc:"Prendre en compte les sentiments, attentes et droits des autres dans ses propres comportements.", hint:"Comment ce respect se manifeste-t-il au quotidien dans ses interactions ?"}
+    ]
+  },
+  {
+    id:"relations",
+    title:"Relations humaines",
+    desc:"Interagir efficacement avec les autres, favorisant la coopération, limitant les conflits et permettant à tous de travailler vers des objectifs communs.",
+    comps:[
+      {id:"resolution_conflits", name:"Résolution des conflits", desc:"Maintenir l'harmonie au sein de l'équipe en adoptant un rôle de médiateur dans les conflits.", hint:"Racontez une situation conflictuelle dans laquelle il/elle a joué un rôle de médiateur."},
+      {id:"cohesion_equipe", name:"Cohésion d'équipe", desc:"Encourager les activités qui créeront des équipes unies et productives.", hint:"Comment contribue-t-il/elle à créer un esprit d'équipe fort ?"},
+      {id:"habiletes_relationnelles", name:"Habiletés relationnelles", desc:"Interagir efficacement et nouer des relations avec des individus ou des groupes.", hint:"Comment décriveriez-vous sa façon d'entrer en relation avec les autres ?"},
+      {id:"empathie", name:"Empathie", desc:"Se centrer sur son interlocuteur afin de comprendre ses enjeux pour identifier efficacement ses besoins.", hint:"Racontez un moment où il/elle a vraiment compris et pris en compte les besoins de quelqu'un."}
+    ]
+  },
+  {
+    id:"engagement",
+    title:"Engagement professionnel",
+    desc:"Démontrer un engagement volontaire et sincère, ainsi que l'internalisation des objectifs de l'entreprise dans le but de s'améliorer et de faire progresser l'organisation.",
+    comps:[
+      {id:"orientation_qualite", name:"Orientation qualité", desc:"Se montrer méticuleux et prêter attention aux détails afin d'assurer le plus haut niveau de qualité et de service.", hint:"Dans quel domaine son exigence de qualité est-elle particulièrement visible ?"},
+      {id:"initiative", name:"Initiative", desc:"Saisir les opportunités et se montrer moteur pour créer ou faire avancer les choses.", hint:"Donnez un exemple où il/elle a lancé quelque chose sans y être invité(e)."},
+      {id:"sens_responsabilites", name:"Sens des responsabilités", desc:"Prendre en charge des projets et assumer les conséquences qui en découlent, qu'elles soient positives ou négatives.", hint:"Racontez une situation où il/elle a pleinement assumé la responsabilité d'un projet."},
+      {id:"combativite", name:"Combativité", desc:"Chercher constamment à exceller et à dépasser ses objectifs.", hint:"Comment son goût pour le dépassement se manifeste-t-il dans son travail ?"},
+      {id:"investissement_travail", name:"Investissement au travail", desc:"Mobiliser et déployer un haut niveau d'énergie et d'efforts pour atteindre les objectifs liés au travail.", hint:"Comment se traduit son niveau d'engagement et d'énergie au quotidien ?"},
+      {id:"disponibilite", name:"Disponibilité", desc:"S'investir pour l'organisation et être disposé à proposer son aide dès que possible.", hint:"Dans quelle situation s'est-il/elle montré(e) particulièrement disponible pour aider ?"}
+    ]
+  },
+  {
+    id:"communication",
+    title:"Compétences de communication",
+    desc:"Comprendre et être compris(e) en écoutant activement les autres et en partageant des idées et des informations de manière adaptée.",
+    comps:[
+      {id:"influence", name:"Influence", desc:"Promouvoir ses idées et convaincre les autres, en communiquant de manière assertive et tactique.", hint:"À quelle occasion vous a-t-il/elle convaincu(e) d'adopter son point de vue ?"},
+      {id:"communication_strategique", name:"Communication stratégique", desc:"Partager les informations les plus pertinentes et s'adapter aux besoins et niveaux de compréhension du public cible.", hint:"Comment adapte-t-il/elle son discours selon son interlocuteur ?"},
+      {id:"capacite_ecoute", name:"Capacité d'écoute", desc:"Être attentif(ve) et interpréter efficacement ce que dit l'autre personne.", hint:"Racontez un moment où vous avez vraiment senti qu'il/elle vous écoutait activement."},
+      {id:"affirmation_soi", name:"Affirmation de soi", desc:"Se faire entendre et défendre son point de vue sans agressivité, dans le respect de soi et de l'autre.", hint:"Dans quelle situation a-t-il/elle défendu sa position avec fermeté et respect ?"},
+      {id:"esprit_synthese", name:"Esprit de synthèse", desc:"Relever les points clés et les présenter de manière cohérente et adaptée au contexte.", hint:"Donnez un exemple où sa capacité à synthétiser a clarifié une situation complexe."}
+    ]
+  }
+];
+
+let state = { prenom:"", lien:"", ratings:{}, comments:{} };
+const totalComps = GROUPS.reduce((s,g)=>s+g.comps.length,0);
+
+function goScreen(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('screen-'+n).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function startForm(){
+  const p=document.getElementById('w-prenom').value.trim();
+  const l=document.getElementById('w-lien').value;
+  if(!p||!l){document.getElementById('w-warn').style.display='block';return;}
+  document.getElementById('w-warn').style.display='none';
+  state.prenom=p;state.lien=l;
+  document.getElementById('s-name').textContent=p;
+  document.getElementById('s-role').textContent=l;
+  buildForm();
+  goScreen('form');
+}
+
+function buildForm(){
+  const body=document.getElementById('form-body');
+  body.innerHTML=GROUPS.map(g=>`
+    <div class="group-block" id="grp-${g.id}">
+      <div class="group-header">
+        <div class="group-title">${g.title}</div>
+        <div class="group-desc">${g.desc}</div>
+      </div>
+      ${g.comps.map(c=>`
+        <div class="comp-row" id="cr-${c.id}">
+          <div class="comp-name">${c.name}</div>
+          <div class="comp-desc">${c.desc}</div>
+          <div class="rating-row">
+            ${[1,2,3,4,5].map(n=>`<button class="rating-btn" id="rb-${c.id}-${n}" onclick="setRating('${c.id}',${n})">${n}</button>`).join('')}
+            <button class="rating-btn na-btn" id="rb-${c.id}-na" onclick="setRating('${c.id}','na')">Non observé</button>
+          </div>
+          <div class="comp-comment">
+            <div class="comp-label-comment">Commentaire <span style="color:#e07b00">*</span></div>
+            <div class="comp-hint">${c.hint}</div>
+            <textarea placeholder="Votre exemple concret…" oninput="setComment('${c.id}',this.value)"></textarea>
+            <div class="missing-note">Une note et un commentaire sont requis pour continuer.</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function setRating(cid, val){
+  state.ratings[cid]=val;
+  [1,2,3,4,5,'na'].forEach(n=>{
+    const btn=document.getElementById(`rb-${cid}-${n}`);
+    if(btn) btn.className='rating-btn'+(n==='na'?' na-btn':'');
+  });
+  const active=document.getElementById(`rb-${cid}-${val}`);
+  if(active) active.classList.add(val==='na'?'active-na':`active-${val}`);
+  updateProgress();
+  const row=document.getElementById(`cr-${cid}`);
+  if(row&&state.comments[cid]!==undefined&&state.comments[cid].trim()) row.classList.remove('incomplete');
+}
+
+function setComment(cid,v){
+  state.comments[cid]=v;
+  const row=document.getElementById(`cr-${cid}`);
+  if(row&&v.trim()&&state.ratings[cid]!==undefined) row.classList.remove('incomplete');
+}
+
+function updateProgress(){
+  const done=Object.keys(state.ratings).length;
+  const pct=Math.round(done/totalComps*100);
+  document.getElementById('prog').style.width=pct+'%';
+  document.getElementById('prog-label').textContent=done+' / '+totalComps;
+}
+
+function goSend(){
+  const missing=[];
+  GROUPS.forEach(g=>g.comps.forEach(c=>{
+    const noRating=state.ratings[c.id]===undefined;
+    const noComment=!state.comments[c.id]||!state.comments[c.id].trim();
+    const row=document.getElementById(`cr-${c.id}`);
+    if(noRating||noComment){
+      missing.push(c.name);
+      if(row) row.classList.add('incomplete');
+    } else {
+      if(row) row.classList.remove('incomplete');
+    }
+  }));
+  const warn=document.getElementById('form-warn');
+  if(missing.length>0){
+    warn.textContent=`${missing.length} compétence${missing.length>1?'s':''} incomplète${missing.length>1?'s':''} : ${missing.slice(0,3).join(', ')}${missing.length>3?'…':''}. Note et commentaire obligatoires.`;
+    warn.style.display='block';
+    const firstMissing=GROUPS.flatMap(g=>g.comps).find(c=>missing.includes(c.name));
+    if(firstMissing){
+      const el=document.getElementById(`cr-${firstMissing.id}`);
+      if(el) el.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+    return;
+  }
+  warn.style.display='none';
+  buildSummary();
+  goScreen('send');
+}
+
+function buildSummary(){
+  const grid=document.getElementById('summary-grid');
+  grid.innerHTML=GROUPS.map(g=>{
+    const scores=g.comps.map(c=>state.ratings[c.id]).filter(r=>r!=='na'&&r!==undefined).map(Number);
+    const avg=scores.length?( scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1):'—';
+    return`<div class="summary-card">
+      <div class="summary-card-title">${g.title}</div>
+      <span class="summary-avg">${avg}</span><span class="summary-avg-label">/ 5</span>
+    </div>`;
+  }).join('');
+}
+
+function sendMail(){
+  const email=document.getElementById('dest-email').value.trim();
+  const warn=document.getElementById('send-warn');
+  if(!email||!email.includes('@')){warn.textContent='Merci de saisir une adresse email valide.';warn.style.display='block';return;}
+  warn.style.display='none';
+
+  const scaleLabel={1:'Très insatisfaisant',2:'Peu satisfaisant',3:'Moyen',4:'Bien',5:'Excellent','na':'Non observé'};
+  const subject=encodeURIComponent(`Évaluation 360° Compétences — Retour de ${state.prenom} (${state.lien})`);
+
+  let body=`Bonjour,\n\nVoici mon évaluation 360° des compétences professionnelles :\n\n`;
+  body+=`Répondant(e) : ${state.prenom} — ${state.lien}\n`;
+  body+=`${'═'.repeat(52)}\n\n`;
+
+  GROUPS.forEach(g=>{
+    const scores=g.comps.map(c=>state.ratings[c.id]).filter(r=>r!=='na'&&r!==undefined).map(Number);
+    const avg=scores.length?(scores.reduce((a,b)=>a+b,0)/scores.length).toFixed(1):'—';
+    body+=`▌ ${g.title.toUpperCase()} (moyenne : ${avg}/5)\n`;
+    body+=`${'─'.repeat(48)}\n`;
+    g.comps.forEach(c=>{
+      const r=state.ratings[c.id];
+      const note=r!==undefined?`${r==='na'?'—':r}/5 — ${scaleLabel[r]}`:'Non noté';
+      const comment=state.comments[c.id]||'(aucun commentaire)';
+      body+=`${c.name} : ${note}\n`;
+      body+=`  → ${comment.trim()}\n\n`;
+    });
+    body+='\n';
+  });
+
+  body+=`${'═'.repeat(52)}\n`;
+  body+=`Réalisé dans le cadre d'un Bilan de Compétences — Attribut Conseils\n`;
+
+  window.location.href='mailto:'+email+'?subject='+subject+'&body='+encodeURIComponent(body);
+  setTimeout(()=>goScreen('thanks'),600);
+}
+</script>
+</body>
+</html>

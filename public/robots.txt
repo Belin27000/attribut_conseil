@@ -1,3 +1,14 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Disallow: /360
+Disallow: /360PRO
+Disallow: /NEO
+Disallow: /MBTI
+Disallow: /valeursetcroyances
+Disallow: /courbe-de-satisfaction
+Disallow: /v6360_traits_personnalite.html
+Disallow: /360_competences_professionnel.html
+Disallow: /neopir3.html
+Disallow: /mbti_attribut_conseils%20(2).html
+Disallow: /valeurs-croyances.html
+Disallow: /courbe_de_satisfaction_attribut.html

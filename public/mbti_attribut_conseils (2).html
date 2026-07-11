@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Questionnaire MBTI — Attribut Conseils</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --azur: #5996b2;
+    --dark-azur: #1a3d5c;
+    --yellow: #dbbe3f;
+    --cream: #faf5f0;
+    --cream-dark: #f0e8df;
+    --text: #1a1a2e;
+    --text-light: #4a5568;
+    --white: #ffffff;
+    --border: #d6e4ef;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Georgia', serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--dark-azur);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .header-brand {
+    color: var(--cream);
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Georgia', serif;
+  }
+  .header-brand strong {
+    display: block;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: var(--white);
+  }
+  .header-line {
+    width: 2px;
+    height: 40px;
+    background: var(--yellow);
+  }
+  .header-title {
+    color: var(--cream);
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: right;
+  }
+
+  /* SCREENS */
+  .screen { display: none; }
+  .screen.active { display: block; }
+
+  /* WELCOME SCREEN */
+  .welcome-wrap {
+    max-width: 640px;
+    margin: 60px auto;
+    padding: 0 24px;
+    text-align: center;
+  }
+  .welcome-wrap h1 {
+    font-size: 32px;
+    color: var(--dark-azur);
+    margin-bottom: 12px;
+    font-weight: normal;
+    letter-spacing: 0.5px;
+  }
+  .welcome-wrap .subtitle {
+    color: var(--text-light);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 40px;
+  }
+  .accent-bar {
+    width: 48px;
+    height: 3px;
+    background: var(--yellow);
+    margin: 0 auto 32px;
+  }
+
+  .form-group {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--dark-azur);
+    margin-bottom: 8px;
+  }
+  .form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1.5px solid var(--border);
+    background: var(--white);
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .form-group input:focus {
+    border-color: var(--azur);
+  }
+
+  .btn-primary {
+    background: var(--dark-azur);
+    color: var(--white);
+    border: none;
+    padding: 16px 40px;
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 12px;
+  }
+  .btn-primary:hover { background: var(--azur); }
+
+  /* PROGRESS */
+  .progress-header {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+  .progress-label {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    white-space: nowrap;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--yellow);
+    transition: width 0.4s ease;
+  }
+  .progress-count {
+    font-size: 13px;
+    color: var(--azur);
+    white-space: nowrap;
+    font-family: 'Georgia', serif;
+  }
+
+  /* QUESTION */
+  .question-wrap {
+    max-width: 680px;
+    margin: 48px auto;
+    padding: 0 24px;
+  }
+  .question-number {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--azur);
+    margin-bottom: 16px;
+  }
+  .question-text {
+    font-size: 22px;
+    color: var(--dark-azur);
+    line-height: 1.5;
+    margin-bottom: 36px;
+    font-weight: normal;
+  }
+
+  .choices { display: flex; flex-direction: column; gap: 14px; }
+  .choice-btn {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    padding: 18px 24px;
+    text-align: left;
+    font-family: 'Georgia', serif;
+    font-size: 15px;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.18s;
+    line-height: 1.5;
+    position: relative;
+  }
+  .choice-btn::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: transparent;
+    transition: background 0.18s;
+  }
+  .choice-btn:hover {
+    border-color: var(--azur);
+    background: #f0f7ff;
+  }
+  .choice-btn:hover::before { background: var(--azur); }
+  .choice-btn.selected {
+    border-color: var(--dark-azur);
+    background: #eaf1f8;
+  }
+  .choice-btn.selected::before { background: var(--dark-azur); }
+
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 36px;
+  }
+  .btn-prev {
+    background: none;
+    border: 1.5px solid var(--border);
+    color: var(--text-light);
+    padding: 12px 24px;
+    font-family: 'Georgia', serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-prev:hover { border-color: var(--azur); color: var(--azur); }
+  .btn-next {
+    background: var(--dark-azur);
+    color: var(--white);
+    border: none;
+    padding: 14px 32px;
+    font-family: 'Georgia', serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .btn-next:hover { background: var(--azur); }
+  .btn-next:disabled { background: var(--border); cursor: not-allowed; }
+
+  /* RESULT SCREEN */
+  .result-wrap {
+    max-width: 760px;
+    margin: 48px auto;
+    padding: 0 24px 60px;
+  }
+  .result-type-badge {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .result-type-letters {
+    font-size: 72px;
+    font-weight: bold;
+    color: var(--dark-azur);
+    letter-spacing: 8px;
+    line-height: 1;
+  }
+  .result-type-name {
+    font-size: 20px;
+    color: var(--azur);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .result-temperament {
+    font-size: 13px;
+    color: var(--text-light);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+  .result-name {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 12px;
+  }
+
+  /* SCORES */
+  .scores-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  .score-pair {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 16px 20px;
+  }
+  .score-pair-label {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 10px;
+  }
+  .score-bar-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .score-letter {
+    width: 20px;
+    font-weight: bold;
+    color: var(--dark-azur);
+  }
+  .score-bar-outer {
+    flex: 1;
+    height: 8px;
+    background: var(--cream-dark);
+  }
+  .score-bar-inner {
+    height: 100%;
+    background: var(--azur);
+    transition: width 0.6s ease;
+  }
+  .score-bar-inner.dominant {
+    background: var(--dark-azur);
+  }
+  .score-pct {
+    width: 32px;
+    text-align: right;
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  /* SYNTHESIS BLOCKS */
+  .synthesis-section {
+    margin-bottom: 32px;
+  }
+  .synthesis-section h3 {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--azur);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .synthesis-section p {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .result-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 40px;
+    flex-wrap: wrap;
+  }
+  .btn-download {
+    background: var(--yellow);
+    color: var(--dark-azur);
+    border: none;
+    padding: 16px 32px;
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.2s;
+  }
+  .btn-download:hover { opacity: 0.85; }
+  .btn-restart {
+    background: none;
+    border: 1.5px solid var(--dark-azur);
+    color: var(--dark-azur);
+    padding: 16px 32px;
+    font-family: 'Georgia', serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-restart:hover { background: var(--dark-azur); color: var(--white); }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 11px;
+    color: var(--text-light);
+    letter-spacing: 1px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  @media (max-width: 600px) {
+    .header { padding: 16px 20px; }
+    .scores-grid { grid-template-columns: 1fr; }
+    .result-type-letters { font-size: 52px; }
+    .question-text { font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-brand">
+    Attribut Conseils
+    <strong>Bilan de Compétences</strong>
+  </div>
+  <div class="header-line"></div>
+  <div class="header-title">Questionnaire<br>de personnalité MBTI</div>
+</div>
+
+<!-- SCREEN 1: WELCOME -->
+<div id="screen-welcome" class="screen active">
+  <div class="welcome-wrap">
+    <p style="font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--azur);margin-bottom:16px;">Keirsey Temperament Sorter II</p>
+    <h1>Mieux se connaître pour mieux choisir</h1>
+    <div class="accent-bar"></div>
+    <p class="subtitle">Ce questionnaire de 70 questions vous invite à explorer vos préférences naturelles. Il n'y a pas de bonne ou mauvaise réponse — choisissez celle qui vous ressemble le plus spontanément.</p>
+    <div class="form-group">
+      <label>Prénom et Nom</label>
+      <input type="text" id="input-name" placeholder="Votre prénom et nom" />
+    </div>
+    <div class="form-group">
+      <label>Date de passation</label>
+      <input type="date" id="input-date" />
+    </div>
+    <button class="btn-primary" onclick="startTest()">Commencer le questionnaire</button>
+  </div>
+</div>
+
+<!-- SCREEN 2: QUESTIONS -->
+<div id="screen-questions" class="screen">
+  <div class="progress-header">
+    <span class="progress-label">Progression</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+    <span class="progress-count" id="progress-count">0 / 70</span>
+  </div>
+  <div class="question-wrap">
+    <div class="question-number" id="q-number"></div>
+    <div class="question-text" id="q-text"></div>
+    <div class="choices" id="q-choices"></div>
+    <div class="nav-row">
+      <button class="btn-prev" id="btn-prev" onclick="prevQuestion()">← Précédent</button>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()">Suivant →</button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 3: RESULT -->
+<div id="screen-result" class="screen">
+  <div class="result-wrap">
+    <div class="result-type-badge">
+      <div class="result-type-letters" id="res-type"></div>
+      <div class="result-type-name" id="res-name"></div>
+      <div class="result-temperament" id="res-temperament"></div>
+      <div class="result-name" id="res-person-name"></div>
+    </div>
+
+    <div class="scores-grid" id="scores-grid"></div>
+
+    <div id="synthesis-container"></div>
+
+    <div class="result-actions">
+      <button class="btn-download" onclick="downloadPDF()">⬇ Télécharger le PDF</button>
+      <button class="btn-download" style="background:var(--azur);color:var(--white);" onclick="sendByEmail()">✉ Envoyer à ma consultante</button>
+      <button class="btn-restart" onclick="restartTest()">Recommencer</button>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Attribut Conseils — Document confidentiel — Usage exclusif dans le cadre du bilan de compétences</div>
+
+<script>
+// ============================================================
+// QUESTIONS (70 items from Keirsey Temperament Sorter II)
+// Format: { stem, a: {text, dims: [{dim, letter}]}, b: {text, dims: [{dim, letter}]} }
+// dims: which dimension axes the choice scores on
+// E=0,I=1,S=2,N=3,T=4,F=5,J=6,P=7
+// ============================================================
+const questions = [
+  { stem: "La plus grande faute, c'est", a: {text:"d'avoir trop de compassion", scores:{F:1}}, b: {text:"de manquer de compassion", scores:{T:1}} },
+  { stem: "Les faits", a: {text:"parlent d'eux-mêmes", scores:{S:1}}, b: {text:"illustrent des principes", scores:{N:1}} },
+  { stem: "Vous êtes fier(e) de", a: {text:"votre solide sens des réalités", scores:{S:1}}, b: {text:"votre imagination fertile", scores:{N:1}} },
+  { stem: "Vous utilisez le plus souvent", a: {text:"votre sens pratique", scores:{S:1}}, b: {text:"votre imagination", scores:{N:1}} },
+  { stem: "Souvent, les enfants", a: {text:"ne se rendent pas assez utiles", scores:{S:1}}, b: {text:"n'utilisent pas assez leur imagination", scores:{N:1}} },
+  { stem: "Quand vous évaluez les autres vous êtes plutôt", a: {text:"objectif et impartial", scores:{T:1}}, b: {text:"amical et personnel", scores:{F:1}} },
+  { stem: "Vous préférez", a: {text:"avoir pris une décision", scores:{J:1}}, b: {text:"avoir à prendre une décision", scores:{P:1}} },
+  { stem: "Si vous devez diriger les autres vous êtes plutôt", a: {text:"ferme et inflexible", scores:{T:1}}, b: {text:"souple et indulgent", scores:{F:1}} },
+  { stem: "Votre façon d'être c'est", a: {text:"de vous décider rapidement", scores:{J:1}}, b: {text:"de prendre votre temps pour décider", scores:{P:1}} },
+  { stem: "En général vous préférez", a: {text:"des déclarations fermes et définitives", scores:{J:1}}, b: {text:"des déclarations préliminaires et sujettes à modifications", scores:{P:1}} },
+  { stem: "Vous aimez que les choses soient", a: {text:"fermes et définitives", scores:{J:1}}, b: {text:"juste esquissées", scores:{P:1}} },
+  { stem: "Vous faites davantage confiance", a: {text:"à votre expérience", scores:{S:1}}, b: {text:"à vos opinions", scores:{N:1}} },
+  { stem: "Au travail, vous êtes du genre à", a: {text:"faire remarquer aux autres leurs erreurs", scores:{J:1}}, b: {text:"essayer de plaire aux autres", scores:{P:1}} },
+  { stem: "Vous vous fiez plus à", a: {text:"vos pensées", scores:{T:1}}, b: {text:"vos sentiments", scores:{F:1}} },
+  { stem: "Vous vous considérez comme", a: {text:"quelqu'un d'ouvert", scores:{E:1}}, b: {text:"quelqu'un de réservé", scores:{I:1}} },
+  { stem: "Vous avez tendance à choisir", a: {text:"avec soin", scores:{J:1}}, b: {text:"impulsivement", scores:{P:1}} },
+  { stem: "Vous vous considérez comme", a: {text:"quelqu'un de dur", scores:{T:1}}, b: {text:"quelqu'un de tendre", scores:{F:1}} },
+  { stem: "Vous êtes plus à l'aise pour", a: {text:"critiquer", scores:{T:1}}, b: {text:"complimenter", scores:{F:1}} },
+  { stem: "Vous préférez travailler", a: {text:"en suivant un plan d'action", scores:{J:1}}, b: {text:"quand ça vous chante", scores:{P:1}} },
+  { stem: "Dans une discussion animée, vous préférez", a: {text:"camper sur vos positions", scores:{T:1}}, b: {text:"chercher un terrain d'entente", scores:{F:1}} },
+  { stem: "Pour prendre une décision vous tenez plutôt compte", a: {text:"des faits", scores:{T:1}}, b: {text:"de vos envies", scores:{F:1}} },
+  { stem: "Si vous devez rencontrer des inconnus", a: {text:"cela vous met en forme", scores:{E:1}}, b: {text:"cela vous fatigue", scores:{I:1}} },
+  { stem: "Dans la plupart des situations vos actions sont", a: {text:"plus délibérées que spontanées", scores:{J:1}}, b: {text:"plus spontanées que délibérées", scores:{P:1}} },
+  { stem: "Vous avez tendance à vous attacher plus", a: {text:"aux faits", scores:{S:1}}, b: {text:"aux conjectures", scores:{N:1}} },
+  { stem: "Vous préférez qu'un écrivain", a: {text:"décrive les choses sans fioritures", scores:{S:1}}, b: {text:"utilise des métaphores et des symboles", scores:{N:1}} },
+  { stem: "Avec les gens vous êtes", a: {text:"plus ferme que gentil", scores:{T:1}}, b: {text:"plus gentil que ferme", scores:{F:1}} },
+  { stem: "Vous prenez ce qu'on dit", a: {text:"au pied de la lettre", scores:{S:1}}, b: {text:"de manière imagée", scores:{N:1}} },
+  { stem: "Ce que vous appréciez chez vous c'est", a: {text:"votre côté raisonnable", scores:{T:1}}, b: {text:"votre côté dévoué", scores:{F:1}} },
+  { stem: "Il est pire d'être", a: {text:"sentimental", scores:{T:1}}, b: {text:"dur", scores:{F:1}} },
+  { stem: "Il vaut mieux éviter", a: {text:"d'être dans la lune", scores:{S:1}}, b: {text:"d'être dans la routine", scores:{N:1}} },
+  { stem: "Vous trouvez que les visionnaires et les théoriciens", a: {text:"sont plutôt barbants", scores:{S:1}}, b: {text:"sont plutôt fascinants", scores:{N:1}} },
+  { stem: "Vous vous intéressez plus", a: {text:"aux faits", scores:{S:1}}, b: {text:"aux possibilités", scores:{N:1}} },
+  { stem: "Vous vous exprimez plus en utilisant", a: {text:"les détails", scores:{S:1}}, b: {text:"des généralités", scores:{N:1}} },
+  { stem: "Au travail vous avez plutôt tendance", a: {text:"à être sociable avec vos collègues", scores:{E:1}}, b: {text:"à rester dans votre coin", scores:{I:1}} },
+  { stem: "Il vous est plus facile", a: {text:"d'utiliser les autres", scores:{S:1}}, b: {text:"de vous identifier à eux", scores:{N:1}} },
+  { stem: "Le bon sens est", a: {text:"généralement fiable", scores:{S:1}}, b: {text:"fréquemment trompeur", scores:{N:1}} },
+  { stem: "Vous préférez qu'on dise de vous", a: {text:"que vous êtes quelqu'un de logique", scores:{T:1}}, b: {text:"que vous êtes quelqu'un qui a du cœur", scores:{F:1}} },
+  { stem: "Dans une soirée, vous préférez", a: {text:"rencontrer un tas de gens, même des inconnus", scores:{E:1}}, b: {text:"rester entre amis proches", scores:{I:1}} },
+  { stem: "Vous avez plutôt tendance", a: {text:"à dire tout de suite ce que vous pensez", scores:{E:1}}, b: {text:"à écouter ce qui va se dire", scores:{I:1}} },
+  { stem: "Quand vous faites la queue, généralement", a: {text:"vous bavardez avec les autres", scores:{E:1}}, b: {text:"vous attendez sans rien dire", scores:{I:1}} },
+  { stem: "Vous êtes du genre à", a: {text:"finir votre travail pour passer à autre chose", scores:{J:1}}, b: {text:"ne pas finir trop vite pour pouvoir explorer les possibilités", scores:{P:1}} },
+  { stem: "Vous pensez être plus doué(e) pour", a: {text:"tenir une conversation", scores:{E:1}}, b: {text:"écouter autrui", scores:{I:1}} },
+  { stem: "Vous vous sentez plutôt", a: {text:"les pieds sur terre", scores:{S:1}}, b: {text:"la tête dans les nuages", scores:{N:1}} },
+  { stem: "Vous avez tendance à remarquer", a: {text:"le désordre", scores:{J:1}}, b: {text:"les occasions de changement", scores:{P:1}} },
+  { stem: "Vous souhaiteriez pour vous-même", a: {text:"plus de volonté", scores:{T:1}}, b: {text:"plus d'émotion", scores:{F:1}} },
+  { stem: "Vous êtes plutôt du genre", a: {text:"à parler beaucoup", scores:{E:1}}, b: {text:"à être attentif(ve) à votre entourage", scores:{I:1}} },
+  { stem: "Il vaut mieux faire preuve", a: {text:"de justice", scores:{T:1}}, b: {text:"de pitié", scores:{F:1}} },
+  { stem: "Vous êtes plus à l'aise pour", a: {text:"arriver à une décision", scores:{J:1}}, b: {text:"garder plusieurs possibilités ouvertes", scores:{P:1}} },
+  { stem: "Vous préférez qu'un contrat soit", a: {text:"couché par écrit et signé", scores:{J:1}}, b: {text:"conclu sur une poignée de mains", scores:{P:1}} },
+  { stem: "Au bureau, le désordre est quelque chose", a: {text:"que vous prenez le temps de ranger", scores:{J:1}}, b: {text:"que vous tolérez facilement", scores:{P:1}} },
+  { stem: "Ce que vous voyez le plus souvent c'est", a: {text:"ce qui est juste sous votre nez", scores:{S:1}}, b: {text:"ce qui ne peut être qu'imaginé", scores:{N:1}} },
+  { stem: "Quand la fin d'un travail approche, vous préférez", a: {text:"tout laisser bien en ordre", scores:{J:1}}, b: {text:"passer à autre chose", scores:{P:1}} },
+  { stem: "Quand le téléphone sonne", a: {text:"vous vous précipitez pour répondre", scores:{E:1}}, b: {text:"vous espérez que quelqu'un d'autre répondra", scores:{I:1}} },
+  { stem: "Vous préférez qu'on ait", a: {text:"de la suite dans les idées", scores:{T:1}}, b: {text:"des relations harmonieuses", scores:{F:1}} },
+  { stem: "Vous êtes", a: {text:"d'un abord plutôt facile", scores:{E:1}}, b: {text:"plutôt réservé(e)", scores:{I:1}} },
+  { stem: "Si vous devez annoncer une mauvaise nouvelle vous préférez", a: {text:"être franc et direct", scores:{T:1}}, b: {text:"être amical et empathique", scores:{F:1}} },
+  { stem: "Vous êtes davantage porté(e)", a: {text:"sur l'observation", scores:{S:1}}, b: {text:"sur l'introspection", scores:{N:1}} },
+  { stem: "Ce qui vous ferait fléchir, ce serait", a: {text:"une preuve incontestable", scores:{T:1}}, b: {text:"un plaidoyer touchant", scores:{F:1}} },
+  { stem: "Dans des circonstances éprouvantes vous êtes parfois", a: {text:"trop insensible", scores:{T:1}}, b: {text:"trop sensible", scores:{F:1}} },
+  { stem: "Ce qui vous satisfait le plus c'est", a: {text:"d'avoir terminé votre travail", scores:{J:1}}, b: {text:"d'avoir un travail en cours", scores:{P:1}} },
+  { stem: "Vous êtes plutôt", a: {text:"sensé(e) et rationnel(le)", scores:{S:1}}, b: {text:"perdu(e) dans vos pensées", scores:{N:1}} },
+  { stem: "Vous êtes attiré(e) par", a: {text:"ce qui est exprimé clairement", scores:{S:1}}, b: {text:"ce qui est implicite", scores:{N:1}} },
+  { stem: "Dans une histoire, vous préférez qu'il y ait", a: {text:"de l'action et de l'aventure", scores:{S:1}}, b: {text:"du fantastique et de l'héroïsme", scores:{N:1}} },
+  { stem: "Vous préférez", a: {text:"aller vite", scores:{J:1}}, b: {text:"prendre votre temps", scores:{P:1}} },
+  { stem: "En général", a: {text:"vous gardez la tête froide", scores:{T:1}}, b: {text:"vous êtes chaleureux(se)", scores:{F:1}} },
+  { stem: "Il vaut mieux", a: {text:"provoquer les choses", scores:{J:1}}, b: {text:"laisser les choses se produire naturellement", scores:{P:1}} },
+  { stem: "De vous-même, vous diriez que vous êtes plutôt", a: {text:"sérieux(se) et résolu(e)", scores:{J:1}}, b: {text:"facile à vivre", scores:{P:1}} },
+  { stem: "Dans le travail, vous préférez que vos tâches soient", a: {text:"planifiées", scores:{J:1}}, b: {text:"non planifiées", scores:{P:1}} },
+  { stem: "Vous vous voyez plutôt comme quelqu'un de", a: {text:"dur(e) à cuire", scores:{T:1}}, b: {text:"sensible", scores:{F:1}} },
+  { stem: "Vous êtes plus", a: {text:"routinier(ère) que spontané(e)", scores:{J:1}}, b: {text:"spontané(e) que routinier(ère)", scores:{P:1}} },
+];
+
+// ============================================================
+// TYPE PROFILES — 14 types
+// ============================================================
+const profiles = {
+  ENTJ: {
+    name: "Le Commandant",
+    temperament: "NT — Analyste Rationnel",
+    fonctionnement: "Ce profil suggère une orientation naturelle vers la pensée stratégique et la vision d'ensemble. Il est possible que la personne traite l'information en cherchant systématiquement les structures sous-jacentes, les inefficacités à corriger et les objectifs à atteindre. On pourrait faire l'hypothèse d'un fonctionnement cognitif orienté vers l'action et la décision, avec une préférence pour la clarté et la logique dans l'analyse des situations.",
+    travail: "Dans un environnement professionnel, ce profil laisse supposer une forte appétence pour les responsabilités, le leadership et les défis ambitieux. L'hypothèse pourrait être que la personne s'épanouit dans des postes à haute autonomie décisionnelle — direction de projets, management stratégique, entrepreneuriat. Les environnements trop routiniers ou dénués de sens pourraient représenter une source d'insatisfaction durable.",
+    relations: "Ce profil suggère un style relationnel direct et exigeant. Il est probable que la personne communique avec franchise et efficacité, attendant un niveau d'engagement et de compétence équivalent chez ses interlocuteurs. On pourrait faire l'hypothèse d'une tendance à la domination dans les échanges collectifs, qui pourrait parfois être perçue comme peu à l'écoute des dimensions émotionnelles.",
+    vigilance: "Un axe de développement potentiel concerne la gestion des émotions — les siennes et celles des autres. Il est possible que la personne ait tendance à minimiser les besoins affectifs de son entourage professionnel. Cultiver la patience et l'écoute émotionnelle pourrait constituer un levier de croissance significatif, notamment dans les contextes de conduite du changement.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que la direction d'entreprise, le conseil en stratégie, l'entrepreneuriat, le management de projet complexe, la finance d'entreprise, le droit des affaires ou la direction commerciale. Les secteurs nécessitant vision, décision rapide et capacité à mobiliser des équipes semblent particulièrement compatibles avec ce type de préférences."
+  },
+  ENTP: {
+    name: "L'Innovateur",
+    temperament: "NT — Analyste Rationnel",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement cognitif particulièrement agile, orienté vers l'exploration des idées, la remise en question des évidences et la génération de nouvelles perspectives. On pourrait faire l'hypothèse que la personne perçoit le monde comme un vaste terrain d'expérimentation intellectuelle, trouvant de l'énergie dans les débats d'idées et les connexions inattendues entre des domaines distincts.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une nette préférence pour les environnements dynamiques, peu hiérarchiques et ouverts à l'innovation. Il est possible que la personne excelle dans les phases de conception, de brainstorming et de résolution créative de problèmes complexes, tout en éprouvant davantage de difficultés dans les phases d'exécution répétitive ou de suivi minutieux.",
+    relations: "Ce profil suggère un style de communication vif, stimulant et parfois challengeant. L'hypothèse pourrait être que la personne utilise le débat et la confrontation d'idées comme mode d'exploration et de lien — sans intention blessante. Cependant, cette posture pourrait être mal perçue par des interlocuteurs qui y voient une forme d'opposition plutôt qu'un mode d'engagement.",
+    vigilance: "Un point de vigilance potentiel concerne la capacité à finaliser et à s'engager dans la durée. Il est possible que la dispersion intellectuelle et l'attrait constant pour la nouveauté fragilisent la concrétisation des projets. Développer des stratégies de priorisation et d'ancrage dans l'action pourrait représenter un levier de développement important.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que l'entrepreneuriat, le conseil en innovation, le marketing stratégique, la communication, les technologies, la recherche appliquée, le journalisme ou le droit. Les secteurs en transformation rapide, qui valorisent la créativité intellectuelle et la capacité à challenger l'existant, semblent particulièrement résonner avec ce type de préférences."
+  },
+  ESFJ: {
+    name: "Le Consul",
+    temperament: "SJ — Gardien Traditionnel",
+    fonctionnement: "Ce profil suggère un mode de traitement de l'information ancré dans le concret, le relationnel et le sens des responsabilités. On pourrait faire l'hypothèse que la personne perçoit le monde à travers le prisme des liens humains et des obligations mutuelles, trouvant du sens dans le soin apporté aux autres et dans le respect des cadres établis.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les environnements structurés, coopératifs et à dimension humaine prononcée. Il est possible que la personne s'épanouisse dans des rôles d'accompagnement, de coordination ou de service — là où son sens de l'organisation et sa chaleur relationnelle sont pleinement valorisés.",
+    relations: "Ce profil suggère un style relationnel chaleureux, attentif et loyal. L'hypothèse pourrait être que la personne accorde une grande importance à l'harmonie dans ses relations et qu'elle investit beaucoup d'énergie pour que chacun se sente reconnu et soutenu. Cette disposition pourrait parfois se traduire par une difficulté à poser des limites ou à décevoir.",
+    vigilance: "Un axe de développement potentiel concerne la gestion du regard des autres et le besoin de validation externe. Il est possible que la personne soit particulièrement sensible aux critiques ou à l'ingratitude, ce qui pourrait fragiliser son estime de soi dans des contextes conflictuels. Développer une assise identitaire plus indépendante des retours extérieurs pourrait constituer un levier de robustesse.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que les ressources humaines, l'enseignement, les soins infirmiers, le travail social, l'administration, la gestion d'équipe, l'hôtellerie ou les métiers de service. Les secteurs à forte dimension relationnelle et sociale, où l'organisation au service des autres est valorisée, semblent particulièrement compatibles avec ce type de préférences."
+  },
+  ESFP: {
+    name: "L'Amuseur",
+    temperament: "SP — Artisan Explorateur",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement ancré dans le présent, le concret et l'expérience sensorielle. On pourrait faire l'hypothèse que la personne traite l'information de manière intuitive et immédiate, en s'appuyant sur ce qu'elle observe et ressent directement. La spontanéité et l'adaptabilité semblent être des ressources naturelles importantes.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une nette préférence pour les environnements vivants, variés et à forte interaction humaine. Il est possible que la personne s'épanouisse dans des métiers de contact, de service, d'animation ou de création, où sa capacité à entrer en relation et à s'adapter rapidement constitue un atout majeur. Les tâches répétitives et solitaires pourraient représenter une source de démotivation.",
+    relations: "Ce profil suggère un style relationnel enthousiaste, spontané et généreux. L'hypothèse pourrait être que la personne crée facilement du lien et met les autres à l'aise, avec une capacité naturelle à percevoir les émotions de son entourage. Cette sensibilité pourrait cependant la rendre vulnérable aux critiques et aux conflits interpersonnels.",
+    vigilance: "Un point de vigilance potentiel concerne la projection dans le temps long. Il est possible que la tendance à privilégier le présent sur l'avenir complexifie la construction de projets structurés sur la durée. Développer des outils de planification et de gestion de l'incertitude pourrait constituer un levier de développement professionnel significatif.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que les métiers de la santé de proximité, l'animation socioculturelle, la vente, l'événementiel, la coiffure et les soins esthétiques, le tourisme, la restauration ou les arts de la scène. Les secteurs qui mettent l'humain au cœur de l'activité et valorisent l'énergie, la présence et le sens du contact semblent particulièrement résonner avec ce type de préférences."
+  },
+  INTJ: {
+    name: "L'Architecte",
+    temperament: "NT — Analyste Rationnel",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement cognitif orienté vers la conceptualisation profonde et la vision systémique. On pourrait faire l'hypothèse que la personne traite l'information en construisant des modèles mentaux complexes, en cherchant les logiques sous-jacentes et en anticipant les conséquences à long terme. L'autonomie intellectuelle semble être une valeur cardinale.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les missions exigeantes, à forte valeur intellectuelle, avec une large autonomie d'organisation. Il est possible que la personne s'épanouisse dans des environnements qui valorisent l'expertise, la rigueur et la pensée stratégique — recherche, conseil, architecture de systèmes, direction. Les contextes très contraints ou peu stimulants intellectuellement pourraient représenter une source d'insatisfaction.",
+    relations: "Ce profil suggère un style relationnel réservé, sélectif et exigeant. L'hypothèse pourrait être que la personne investit ses relations avec profondeur et discernement, préférant un cercle restreint d'interlocuteurs stimulants aux interactions superficielles. Cette réserve pourrait parfois être interprétée comme de la froideur ou de la distance par l'entourage.",
+    vigilance: "Un axe de développement potentiel concerne la flexibilité relationnelle et la tolérance à l'imperfection des autres. Il est possible que des standards élevés, appliqués à soi comme aux autres, génèrent de la frustration dans les contextes collaboratifs. Cultiver la patience et l'empathie fonctionnelle pourrait ouvrir des espaces de coopération plus fluides.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que la recherche et développement, la stratégie d'entreprise, l'architecture, l'ingénierie de systèmes, la data science, le conseil en management, la médecine spécialisée ou la direction de projets complexes. Les secteurs qui valorisent l'expertise approfondie, la vision long terme et l'indépendance intellectuelle semblent particulièrement compatibles avec ce type de préférences."
+  },
+  INTP: {
+    name: "Le Logicien",
+    temperament: "NT — Analyste Rationnel",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement intellectuel particulièrement analytique et ouvert à la complexité. On pourrait faire l'hypothèse que la personne trouve de l'énergie dans l'exploration théorique, la résolution de problèmes abstraits et la recherche de cohérence interne dans ses raisonnements. La curiosité intellectuelle semble être un moteur puissant.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une nette préférence pour les missions nécessitant analyse, conceptualisation et liberté de pensée. Il est possible que la personne excelle dans des environnements qui valorisent l'expertise et la réflexion approfondie — technologies, sciences, stratégie, développement de systèmes. Les contraintes formelles excessives et les tâches répétitives pourraient être vécues comme des freins à l'expression du potentiel.",
+    relations: "Ce profil suggère un style relationnel introverti, précis et parfois déconcertant pour l'entourage. L'hypothèse pourrait être que la personne communique de manière très structurée et rigoureuse, ce qui peut créer une distance perçue avec des interlocuteurs qui attendent davantage de chaleur ou d'expressivité émotionnelle.",
+    vigilance: "Un point de vigilance potentiel concerne la tendance à la procrastination et à la difficulté de passer de la réflexion à l'action. Il est possible que la recherche perpétuelle de la solution parfaite ou l'exploration de nouvelles pistes complexifie la finalisation des projets. Développer des stratégies de passage à l'action et d'ancrage dans l'exécution pourrait constituer un levier de développement important.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que la programmation et le développement informatique, la recherche scientifique, les mathématiques appliquées, la philosophie, l'analyse financière, la cybersécurité ou l'enseignement supérieur. Les secteurs qui valorisent la rigueur conceptuelle, la résolution de problèmes complexes et l'autonomie de pensée semblent particulièrement résonner avec ce type de préférences."
+  },
+  INFJ: {
+    name: "L'Avocat",
+    temperament: "NF — Diplomate Idéaliste",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement cognitif orienté vers le sens, les valeurs et la compréhension profonde des dynamiques humaines. On pourrait faire l'hypothèse que la personne perçoit le monde avec une sensibilité particulière aux intentions sous-jacentes, aux connexions invisibles entre les choses et aux possibilités de transformation. L'authenticité semble être une valeur fondamentale.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte aspiration à exercer un métier porteur de sens et d'impact. Il est possible que la personne s'épanouisse dans des missions d'accompagnement, de conseil, de formation ou de création — là où ses capacités d'empathie, d'analyse et de vision à long terme peuvent pleinement s'exprimer. Les environnements superficiels ou contraires à ses valeurs pourraient être vécus comme profondément insatisfaisants.",
+    relations: "Ce profil suggère un style relationnel profond, attentionné et parfois difficile à cerner. L'hypothèse pourrait être que la personne établit des relations intenses et significatives, investissant beaucoup dans la compréhension de l'autre. Cependant, la discordance entre son monde intérieur riche et sa réserve naturelle pourrait créer une certaine solitude relationnelle.",
+    vigilance: "Un axe de développement potentiel concerne la gestion du perfectionnisme et de la tendance à l'épuisement. Il est possible que la personne place des exigences très élevées sur elle-même, au risque de se surinvestir dans les causes ou les personnes qui lui tiennent à cœur. Apprendre à poser des limites claires et à prendre soin de ses propres besoins pourrait constituer un enjeu de développement central.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que la psychologie, le coaching, le conseil en développement personnel, l'écriture, la direction artistique, le travail social, la médiation ou la formation. Les secteurs porteurs de sens, orientés vers la transformation humaine et sociale, semblent particulièrement compatibles avec ce type de préférences."
+  },
+  INFP: {
+    name: "Le Médiateur",
+    temperament: "NF — Diplomate Idéaliste",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement profondément orienté vers les valeurs personnelles, l'authenticité et la quête de sens. On pourrait faire l'hypothèse que la personne perçoit le monde à travers un prisme émotionnel et idéaliste, cherchant à aligner ses actions avec ses convictions profondes. La créativité et l'introspection semblent être des ressources naturelles importantes.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une aspiration forte à un travail porteur de sens, d'autonomie et d'expression personnelle. Il est possible que la personne s'épanouisse dans des métiers créatifs, d'accompagnement ou de service — là où elle peut agir en accord avec ses valeurs et contribuer au bien-être des autres. Les environnements très compétitifs ou dénués d'humanité pourraient représenter une source de souffrance.",
+    relations: "Ce profil suggère un style relationnel chaleureux, empathique et d'une grande fidélité aux personnes aimées. L'hypothèse pourrait être que la personne s'engage avec profondeur et sincérité dans ses relations, tout en ayant besoin d'espaces de solitude pour se ressourcer. Sa sensibilité aux dynamiques interpersonnelles pourrait parfois la rendre vulnérable aux conflits.",
+    vigilance: "Un point de vigilance potentiel concerne la tendance à l'idéalisation et à la difficulté de composer avec les contraintes du réel. Il est possible que l'écart entre l'idéal recherché et la réalité quotidienne génère de la frustration ou de la procrastination. Développer des stratégies d'ancrage dans le concret et de tolérance à l'imperfection pourrait constituer un levier de développement significatif.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que l'écriture, les arts, la psychologie, le conseil, l'enseignement, le travail social, les métiers du bien-être ou de l'humanitaire. Les secteurs porteurs de sens profond, qui laissent une large place à l'expression personnelle et à la relation authentique, semblent particulièrement compatibles avec ce type de préférences."
+  },
+  ENFJ: {
+    name: "Le Protagoniste",
+    temperament: "NF — Diplomate Idéaliste",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement orienté vers l'humain, la connexion et l'influence positive. On pourrait faire l'hypothèse que la personne perçoit naturellement les dynamiques relationnelles, les besoins des autres et les leviers de leur développement. Elle semble trouver de l'énergie dans les échanges et dans le fait de contribuer à la croissance de son entourage.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les métiers de l'accompagnement, du management, de la formation ou de la communication. Il est possible que la personne s'épanouisse dans des environnements où elle peut fédérer, inspirer et guider des équipes vers un objectif commun. Sa capacité à créer de la cohésion et à mobiliser les talents pourrait constituer un atout professionnel majeur.",
+    relations: "Ce profil suggère un style relationnel chaleureux, engagé et naturellement tourné vers le soutien des autres. L'hypothèse pourrait être que la personne investit beaucoup dans ses relations et qu'elle est particulièrement habile pour percevoir et répondre aux besoins émotionnels de son entourage. Cette générosité relationnelle pourrait cependant générer un risque d'oubli de soi.",
+    vigilance: "Un axe de développement potentiel concerne la gestion des limites et la tendance à prendre en charge les problèmes des autres au détriment de ses propres besoins. Il est possible que la personne ait du mal à décevoir ou à refuser, ce qui pourrait générer de l'épuisement sur le long terme. Développer une posture d'accompagnement plus distanciée et apprendre à dire non avec bienveillance pourrait constituer un enjeu important.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que la formation, le coaching, le management d'équipe, les ressources humaines, la direction d'associations, la communication institutionnelle ou les relations publiques. Les secteurs qui placent le développement humain et la cohésion collective au cœur de leur mission semblent particulièrement résonner avec ce type de préférences."
+  },
+  ENFP: {
+    name: "Le Campagneur",
+    temperament: "NF — Diplomate Idéaliste",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement enthousiaste, créatif et porté par les possibilités. On pourrait faire l'hypothèse que la personne perçoit le monde comme un espace riche de sens et d'opportunités, trouvant de l'énergie dans les nouvelles idées, les rencontres stimulantes et les projets porteurs de valeurs. L'intuition et l'imagination semblent être des ressources naturelles centrales.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les missions créatives, variées et à forte dimension humaine. Il est possible que la personne s'épanouisse dans des environnements qui valorisent l'originalité, l'initiative et le sens — conseil, formation, communication, entrepreneuriat. Les contextes très routiniers ou contraignants pourraient représenter une source de démotivation importante.",
+    relations: "Ce profil suggère un style relationnel chaleureux, expressif et inspirant. L'hypothèse pourrait être que la personne crée facilement des connexions authentiques et qu'elle possède un talent naturel pour percevoir le potentiel des autres. Sa vitalité et son enthousiasme pourraient être des ressources précieuses dans les dynamiques collectives.",
+    vigilance: "Un point de vigilance potentiel concerne la gestion de la dispersion et de la difficulté à s'engager durablement sur un seul projet. Il est possible que la multiplicité des centres d'intérêt et l'attrait pour la nouveauté fragilisent la concrétisation des ambitions. Développer des stratégies de focalisation et de suivi dans la durée pourrait constituer un levier de développement professionnel important.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que le conseil en orientation, le coaching, la communication, le journalisme, le marketing créatif, l'animation de communautés, l'entrepreneuriat social ou la formation. Les secteurs qui valorisent l'enthousiasme, la créativité relationnelle et la capacité à donner du sens semblent particulièrement compatibles avec ce type de préférences."
+  },
+  ISTJ: {
+    name: "Le Logisticien",
+    temperament: "SJ — Gardien Traditionnel",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement ancré dans le concret, la fiabilité et le respect des structures établies. On pourrait faire l'hypothèse que la personne traite l'information de manière méthodique et séquentielle, accordant une grande importance aux faits vérifiables, aux procédures éprouvées et à la cohérence entre les engagements pris et les actes.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les environnements structurés, à responsabilités claires et à standards élevés. Il est possible que la personne s'épanouisse dans des rôles nécessitant rigueur, fiabilité et sens de l'organisation — gestion, administration, contrôle, logistique. Sa capacité à tenir ses engagements et à aller au bout de ses missions pourrait constituer un atout professionnel majeur.",
+    relations: "Ce profil suggère un style relationnel réservé, stable et d'une grande loyauté. L'hypothèse pourrait être que la personne s'investit avec profondeur et discrétion dans ses relations, préférant les prouver par ses actes plutôt que par ses mots. Cette sobriété expressive pourrait parfois être mal interprétée comme de l'indifférence.",
+    vigilance: "Un axe de développement potentiel concerne l'ouverture au changement et à l'innovation. Il est possible que l'attachement aux méthodes éprouvées complexifie l'adaptation à des environnements en mutation rapide. Cultiver une plus grande flexibilité cognitive et une tolérance à l'incertitude pourrait constituer un levier de développement important.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que la comptabilité, le droit, l'administration publique, la gestion de projet, la logistique, la finance, les assurances ou l'audit. Les secteurs qui valorisent la rigueur, la fiabilité et la maîtrise des process dans la durée semblent particulièrement compatibles avec ce type de préférences."
+  },
+  ISFJ: {
+    name: "Le Défenseur",
+    temperament: "SJ — Gardien Traditionnel",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement orienté vers le soin, la stabilité et l'attention aux détails. On pourrait faire l'hypothèse que la personne traite l'information de manière concrète et attentive, en mémorisant précisément les besoins et les préférences de son entourage. Le service aux autres et la préservation de l'harmonie semblent être des valeurs profondes.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les missions d'accompagnement, de soutien et de service. Il est possible que la personne s'épanouisse dans des environnements à dimension humaine forte — soins, éducation, ressources humaines, conseil — où sa capacité d'écoute, sa fiabilité et son attention aux autres sont pleinement valorisées.",
+    relations: "Ce profil suggère un style relationnel discret, chaleureux et profondément attentionné. L'hypothèse pourrait être que la personne exprime son attachement par des gestes concrets plutôt que par des mots, et qu'elle est souvent la première à percevoir les difficultés de son entourage. Cette générosité silencieuse pourrait parfois conduire à une forme d'invisibilité relationnelle.",
+    vigilance: "Un point de vigilance potentiel concerne la tendance à négliger ses propres besoins au profit de ceux des autres. Il est possible que la personne ait du mal à exprimer ses limites ou à refuser des sollicitations, au risque de s'épuiser. Développer une communication plus assertive et apprendre à prendre soin d'elle-même autant que des autres pourrait constituer un levier de développement significatif.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que les soins infirmiers, la médecine générale, l'enseignement primaire, le travail social, la gestion administrative, l'assistanat de direction ou la bibliothéconomie. Les secteurs qui valorisent le service discret, la constance et l'attention aux besoins des personnes semblent particulièrement résonner avec ce type de préférences."
+  },
+  ESTJ: {
+    name: "Le Directeur",
+    temperament: "SJ — Gardien Traditionnel",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement orienté vers l'efficacité, l'organisation et la mise en œuvre concrète. On pourrait faire l'hypothèse que la personne traite l'information de manière logique et pragmatique, cherchant rapidement à structurer les situations, à définir des rôles clairs et à produire des résultats mesurables. L'ordre et la discipline semblent être des valeurs fondatrices.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les environnements bien structurés, orientés résultats et à responsabilités clairement définies. Il est possible que la personne s'épanouisse dans des rôles de management, d'administration ou de direction d'opérations — là où sa capacité à organiser, décider et entraîner une équipe peut pleinement s'exprimer.",
+    relations: "Ce profil suggère un style relationnel direct, prévisible et orienté vers l'efficacité collective. L'hypothèse pourrait être que la personne communique avec franchise et clarté, attendant la même rigueur et le même engagement de la part de ses interlocuteurs. Sa fiabilité et son sens des responsabilités pourraient constituer des fondations solides pour les relations professionnelles.",
+    vigilance: "Un axe de développement potentiel concerne la prise en compte des dimensions émotionnelles et relationnelles dans la conduite des équipes. Il est possible que la priorité donnée à l'efficacité et aux résultats laisse peu de place à l'expression des besoins individuels. Cultiver davantage d'empathie et de souplesse dans les approches managériales pourrait constituer un levier d'influence plus large.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que le management opérationnel, la gestion d'entreprise, le droit, la finance, les achats, la direction administrative ou les collectivités territoriales. Les secteurs qui valorisent l'autorité organisationnelle, la rigueur des processus et la capacité à tenir des équipes vers des objectifs clairs semblent particulièrement compatibles avec ce type de préférences."
+  },
+  ISTP: {
+    name: "Le Virtuose",
+    temperament: "SP — Artisan Explorateur",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement ancré dans l'observation, l'analyse et l'action efficace. On pourrait faire l'hypothèse que la personne traite l'information de manière pragmatique et détachée, cherchant à comprendre comment les choses fonctionnent concrètement avant d'intervenir. La maîtrise technique et l'autonomie semblent être des valeurs importantes.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les missions concrètes, techniques et à forte valeur d'expertise. Il est possible que la personne s'épanouisse dans des environnements qui valorisent la compétence pratique, la résolution de problèmes réels et l'autonomie d'action — ingénierie, artisanat de précision, intervention terrain, analyse technique. Les contextes trop bureaucratiques ou politisés pourraient représenter une source d'insatisfaction.",
+    relations: "Ce profil suggère un style relationnel sobre, direct et pragmatique. L'hypothèse pourrait être que la personne communique de manière économique et précise, préférant les faits aux discours. Cette réserve naturelle pourrait parfois être perçue comme de l'indifférence, alors qu'elle traduit davantage une forme de respect de l'espace de l'autre.",
+    vigilance: "Un point de vigilance potentiel concerne la projection dans l'avenir et la communication autour de ses intentions. Il est possible que la tendance à rester dans l'action immédiate complexifie la construction de projets à long terme ou la visibilité sur ses aspirations profondes. Développer une capacité à formaliser et à partager sa vision pourrait constituer un levier de développement important.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que la mécanique, l'électronique, l'informatique système, le bâtiment, les métiers de l'urgence (pompier, secouriste), la chirurgie, les métiers d'art ou l'investigation. Les secteurs qui valorisent l'expertise technique, la précision et l'autonomie dans l'action semblent particulièrement résonner avec ce type de préférences."
+  },
+  ISFP: {
+    name: "L'Aventurier",
+    temperament: "SP — Artisan Explorateur",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement sensible, ancré dans le présent et guidé par des valeurs profondes et personnelles. On pourrait faire l'hypothèse que la personne perçoit le monde avec une acuité sensorielle et émotionnelle particulière, trouvant du sens dans les expériences concrètes, le beau et l'authenticité des relations. La liberté et l'harmonie intérieure semblent être des valeurs fondamentales.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une aspiration à un travail porteur de sens, d'expression personnelle et à dimension concrète. Il est possible que la personne s'épanouisse dans des métiers créatifs, artisanaux, de soin ou de contact — là où elle peut agir avec ses mains, ses sens et son cœur. Les environnements très compétitifs, froids ou rigides pourraient représenter une source de mal-être.",
+    relations: "Ce profil suggère un style relationnel doux, attentionné et profondément loyal. L'hypothèse pourrait être que la personne exprime son affection par des actes plutôt que par des mots, et qu'elle est particulièrement sensible à l'atmosphère émotionnelle des groupes dans lesquels elle évolue. Cette sensibilité pourrait la rendre vulnérable aux conflits et aux critiques.",
+    vigilance: "Un axe de développement potentiel concerne l'affirmation de soi et la capacité à défendre ses besoins et ses positions. Il est possible que la tendance à éviter les conflits et à s'effacer conduise à des frustrations accumulées. Développer une communication plus assertive et apprendre à exprimer ses besoins avec clarté pourrait constituer un levier de développement significatif.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que les arts plastiques, la musique, la photographie, les métiers de la mode, les soins esthétiques, la cuisine gastronomique, la kinésithérapie ou l'animation nature. Les secteurs qui conjuguent créativité, sensorialité et authenticité relationnelle semblent particulièrement compatibles avec ce type de préférences."
+  },
+  ESTP: {
+    name: "L'Entrepreneur",
+    temperament: "SP — Artisan Explorateur",
+    fonctionnement: "Ce profil suggère un mode de fonctionnement dynamique, pragmatique et orienté vers l'action immédiate. On pourrait faire l'hypothèse que la personne traite l'information en temps réel, en s'appuyant sur l'observation directe et le sens pratique. Sa capacité à s'adapter rapidement aux situations changeantes et à saisir les opportunités au vol semble être une ressource naturelle importante.",
+    travail: "Dans un contexte professionnel, ce profil laisse supposer une forte appétence pour les environnements dynamiques, à enjeux concrets et à forte interaction humaine. Il est possible que la personne s'épanouisse dans des métiers de négociation, de vente, de gestion de crise ou d'entrepreneuriat — là où sa vivacité d'esprit, sa capacité à convaincre et son goût du risque calculé constituent des atouts majeurs.",
+    relations: "Ce profil suggère un style relationnel direct, énergique et naturellement charismatique. L'hypothèse pourrait être que la personne sait créer rapidement une atmosphère de confiance et d'enthousiasme autour d'elle. Son sens de l'humour et sa franchise pourraient être des atouts relationnels, même si sa directivité pourrait parfois être perçue comme brusquerie.",
+    vigilance: "Un point de vigilance potentiel concerne la gestion de l'impulsivité et la capacité à anticiper les conséquences à long terme de ses décisions. Il est possible que la préférence pour l'action immédiate complexifie la planification et la persévérance sur des objectifs nécessitant patience et méthode. Développer des outils de réflexion stratégique et de régulation de l'impulsivité pourrait constituer un levier de développement important.",
+    secteurs: "Ce profil suggère une affinité potentielle pour des environnements tels que la vente, la négociation commerciale, l'entrepreneuriat, la gestion de crise, le sport de haut niveau, les métiers de l'urgence, le courtage, l'immobilier ou le management opérationnel. Les secteurs qui valorisent la réactivité, la prise de risque maîtrisée et l'impact immédiat semblent particulièrement résonner avec ce type de préférences."
+  }
+};
+
+// ============================================================
+// STATE
+// ============================================================
+let answers = new Array(70).fill(null);
+let currentQ = 0;
+let userName = "";
+let userDate = "";
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startTest() {
+  const nameInput = document.getElementById('input-name').value.trim();
+  if (!nameInput) {
+    alert("Veuillez entrer votre prénom et nom pour commencer.");
+    return;
+  }
+  userName = nameInput;
+  const dateInput = document.getElementById('input-date').value;
+  userDate = dateInput ? new Date(dateInput).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' }) : new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+  currentQ = 0;
+  answers = new Array(70).fill(null);
+  showScreen('screen-questions');
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const q = questions[currentQ];
+  document.getElementById('q-number').textContent = `Question ${currentQ + 1} sur 70`;
+  document.getElementById('q-text').textContent = q.stem;
+
+  const choicesDiv = document.getElementById('q-choices');
+  choicesDiv.innerHTML = '';
+
+  ['a', 'b'].forEach(key => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn' + (answers[currentQ] === key ? ' selected' : '');
+    btn.textContent = q[key].text;
+    btn.onclick = () => selectAnswer(key);
+    choicesDiv.appendChild(btn);
+  });
+
+  const pct = Math.round((currentQ / 70) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-count').textContent = `${currentQ} / 70`;
+
+  document.getElementById('btn-prev').style.visibility = currentQ === 0 ? 'hidden' : 'visible';
+  document.getElementById('btn-next').textContent = currentQ === 69 ? 'Voir mes résultats →' : 'Suivant →';
+  document.getElementById('btn-next').disabled = answers[currentQ] === null;
+}
+
+function selectAnswer(key) {
+  answers[currentQ] = key;
+  document.querySelectorAll('.choice-btn').forEach((btn, i) => {
+    btn.classList.toggle('selected', i === (key === 'a' ? 0 : 1));
+  });
+  document.getElementById('btn-next').disabled = false;
+}
+
+function nextQuestion() {
+  if (answers[currentQ] === null) return;
+  if (currentQ === 69) {
+    computeResults();
+    return;
+  }
+  currentQ++;
+  renderQuestion();
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+function restartTest() {
+  showScreen('screen-welcome');
+}
+
+// ============================================================
+// COMPUTE RESULTS
+// ============================================================
+function computeResults() {
+  const scores = { E:0, I:0, S:0, N:0, T:0, F:0, J:0, P:0 };
+  questions.forEach((q, i) => {
+    const ans = answers[i];
+    if (ans) {
+      const s = q[ans].scores;
+      Object.entries(s).forEach(([k,v]) => scores[k] += v);
+    }
+  });
+
+  // Determine type
+  const E = scores.E >= scores.I ? 'E' : 'I';
+  const S = scores.S >= scores.N ? 'S' : 'N';
+  const T = scores.T >= scores.F ? 'T' : 'F';
+  const J = scores.J >= scores.P ? 'J' : 'P';
+  const type = E + S + T + J;
+
+  // Percentages
+  const pctE = Math.round((scores.E / (scores.E + scores.I)) * 100) || 50;
+  const pctI = 100 - pctE;
+  const pctS = Math.round((scores.S / (scores.S + scores.N)) * 100) || 50;
+  const pctN = 100 - pctS;
+  const pctT = Math.round((scores.T / (scores.T + scores.F)) * 100) || 50;
+  const pctF = 100 - pctT;
+  const pctJ = Math.round((scores.J / (scores.J + scores.P)) * 100) || 50;
+  const pctP = 100 - pctJ;
+
+  const profile = profiles[type] || profiles['ENTJ'];
+
+  // Render result
+  document.getElementById('res-type').textContent = type;
+  document.getElementById('res-name').textContent = profile.name;
+  document.getElementById('res-temperament').textContent = profile.temperament;
+  document.getElementById('res-person-name').textContent = `${userName} — ${userDate}`;
+
+  // Scores grid
+  const grid = document.getElementById('scores-grid');
+  const pairs = [
+    { label: 'Orientation de l\'énergie', l1: 'E', v1: pctE, l2: 'I', v2: pctI, dom: E },
+    { label: 'Mode de perception', l1: 'S', v1: pctS, l2: 'N', v2: pctN, dom: S },
+    { label: 'Prise de décision', l1: 'T', v1: pctT, l2: 'F', v2: pctF, dom: T },
+    { label: 'Mode d\'organisation', l1: 'J', v1: pctJ, l2: 'P', v2: pctP, dom: J },
+  ];
+  grid.innerHTML = pairs.map(p => `
+    <div class="score-pair">
+      <div class="score-pair-label">${p.label}</div>
+      <div class="score-bar-row">
+        <span class="score-letter">${p.l1}</span>
+        <div class="score-bar-outer"><div class="score-bar-inner ${p.dom===p.l1?'dominant':''}" style="width:${p.v1}%"></div></div>
+        <span class="score-pct">${p.v1}%</span>
+      </div>
+      <div class="score-bar-row">
+        <span class="score-letter">${p.l2}</span>
+        <div class="score-bar-outer"><div class="score-bar-inner ${p.dom===p.l2?'dominant':''}" style="width:${p.v2}%"></div></div>
+        <span class="score-pct">${p.v2}%</span>
+      </div>
+    </div>
+  `).join('');
+
+  // Synthesis
+  const container = document.getElementById('synthesis-container');
+  const sections = [
+    { title: 'Mode de fonctionnement', text: profile.fonctionnement },
+    { title: 'Rapport au travail et à l\'environnement professionnel', text: profile.travail },
+    { title: 'Relation aux autres et communication', text: profile.relations },
+    { title: 'Points de vigilance et axes de développement', text: profile.vigilance },
+    { title: 'Pistes de secteurs et environnements professionnels', text: profile.secteurs },
+  ];
+  container.innerHTML = sections.map(s => `
+    <div class="synthesis-section">
+      <h3>${s.title}</h3>
+      <p>${s.text}</p>
+    </div>
+  `).join('');
+
+  // Store for PDF
+  window._mbtiResult = { type, profile, userName, scores: { E:pctE, I:pctI, S:pctS, N:pctN, T:pctT, F:pctF, J:pctJ, P:pctP }, dominant: {E, S, T, J} };
+
+  showScreen('screen-result');
+}
+
+function sendByEmail() {
+  const r = window._mbtiResult;
+  if (!r) return;
+  // Download PDF first
+  downloadPDF();
+  // Then open mail client
+  setTimeout(() => {
+    const subject = encodeURIComponent(`Résultats MBTI — ${r.userName} — ${r.type} ${r.profile.name}`);
+    const body = encodeURIComponent(
+`Bonjour,
+
+Veuillez trouver ci-joint les résultats de mon questionnaire MBTI réalisé dans le cadre de mon bilan de compétences.
+
+Nom : ${r.userName}
+Type MBTI : ${r.type} — ${r.profile.name}
+Tempérament : ${r.profile.temperament}
+
+Le PDF de restitution est en pièce jointe.
+
+Cordialement,
+${r.userName}`
+    );
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  }, 1500);
+}
+
+// ============================================================
+// PDF GENERATION
+// ============================================================
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+  const r = window._mbtiResult;
+  if (!r) return;
+
+  const W = 210, H = 297;
+  const margin = 18;
+  const contentW = W - margin * 2;
+
+  // Colors
+  const darkAzur = [26, 61, 92];
+  const azur = [89, 150, 178];
+  const yellow = [219, 190, 63];
+  const cream = [250, 245, 240];
+  const lightGray = [240, 232, 223];
+  const textColor = [26, 26, 46];
+  const mutedText = [74, 85, 104];
+
+  // Helper: wrapped text
+  function addWrappedText(text, x, y, maxW, lineH, color) {
+    doc.setTextColor(...color);
+    const lines = doc.splitTextToSize(text, maxW);
+    doc.text(lines, x, y);
+    return y + lines.length * lineH;
+  }
+
+  // ---- PAGE 1 ----
+
+  // Header band
+  doc.setFillColor(...darkAzur);
+  doc.rect(0, 0, W, 38, 'F');
+
+  // Yellow accent
+  doc.setFillColor(...yellow);
+  doc.rect(0, 38, W, 3, 'F');
+
+  // Brand
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'normal');
+  doc.text('ATTRIBUT CONSEILS', margin, 14);
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'bold');
+  doc.text('Bilan de Compétences', margin, 22);
+  doc.setFontSize(8);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Document confidentiel', margin, 30);
+
+  // Right: doc title
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(200, 220, 235);
+  doc.text('Restitution MBTI — Keirsey Temperament Sorter II', W - margin, 14, { align: 'right' });
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(10);
+  doc.text(r.userName, W - margin, 22, { align: 'right' });
+  const today = userDate || new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+  doc.setFontSize(8);
+  doc.setTextColor(200, 220, 235);
+  doc.text(today, W - margin, 30, { align: 'right' });
+
+  // Type block
+  let y = 52;
+  doc.setFillColor(...cream);
+  doc.rect(margin, y, contentW, 40, 'F');
+  doc.setDrawColor(...azur);
+  doc.setLineWidth(0.5);
+  doc.rect(margin, y, contentW, 40);
+
+  // Type letters
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(36);
+  doc.setTextColor(...darkAzur);
+  doc.text(r.type, margin + contentW / 2, y + 22, { align: 'center' });
+
+  // Name & temperament
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(12);
+  doc.setTextColor(...azur);
+  doc.text(r.profile.name, margin + contentW / 2, y + 32, { align: 'center' });
+  doc.setFontSize(8);
+  doc.setTextColor(...mutedText);
+  doc.text(r.profile.temperament, margin + contentW / 2, y + 38, { align: 'center' });
+
+  // Scores section
+  y = 100;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(8);
+  doc.setTextColor(...azur);
+  doc.text('PROFIL DES PRÉFÉRENCES', margin, y);
+  doc.setDrawColor(...azur);
+  doc.setLineWidth(0.3);
+  doc.line(margin, y + 2, W - margin, y + 2);
+
+  y += 8;
+  const pairLabels = [
+    { label: 'Orientation de l\'énergie', l1: 'E', v1: r.scores.E, l2: 'I', v2: r.scores.I, dom: r.dominant.E },
+    { label: 'Mode de perception', l1: 'S', v1: r.scores.S, l2: 'N', v2: r.scores.N, dom: r.dominant.S },
+    { label: 'Prise de décision', l1: 'T', v1: r.scores.T, l2: 'F', v2: r.scores.F, dom: r.dominant.T },
+    { label: 'Mode d\'organisation', l1: 'J', v1: r.scores.J, l2: 'P', v2: r.scores.P, dom: r.dominant.J },
+  ];
+
+  const colW = (contentW - 6) / 2;
+  pairLabels.forEach((p, idx) => {
+    const col = idx % 2;
+    const row = Math.floor(idx / 2);
+    const px = margin + col * (colW + 6);
+    const py = y + row * 22;
+
+    doc.setFillColor(...lightGray);
+    doc.rect(px, py, colW, 18, 'F');
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7);
+    doc.setTextColor(...mutedText);
+    doc.text(p.label.toUpperCase(), px + 4, py + 5);
+
+    // Bar row 1
+    const barX = px + 12;
+    const barW = colW - 20;
+    const barH = 3;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...(p.dom === p.l1 ? darkAzur : mutedText));
+    doc.text(p.l1, px + 4, py + 11);
+    doc.setFillColor(...lightGray);
+    doc.setDrawColor(180, 200, 215);
+    doc.rect(barX, py + 8, barW, barH, 'FD');
+    doc.setFillColor(...(p.dom === p.l1 ? darkAzur : azur));
+    doc.rect(barX, py + 8, barW * p.v1 / 100, barH, 'F');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(...mutedText);
+    doc.text(`${p.v1}%`, px + colW - 4, py + 11, { align: 'right' });
+
+    // Bar row 2
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...(p.dom === p.l2 ? darkAzur : mutedText));
+    doc.text(p.l2, px + 4, py + 17);
+    doc.setFillColor(...lightGray);
+    doc.setDrawColor(180, 200, 215);
+    doc.rect(barX, py + 14, barW, barH, 'FD');
+    doc.setFillColor(...(p.dom === p.l2 ? darkAzur : azur));
+    doc.rect(barX, py + 14, barW * p.v2 / 100, barH, 'F');
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(...mutedText);
+    doc.text(`${p.v2}%`, px + colW - 4, py + 17, { align: 'right' });
+  });
+
+  y += 48;
+
+  // Synthesis sections page 1
+  const sections = [
+    { title: 'Mode de fonctionnement', text: r.profile.fonctionnement },
+    { title: 'Rapport au travail et à l\'environnement professionnel', text: r.profile.travail },
+  ];
+
+  sections.forEach(s => {
+    if (y > H - 30) {
+      doc.addPage();
+      y = margin;
+    }
+    // Section title
+    doc.setFillColor(...azur);
+    doc.rect(margin, y, 3, 8, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...darkAzur);
+    doc.text(s.title.toUpperCase(), margin + 6, y + 6);
+    y += 12;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...textColor);
+    const lines = doc.splitTextToSize(s.text, contentW);
+    const blockH = lines.length * 5.2;
+    if (y + blockH > H - 20) {
+      doc.addPage();
+      y = margin + 10;
+    }
+    doc.text(lines, margin, y);
+    y += blockH + 10;
+  });
+
+  // ---- PAGE 2 ----
+  doc.addPage();
+
+  // Header band page 2
+  doc.setFillColor(...darkAzur);
+  doc.rect(0, 0, W, 20, 'F');
+  doc.setFillColor(...yellow);
+  doc.rect(0, 20, W, 2, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.text('ATTRIBUT CONSEILS', margin, 9);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(8);
+  doc.setTextColor(200, 220, 235);
+  doc.text(`${r.userName} — ${r.type} ${r.profile.name}`, W - margin, 9, { align: 'right' });
+  doc.setTextColor(255, 255, 255);
+  doc.text('Synthèse de personnalité — Page 2', W - margin, 15, { align: 'right' });
+
+  y = 30;
+
+  const sections2 = [
+    { title: 'Relation aux autres et communication', text: r.profile.relations },
+    { title: 'Points de vigilance et axes de développement', text: r.profile.vigilance },
+    { title: 'Pistes de secteurs et environnements professionnels', text: r.profile.secteurs },
+  ];
+
+  sections2.forEach(s => {
+    doc.setFillColor(...azur);
+    doc.rect(margin, y, 3, 8, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor(...darkAzur);
+    doc.text(s.title.toUpperCase(), margin + 6, y + 6);
+    y += 12;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(...textColor);
+    const lines = doc.splitTextToSize(s.text, contentW);
+    // If section overflows page, start new page
+    if (y + lines.length * 5.2 > H - 45) {
+      doc.addPage();
+      doc.setFillColor(...darkAzur);
+      doc.rect(0, 0, W, 20, 'F');
+      doc.setFillColor(...yellow);
+      doc.rect(0, 20, W, 2, 'F');
+      doc.setTextColor(255,255,255);
+      doc.setFont('helvetica','bold');
+      doc.setFontSize(8);
+      doc.text('ATTRIBUT CONSEILS', margin, 13);
+      doc.setFont('helvetica','normal');
+      doc.setTextColor(200,220,235);
+      doc.text(`${r.userName} — ${r.type}`, W - margin, 13, { align: 'right' });
+      y = 30;
+      // Redraw section title
+      doc.setFillColor(...azur);
+      doc.rect(margin, y, 3, 8, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(...darkAzur);
+      doc.text(s.title.toUpperCase(), margin + 6, y + 6);
+      y += 12;
+    }
+    doc.text(lines, margin, y);
+    y += lines.length * 5.2 + 12;
+  });
+
+  // Disclaimer box
+  y = Math.max(y + 10, H - 55);
+  doc.setFillColor(...cream);
+  doc.setDrawColor(...azur);
+  doc.setLineWidth(0.4);
+  doc.rect(margin, y, contentW, 30, 'FD');
+
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(7.5);
+  doc.setTextColor(...darkAzur);
+  doc.text('Note d\'utilisation', margin + 5, y + 7);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7.5);
+  doc.setTextColor(...mutedText);
+  const disclaimer = "Ce document présente des hypothèses de travail basées sur les réponses au Keirsey Temperament Sorter II. Il ne constitue pas un diagnostic mais un point d'appui pour la réflexion dans le cadre du bilan de compétences. Les interprétations formulées en termes d'hypothèses sont à valider avec le consultant lors des séances de restitution.";
+  const dLines = doc.splitTextToSize(disclaimer, contentW - 10);
+  doc.text(dLines, margin + 5, y + 14);
+
+  // Footer
+  doc.setFillColor(...darkAzur);
+  doc.rect(0, H - 12, W, 12, 'F');
+  doc.setTextColor(200, 220, 235);
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(7);
+  doc.text('Attribut Conseils — Document confidentiel — Bilan de compétences', margin, H - 4);
+  doc.text(today, W - margin, H - 4, { align: 'right' });
+
+  doc.save(`MBTI_${r.type}_${r.userName.replace(/\s+/g,'_')}.pdf`);
+}
+</script>
+</body>
+</html>

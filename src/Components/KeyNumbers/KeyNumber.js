@@ -6,8 +6,19 @@ const KeyNumber = () => {
   const [countYear, setCountYear] = useState(1);
   const [countPeople, setCountPeople] = useState(2500);
   const [countExpert, setCountExpert] = useState(1);
-  const yearNumber = 19;
-  const peopleHelped = 4800;
+  const startYear = 2007;
+  const yearNumber = Math.max(new Date().getFullYear() - startYear, 1);
+  const referencePeopleCount = 4800;
+  const referencePeopleDate = new Date("2026-01-01T00:00:00");
+  const yearlyPeopleIncrease = 135;
+  const weeksElapsed = Math.max(
+    Math.floor(
+      (Date.now() - referencePeopleDate.getTime()) / (7 * 24 * 60 * 60 * 1000),
+    ),
+    0,
+  );
+  const peopleHelped =
+    referencePeopleCount + Math.floor((weeksElapsed * yearlyPeopleIncrease) / 52);
   const teamNumber = 6;
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -29,7 +40,7 @@ const KeyNumber = () => {
     return () => {
       clearInterval(intervalYear); // Assurez-vous d'arrêter l'intervalle lors du démontage du composant
     };
-  }, [inView, countYear]);
+  }, [inView, countYear, yearNumber]);
 
   useEffect(() => {
     let intervalPeople;
@@ -47,7 +58,7 @@ const KeyNumber = () => {
     return () => {
       clearInterval(intervalPeople);
     };
-  }, [inView, countPeople]);
+  }, [inView, countPeople, peopleHelped]);
 
   useEffect(() => {
     let intervalExpert;

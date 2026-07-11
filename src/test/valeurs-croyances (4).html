@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes Valeurs &amp; Croyances — Attribut Conseils</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--azur:#5996b2;--dark-azur:#1a3d5c;--yellow:#dbbe3f;--cream:#faf5f0;--cream-dark:#f0e9e1;--text:#2a2a2a;--text-light:#6b6b6b;--border:#d8cfc7;--white:#ffffff;--radius:6px}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;font-size:15px;line-height:1.6}
+.header{background:var(--dark-azur);padding:28px 40px;display:flex;align-items:center;justify-content:space-between}
+.header-logo{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:#fff;letter-spacing:.04em}
+.header-logo span{color:var(--yellow)}
+.header-sub{font-size:12px;color:rgba(255,255,255,.5);letter-spacing:.12em;text-transform:uppercase;font-weight:300}
+.progress-bar{background:var(--dark-azur);padding:0 40px 22px;display:flex;align-items:center;overflow-x:auto;gap:0}
+.ps{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.sd{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;color:rgba(255,255,255,.4);flex-shrink:0;transition:all .3s}
+.sd.active{background:var(--yellow);border-color:var(--yellow);color:var(--dark-azur)}
+.sd.done{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.7)}
+.sl{font-size:11px;color:rgba(255,255,255,.35);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;transition:color .3s}
+.sl.active{color:var(--yellow)}
+.sl.done{color:rgba(255,255,255,.55)}
+.sc{width:24px;height:1px;background:rgba(255,255,255,.15);flex-shrink:0;margin:0 3px}
+.container{max-width:860px;margin:0 auto;padding:48px 40px 80px}
+.sp{display:none}
+.sp.active{display:block}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--azur);font-weight:500;margin-bottom:10px}
+.step-title{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:400;color:var(--dark-azur);line-height:1.2;margin-bottom:10px}
+.step-intro{font-size:15px;color:var(--text-light);max-width:600px;margin-bottom:32px;font-weight:300;line-height:1.7}
+.fl{display:flex;gap:24px;flex-wrap:wrap}
+.fg{margin-bottom:22px}
+.fl .fg{flex:1;min-width:190px}
+.lbl{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-light);margin-bottom:8px;font-weight:500}
+.fi{width:100%;padding:13px 17px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:15px;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
+.fi:focus{border-color:var(--azur)}
+textarea.fi{resize:vertical;min-height:88px}
+.vs-wrap{position:relative;margin-bottom:14px}
+.vs-wrap input{width:100%;padding:12px 18px 12px 44px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:14px;background:#fff;outline:none;transition:border-color .2s}
+.vs-wrap input:focus{border-color:var(--azur)}
+.vs-wrap::before{content:'\2315';position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--text-light);font-size:18px}
+.vc{font-size:13px;color:var(--text-light);margin-bottom:12px}
+.vc strong{color:var(--azur)}
+.vg{display:flex;flex-wrap:wrap;gap:8px;max-height:310px;overflow-y:auto;padding:4px 2px;margin-bottom:24px}
+.chip{padding:8px 16px;border:1.5px solid var(--border);border-radius:24px;font-size:13px;cursor:pointer;background:#fff;color:var(--text);transition:all .18s;user-select:none}
+.chip:hover{border-color:var(--azur);color:var(--azur)}
+.chip.sel{background:var(--azur);border-color:var(--azur);color:#fff;font-weight:500}
+.chip.dis{opacity:.35;cursor:not-allowed}
+.rl{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.rc{display:flex;align-items:center;gap:16px;background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:16px 20px;cursor:grab;transition:box-shadow .2s,border-color .2s;user-select:none}
+.rc:active{cursor:grabbing}
+.rc.dragging{box-shadow:0 8px 32px rgba(26,61,92,.18);border-color:var(--azur);opacity:.92}
+.rc.over{border-color:var(--yellow);background:#fffdf0}
+.rn{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;color:var(--azur);width:32px;text-align:center;flex-shrink:0}
+.rname{font-size:16px;font-weight:500;color:var(--dark-azur);flex:1}
+.rh{color:var(--border);font-size:18px}
+.cb{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:26px 26px 22px;margin-bottom:18px}
+.cv{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--dark-azur);margin-bottom:4px}
+.cr{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--azur);margin-bottom:18px;font-weight:500}
+.cf{display:flex;flex-direction:column;gap:16px}
+.divider{border:none;border-top:1px solid var(--border);margin:34px 0}
+.badge{display:inline-block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:500;padding:5px 14px;border-radius:24px;margin-bottom:18px}
+.blim{background:#fdecea;color:#c0392b}
+.baid{background:#edf7f0;color:#1e8449}
+.pc{display:flex;align-items:flex-start;gap:12px;margin-bottom:12px}
+.pp{font-size:14px;color:var(--text-light);padding-top:11px;font-style:italic;min-width:210px;flex-shrink:0}
+.pi{flex:1;padding:11px 15px;border:1.5px solid var(--border);border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:14px;color:var(--text);background:#fff;outline:none;transition:border-color .2s}
+.pi:focus{border-color:var(--azur)}
+.bridge{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:36px 40px;text-align:center;margin-bottom:28px}
+.bridge-icon{font-size:38px;margin-bottom:18px}
+.bridge-title{font-family:'Cormorant Garamond',serif;font-size:28px;color:var(--dark-azur);margin-bottom:12px}
+.bridge-text{font-size:14px;color:var(--text-light);font-weight:300;line-height:1.7;max-width:460px;margin:0 auto}
+.done-chips{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+.done-chip{padding:7px 16px;background:var(--dark-azur);color:#fff;border-radius:24px;font-size:13px;font-weight:500}
+.btn-row{display:flex;gap:14px;margin-top:34px;align-items:center;flex-wrap:wrap}
+.btn{background:var(--dark-azur);color:#fff;border:none;padding:14px 30px;border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:14px;font-weight:500;cursor:pointer;letter-spacing:.04em;transition:background .2s,transform .15s}
+.btn:hover{background:#0f2a42;transform:translateY(-1px)}
+.btn-sec{background:transparent;color:var(--text-light);border:1.5px solid var(--border);padding:13px 26px;border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:14px;cursor:pointer;transition:border-color .2s,color .2s}
+.btn-sec:hover{border-color:var(--azur);color:var(--azur)}
+.btn-pdf{background:var(--yellow);color:var(--dark-azur);border:none;padding:14px 30px;border-radius:var(--radius);font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;letter-spacing:.04em;transition:background .2s,transform .15s}
+.btn-pdf:hover{background:#c9a830;transform:translateY(-1px)}
+.recap-card{background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:26px 30px;margin-bottom:16px}
+.rtitle{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;color:var(--dark-azur);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--cream-dark)}
+.rv{display:flex;align-items:baseline;gap:14px;padding:9px 0;border-bottom:1px solid var(--cream-dark)}
+.rv:last-child{border-bottom:none}
+.rnum{font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--azur);width:24px;flex-shrink:0}
+.rvname{font-weight:500;font-size:15px;width:155px;flex-shrink:0}
+.rvd{font-size:13px;color:var(--text-light);font-style:italic}
+.info-box{background:#eef4f8;border-left:3px solid var(--azur);padding:15px 18px;border-radius:0 var(--radius) var(--radius) 0;font-size:13px;color:var(--dark-azur);margin-top:22px;line-height:1.6}
+.info-box strong{display:block;margin-bottom:4px;font-weight:500}
+.err{color:#c0392b;font-size:13px;margin-top:8px;display:none}
+@media(max-width:620px){
+  .container{padding:26px 16px 60px}
+  .header{padding:18px 18px}
+  .progress-bar{padding:0 18px 18px}
+  .step-title{font-size:26px}
+  .pc{flex-direction:column;gap:6px}
+  .pp{padding-top:0;min-width:unset}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-logo">ATTRIBUT <span>CONSEILS</span></div>
+    <div class="header-sub">Bilan de compétences</div>
+  </div>
+  <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:rgba(255,255,255,.55);font-style:italic">Mes valeurs &amp; croyances</div>
+</div>
+
+<div class="progress-bar">
+  <div class="ps"><div class="sd active" id="d1">1</div><div class="sl active" id="l1">Valeurs pro</div></div>
+  <div class="sc"></div>
+  <div class="ps"><div class="sd" id="d2">2</div><div class="sl" id="l2">Croyances pro</div></div>
+  <div class="sc"></div>
+  <div class="ps"><div class="sd" id="d3">3</div><div class="sl" id="l3">Valeurs perso</div></div>
+  <div class="sc"></div>
+  <div class="ps"><div class="sd" id="d4">4</div><div class="sl" id="l4">Croyances perso</div></div>
+  <div class="sc"></div>
+  <div class="ps"><div class="sd" id="d5">5</div><div class="sl" id="l5">Synthèse</div></div>
+</div>
+
+<div class="container">
+
+<!-- 0 Accueil -->
+<div class="sp active" id="s0">
+  <div class="eyebrow">Avant de commencer</div>
+  <h1 class="step-title">Bienvenue dans ce module<br><em style="font-style:italic;font-weight:300">d'exploration personnelle</em></h1>
+  <p class="step-intro">Ce parcours vous invite à explorer vos valeurs dans deux sphères de votre vie — professionnelle puis personnelle — et à identifier les croyances qui leur sont associées. Prenez le temps qu'il vous faut.</p>
+  <p class="step-intro" style="margin-top:-14px">À la fin, vous téléchargerez un document à déposer dans votre espace Dendreo. Il servira de base à votre prochain rendez-vous.</p>
+  <div class="fl">
+    <div class="fg"><label class="lbl">Prénom</label><input class="fi" id="prenom" placeholder="ex. Marie"></div>
+    <div class="fg"><label class="lbl">Nom</label><input class="fi" id="nom" placeholder="ex. Dupont"></div>
+  </div>
+  <div class="fl">
+    <div class="fg"><label class="lbl">Date</label><input class="fi" type="date" id="ddate"></div>
+    <div class="fg"><label class="lbl">Consultante</label>
+      <select class="fi" id="consult">
+        <option value="">Sélectionner</option>
+        <option>Daphné</option><option>Camille Sulpice</option><option>Caroline</option>
+      </select>
+    </div>
+  </div>
+  <div class="btn-row"><button class="btn" onclick="G(1)">Commencer &#8594;</button></div>
+</div>
+
+<!-- 1 Valeurs pro sélection -->
+<div class="sp" id="s1">
+  <div class="eyebrow">Étape 1 · Vie professionnelle</div>
+  <h2 class="step-title">Vos valeurs au travail</h2>
+  <p class="step-intro">Pensez à votre vie professionnelle — votre environnement idéal, ce qui vous motive profondément, ce qui vous manque ou vous pèse. Sélectionnez <strong>5 à 7 valeurs</strong>.</p>
+  <div class="vs-wrap"><input id="sPro" placeholder="Rechercher une valeur…" oninput="FV('pro')"></div>
+  <div class="vc" id="cPro"><strong>0</strong> valeur(s) — choisissez entre 5 et 7</div>
+  <div class="vg" id="gPro"></div>
+  <div class="err" id="e1">Veuillez sélectionner entre 5 et 7 valeurs.</div>
+  <div class="btn-row">
+    <button class="btn-sec" onclick="G(0)">&#8592; Retour</button>
+    <button class="btn" onclick="VS1()">Classer mes valeurs &#8594;</button>
+  </div>
+</div>
+
+<!-- 1b Ranking pro -->
+<div class="sp" id="s1b">
+  <div class="eyebrow">Étape 1 · Vie professionnelle</div>
+  <h2 class="step-title">Classez vos valeurs professionnelles</h2>
+  <p class="step-intro">Glissez-déposez pour ordonner de la plus à la moins importante. Seules vos <strong>5 premières</strong> seront retenues.</p>
+  <div class="rl" id="rPro"></div>
+  <div class="btn-row">
+    <button class="btn-sec" onclick="G(1)">&#8592; Modifier ma sélection</button>
+    <button class="btn" onclick="GCP()">Explorer les croyances &#8594;</button>
+  </div>
+</div>
+
+<!-- 2 Croyances pro -->
+<div class="sp" id="s2">
+  <div class="eyebrow">Étape 2 · Vie professionnelle</div>
+  <h2 class="step-title">Vos croyances professionnelles</h2>
+  <p class="step-intro">Pour chacune de vos 5 valeurs, explorez la croyance associée. Puis identifiez une croyance limitante et une croyance aidante dans votre rapport au travail.</p>
+  <div id="cpro"></div>
+  <div class="divider"></div>
+  <span class="badge blim">Croyance limitante · vie professionnelle</span>
+  <p style="font-size:14px;color:var(--text-light);margin-bottom:18px;font-style:italic">Une pensée qui freine votre évolution ou réduit votre champ des possibles.</p>
+  <div id="lpro"></div>
+  <div class="divider"></div>
+  <span class="badge baid">Croyance aidante · vie professionnelle</span>
+  <p style="font-size:14px;color:var(--text-light);margin-bottom:18px;font-style:italic">Une conviction qui soutient et élargit votre horizon professionnel.</p>
+  <div id="apro"></div>
+  <div class="btn-row">
+    <button class="btn-sec" onclick="G('1b')">&#8592; Retour</button>
+    <button class="btn" onclick="SP()">Continuer vers la vie personnelle &#8594;</button>
+  </div>
+</div>
+
+<!-- Bridge -->
+<div class="sp" id="sbridge">
+  <div class="bridge">
+    <div class="bridge-icon">&#10022;</div>
+    <div class="bridge-title">Première partie complétée</div>
+    <p class="bridge-text">Vous avez identifié vos valeurs et croyances professionnelles. Prenez un instant avant d'explorer votre vie personnelle.</p>
+    <div class="done-chips" id="bchips"></div>
+  </div>
+  <div class="btn-row" style="justify-content:center">
+    <button class="btn" onclick="G(3)">Explorer mes valeurs personnelles &#8594;</button>
+  </div>
+</div>
+
+<!-- 3 Valeurs perso sélection -->
+<div class="sp" id="s3">
+  <div class="eyebrow">Étape 3 · Vie personnelle</div>
+  <h2 class="step-title">Vos valeurs personnelles</h2>
+  <p class="step-intro">Pensez maintenant à votre vie en dehors du travail — vos relations, votre équilibre, ce qui donne sens à votre quotidien. Sélectionnez <strong>5 à 7 valeurs</strong>.</p>
+  <div class="vs-wrap"><input id="sPerso" placeholder="Rechercher une valeur…" oninput="FV('perso')"></div>
+  <div class="vc" id="cPerso"><strong>0</strong> valeur(s) — choisissez entre 5 et 7</div>
+  <div class="vg" id="gPerso"></div>
+  <div class="err" id="e3">Veuillez sélectionner entre 5 et 7 valeurs.</div>
+  <div class="btn-row">
+    <button class="btn-sec" onclick="G('bridge')">&#8592; Retour</button>
+    <button class="btn" onclick="VS3()">Classer mes valeurs &#8594;</button>
+  </div>
+</div>
+
+<!-- 3b Ranking perso -->
+<div class="sp" id="s3b">
+  <div class="eyebrow">Étape 3 · Vie personnelle</div>
+  <h2 class="step-title">Classez vos valeurs personnelles</h2>
+  <p class="step-intro">Même principe — glissez-déposez pour ordonner. Vos <strong>5 premières</strong> seront retenues.</p>
+  <div class="rl" id="rPerso"></div>
+  <div class="btn-row">
+    <button class="btn-sec" onclick="G(3)">&#8592; Modifier ma sélection</button>
+    <button class="btn" onclick="GCPE()">Explorer les croyances &#8594;</button>
+  </div>
+</div>
+
+<!-- 4 Croyances perso -->
+<div class="sp" id="s4">
+  <div class="eyebrow">Étape 4 · Vie personnelle</div>
+  <h2 class="step-title">Vos croyances personnelles</h2>
+  <p class="step-intro">Pour chacune de vos 5 valeurs personnelles, explorez la croyance associée. Puis identifiez une croyance limitante et une croyance aidante dans votre vie personnelle.</p>
+  <div id="cperso"></div>
+  <div class="divider"></div>
+  <span class="badge blim">Croyance limitante · vie personnelle</span>
+  <p style="font-size:14px;color:var(--text-light);margin-bottom:18px;font-style:italic">Une pensée qui freine votre épanouissement personnel.</p>
+  <div id="lperso"></div>
+  <div class="divider"></div>
+  <span class="badge baid">Croyance aidante · vie personnelle</span>
+  <p style="font-size:14px;color:var(--text-light);margin-bottom:18px;font-style:italic">Une conviction qui vous soutient dans votre vie personnelle.</p>
+  <div id="aperso"></div>
+  <div class="btn-row">
+    <button class="btn-sec" onclick="G('3b')">&#8592; Retour</button>
+    <button class="btn" onclick="SPERSO()">Voir ma synthèse &#8594;</button>
+  </div>
+</div>
+
+<!-- 5 Synthèse -->
+<div class="sp" id="s5">
+  <div class="eyebrow">Votre synthèse complète</div>
+  <h2 class="step-title">Vos valeurs &amp; croyances</h2>
+  <p class="step-intro">Voici votre carte personnelle. Commencez par télécharger votre PDF, puis envoyez-le à votre consultante.</p>
+
+  <!-- ÉTAPE 1 : PDF -->
+  <div style="background:#fff;border:1.5px solid var(--yellow);border-radius:var(--radius);padding:22px 26px;margin-bottom:16px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div style="flex:1;min-width:220px">
+      <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow);font-weight:600;margin-bottom:4px">Étape 1 — À faire en premier</div>
+      <div style="font-size:15px;font-weight:500;color:var(--dark-azur);margin-bottom:4px">Téléchargez votre document PDF</div>
+      <div style="font-size:13px;color:var(--text-light)">Déposez-le ensuite dans votre espace Dendreo → « Mes documents ».</div>
+    </div>
+    <button class="btn-pdf" onclick="PDF()" style="flex-shrink:0">&#8595; Télécharger mon PDF</button>
+  </div>
+
+  <div id="recap"></div>
+
+  <!-- ÉTAPE 2 : Email -->
+  <div style="background:#fff;border:1.5px solid var(--border);border-radius:var(--radius);padding:22px 26px;margin-top:16px;display:flex;align-items:center;gap:20px;flex-wrap:wrap">
+    <div style="flex:1;min-width:220px">
+      <div style="font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--azur);font-weight:600;margin-bottom:4px">Étape 2 — Une fois le PDF téléchargé</div>
+      <div style="font-size:15px;font-weight:500;color:var(--dark-azur);margin-bottom:4px">Envoyez un résumé à votre consultante</div>
+      <div style="font-size:13px;color:var(--text-light)">Un email récapitulatif s'ouvrira dans votre messagerie. La page restera ouverte.</div>
+    </div>
+    <button class="btn-sec" onclick="MAIL()" style="flex-shrink:0">&#9993; Envoyer à ma consultante</button>
+  </div>
+
+  <div class="btn-row" style="margin-top:28px">
+    <button class="btn-sec" onclick="G(4)">&#8592; Modifier</button>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+const VL=["Abondance","Acceptation","Accessibilité","Accomplissement","Achèvement","Actualité","Adaptabilité","Affection","Affluence","Agilité","Altruisme","Ambition","Anticipation","Appréciation","Assurance","Attraction","Audace","Auto-discipline","Autonomie","Aventure","Bienveillance","Bonheur","Bravoure","Calme","Camaraderie","Candeur","Certitude","Chaleur","Clarté","Cohérence","Compassion","Compétence","Compréhension","Concentration","Confiance en soi","Conformité","Confort","Connexion","Conscience","Contentement","Continuité","Contribution","Contrôle","Conviction","Convivialité","Coopération","Cordialité","Courage","Courtoisie","Créativité","Crédibilité","Croissance","Curiosité","Découverte","Défi","Détermination","Devoir","Dévotion","Dignité","Diligence","Discernement","Discipline","Discrétion","Disponibilité","Diversité","Don","Dynamisme","Économe","Éducation","Efficacité","Égalité","Empathie","Empressement","Encouragement","Énergie","Engagement","Entêtement","Enthousiasme","Équité","Espérance","Excellence","Expérience","Expertise","Exploration","Expressivité","Famille","Fermeté","Fiabilité","Fidélité","Flexibilité","Force","Franchise","Générosité","Gratitude","Habileté","Harmonie intérieure","Honnêteté","Indépendance financière","Intelligence","Intrépidité","Jeunesse","Joie","Justice","Liberté","Lucidité","Maîtrise","Ordre social","Paix","Partage","Performance","Plaisir","Politesse","Pouvoir social","Prise de décision","Profondeur","Proximité","Réciprocité","Réflexion","Résilience","Respect","Retenue","Rêve","Richesse","Rigueur","Sagesse","Sang-froid","Santé","Satisfaction","Sécurité","Sens de la vie","Sensibilité","Sentiment d'appartenance","Sérénité","Service","Simplicité","Sincérité","Solidarité","Solidité","Solitude","Soutien","Spiritualité","Spontanéité","Stabilité","Succès","Sympathie","Synergie","Tradition","Tranquillité","Transcendance","Travail d'équipe","Unité","Utilité","Variété","Vérité","Vie spirituelle","Vigilance","Vision","Vitalité","Vitesse","Vivacité","Volonté"];
+
+let sPro=[],rPro=[],cPro={},lPro={},aPro={};
+let sPerso=[],rPerso=[],cPerso={},lPerso={},aPerso={};
+let dragSrc=null;
+
+function RG(dom){
+  const ip=dom==='pro';
+  const q=(document.getElementById(ip?'sPro':'sPerso').value||'').toLowerCase();
+  const sel=ip?sPro:sPerso;
+  const g=document.getElementById(ip?'gPro':'gPerso');
+  g.innerHTML='';
+  VL.filter(v=>v.toLowerCase().includes(q)).forEach(v=>{
+    const iS=sel.includes(v),iD=sel.length>=7&&!iS;
+    const c=document.createElement('div');
+    c.className='chip'+(iS?' sel':'')+(iD?' dis':'');
+    c.textContent=v;
+    c.onclick=()=>{
+      if(iD)return;
+      if(iS){if(ip)sPro=sPro.filter(x=>x!==v);else sPerso=sPerso.filter(x=>x!==v);}
+      else{if(ip)sPro.push(v);else sPerso.push(v);}
+      RG(dom);
+    };
+    g.appendChild(c);
+  });
+  const n=sel.length;
+  document.getElementById(ip?'cPro':'cPerso').innerHTML=`<strong>${n}</strong> valeur(s) sélectionnée(s) — choisissez entre 5 et 7`;
+}
+function FV(d){RG(d);}
+
+function RR(dom){
+  const ip=dom==='pro';
+  const arr=ip?rPro:rPerso;
+  const el=document.getElementById(ip?'rPro':'rPerso');
+  el.innerHTML='';
+  arr.forEach((v,i)=>{
+    const c=document.createElement('div');
+    c.className='rc';c.draggable=true;
+    c.innerHTML=`<div class="rn">${i+1}</div><div class="rname">${v}</div><div class="rh">&#10727;</div>`;
+    c.addEventListener('dragstart',()=>{dragSrc=i;c.classList.add('dragging');});
+    c.addEventListener('dragend',()=>c.classList.remove('dragging'));
+    c.addEventListener('dragover',e=>{e.preventDefault();c.classList.add('over');});
+    c.addEventListener('dragleave',()=>c.classList.remove('over'));
+    c.addEventListener('drop',e=>{
+      e.preventDefault();c.classList.remove('over');
+      if(dragSrc!==null&&dragSrc!==i){
+        const a=ip?rPro:rPerso;
+        const m=a.splice(dragSrc,1)[0];a.splice(i,0,m);RR(dom);
+      }
+    });
+    el.appendChild(c);
+  });
+}
+
+function RF(dom){
+  const ip=dom==='pro';
+  const top=(ip?rPro:rPerso).slice(0,5);
+  const st=ip?cPro:cPerso;
+  const el=document.getElementById(ip?'cpro':'cperso');
+  el.innerHTML='';
+  top.forEach((v,i)=>{
+    const d=st[v]||{};
+    const b=document.createElement('div');b.className='cb';
+    b.innerHTML=`<div class="cv">${v}</div>
+    <div class="cr">Valeur n°${i+1} · ${ip?'vie professionnelle':'vie personnelle'}</div>
+    <div class="cf">
+      <div class="fg"><label class="lbl">Que signifie cette valeur pour vous ?</label>
+        <textarea class="fi" id="${dom}s${i}" placeholder="Décrivez en vos propres mots…">${d.s||''}</textarea></div>
+      <div class="fg"><label class="lbl">Comment savez-vous qu'elle est satisfaite ?</label>
+        <textarea class="fi" id="${dom}f${i}" placeholder="Quels signes concrets ?">${d.f||''}</textarea></div>
+      <div class="fg"><label class="lbl">Commentaire libre <span style="font-weight:300;color:var(--text-light)">(optionnel)</span></label>
+        <textarea class="fi" id="${dom}c${i}" style="min-height:70px" placeholder="Toute réflexion…">${d.c||''}</textarea></div>
+    </div>`;
+    el.appendChild(b);
+  });
+  const LP=[
+    {p:'Je ne réussis pas complètement dans… parce que',k:'l1'},
+    {p:'Je ne peux pas devenir… car',k:'l2'},
+    {p:'Je ne suis pas capable de… parce que',k:'l3'}
+  ];
+  const AP=[
+    {p:'Je suis capable de… parce que',k:'a1'},
+    {p:'Je vais arriver à… parce que',k:'a2'},
+    {p:"J'ai un vrai talent pour… car",k:'a3'}
+  ];
+  const lSt=ip?lPro:lPerso,aSt=ip?aPro:aPerso;
+  const le=document.getElementById(ip?'lpro':'lperso'),ae=document.getElementById(ip?'apro':'aperso');
+  le.innerHTML='';ae.innerHTML='';
+  LP.forEach(p=>{const d=document.createElement('div');d.className='pc';d.innerHTML=`<span class="pp">${p.p}</span><input type="text" class="pi" id="${dom}${p.k}" value="${lSt[p.k]||''}" placeholder="…">`;le.appendChild(d);});
+  AP.forEach(p=>{const d=document.createElement('div');d.className='pc';d.innerHTML=`<span class="pp">${p.p}</span><input type="text" class="pi" id="${dom}${p.k}" value="${aSt[p.k]||''}" placeholder="…">`;ae.appendChild(d);});
+}
+
+function SF(dom){
+  const ip=dom==='pro';
+  const top=(ip?rPro:rPerso).slice(0,5);
+  const st=ip?cPro:cPerso,lSt=ip?lPro:lPerso,aSt=ip?aPro:aPerso;
+  top.forEach((v,i)=>{st[v]={s:document.getElementById(`${dom}s${i}`)?.value||'',f:document.getElementById(`${dom}f${i}`)?.value||'',c:document.getElementById(`${dom}c${i}`)?.value||''};});
+  ['l1','l2','l3'].forEach(k=>{lSt[k]=document.getElementById(`${dom}${k}`)?.value||'';});
+  ['a1','a2','a3'].forEach(k=>{aSt[k]=document.getElementById(`${dom}${k}`)?.value||'';});
+}
+
+function VS1(){if(sPro.length<5||sPro.length>7){document.getElementById('e1').style.display='block';return;}document.getElementById('e1').style.display='none';rPro=[...sPro];RR('pro');G('1b');}
+function GCP(){RF('pro');G(2);}
+function SP(){SF('pro');const bc=document.getElementById('bchips');bc.innerHTML='';rPro.slice(0,5).forEach(v=>{const c=document.createElement('div');c.className='done-chip';c.textContent=v;bc.appendChild(c);});G('bridge');}
+function VS3(){if(sPerso.length<5||sPerso.length>7){document.getElementById('e3').style.display='block';return;}document.getElementById('e3').style.display='none';rPerso=[...sPerso];RR('perso');G('3b');}
+function GCPE(){RF('perso');G(4);}
+function SPERSO(){SF('perso');REC();G(5);}
+
+function REC(){
+  const el=document.getElementById('recap');
+  let h='';
+  function valBlock(ranked,store,title){
+    h+=`<div class="recap-card"><div class="rtitle">${title}</div>`;
+    ranked.slice(0,5).forEach((v,i)=>{const d=store[v]||{};h+=`<div class="rv"><div class="rnum">${i+1}</div><div class="rvname">${v}</div><div class="rvd">${d.s?'"'+d.s+'"':'<em style="color:#ccc">—</em>'}</div></div>`;});
+    h+=`</div>`;
+  }
+  function crBlock(ranked,store,lSt,aSt,title){
+    h+=`<div class="recap-card"><div class="rtitle">${title}</div>`;
+    ranked.slice(0,5).forEach(v=>{const d=store[v]||{};if(d.f||d.c){h+=`<div style="margin-bottom:12px"><b style="color:var(--dark-azur)">${v}</b>`;if(d.f)h+=`<br><span style="font-size:13px;color:var(--text-light);font-style:italic">Satisfaite quand : ${d.f}</span>`;if(d.c)h+=`<br><span style="font-size:13px;color:var(--text-light)">&#8594; ${d.c}</span>`;h+=`</div>`;}});
+    const hL=lSt.l1||lSt.l2||lSt.l3,hA=aSt.a1||aSt.a2||aSt.a3;
+    if(hL||hA){h+=`<div style="display:flex;gap:24px;flex-wrap:wrap;margin-top:14px;padding-top:14px;border-top:1px solid var(--cream-dark)">`;
+    if(hL){h+=`<div style="flex:1;min-width:190px"><span class="badge blim">Limitante</span>`;if(lSt.l1)h+=`<p style="font-size:13px;margin-bottom:5px">Je ne réussis pas… <em>${lSt.l1}</em></p>`;if(lSt.l2)h+=`<p style="font-size:13px;margin-bottom:5px">Je ne peux pas devenir… <em>${lSt.l2}</em></p>`;if(lSt.l3)h+=`<p style="font-size:13px">Je ne suis pas capable… <em>${lSt.l3}</em></p></div>`;}
+    if(hA){h+=`<div style="flex:1;min-width:190px"><span class="badge baid">Aidante</span>`;if(aSt.a1)h+=`<p style="font-size:13px;margin-bottom:5px">Je suis capable de… <em>${aSt.a1}</em></p>`;if(aSt.a2)h+=`<p style="font-size:13px;margin-bottom:5px">Je vais arriver à… <em>${aSt.a2}</em></p>`;if(aSt.a3)h+=`<p style="font-size:13px">J'ai un talent pour… <em>${aSt.a3}</em></p></div>`;}
+    h+=`</div>`;}
+    h+=`</div>`;
+  }
+  valBlock(rPro,cPro,'Valeurs professionnelles');
+  crBlock(rPro,cPro,lPro,aPro,'Croyances · vie professionnelle');
+  valBlock(rPerso,cPerso,'Valeurs personnelles');
+  crBlock(rPerso,cPerso,lPerso,aPerso,'Croyances · vie personnelle');
+  el.innerHTML=h;
+}
+
+function MAIL(){
+  const p=document.getElementById('prenom').value,n=document.getElementById('nom').value,c=document.getElementById('consult').value,d=document.getElementById('ddate').value;
+  let b=`ATTRIBUT CONSEILS — Valeurs & Croyances\n\nBénéficiaire : ${p} ${n}\nDate : ${d}\nConsultante : ${c}\n\n`;
+  b+=`========== VIE PROFESSIONNELLE ==========\n\n`;
+  rPro.slice(0,5).forEach((v,i)=>{const d=cPro[v]||{};b+=`${i+1}. ${v}\n`;if(d.s)b+=`   Signification : ${d.s}\n`;if(d.f)b+=`   Satisfaite quand : ${d.f}\n`;if(d.c)b+=`   Note : ${d.c}\n`;b+='\n';});
+  b+=`Croyance limitante :\n`;if(lPro.l1)b+=`• ${lPro.l1}\n`;if(lPro.l2)b+=`• ${lPro.l2}\n`;if(lPro.l3)b+=`• ${lPro.l3}\n`;
+  b+=`\nCroyance aidante :\n`;if(aPro.a1)b+=`• ${aPro.a1}\n`;if(aPro.a2)b+=`• ${aPro.a2}\n`;if(aPro.a3)b+=`• ${aPro.a3}\n`;
+  b+=`\n========== VIE PERSONNELLE ==========\n\n`;
+  rPerso.slice(0,5).forEach((v,i)=>{const d=cPerso[v]||{};b+=`${i+1}. ${v}\n`;if(d.s)b+=`   Signification : ${d.s}\n`;if(d.f)b+=`   Satisfaite quand : ${d.f}\n`;if(d.c)b+=`   Note : ${d.c}\n`;b+='\n';});
+  b+=`Croyance limitante :\n`;if(lPerso.l1)b+=`• ${lPerso.l1}\n`;if(lPerso.l2)b+=`• ${lPerso.l2}\n`;if(lPerso.l3)b+=`• ${lPerso.l3}\n`;
+  b+=`\nCroyance aidante :\n`;if(aPerso.a1)b+=`• ${aPerso.a1}\n`;if(aPerso.a2)b+=`• ${aPerso.a2}\n`;if(aPerso.a3)b+=`• ${aPerso.a3}\n`;
+  window.open(`mailto:?subject=${encodeURIComponent('Valeurs & Croyances — '+p+' '+n)}&body=${encodeURIComponent(b)}`);
+}
+
+function PDF(){
+  const{jsPDF}=window.jspdf;
+  const doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+  const pn=document.getElementById('prenom').value,nn=document.getElementById('nom').value;
+  const cn=document.getElementById('consult').value,dn=document.getElementById('ddate').value;
+  const W=210,M=22;let y=0;
+
+  doc.setFillColor(26,61,92);doc.rect(0,0,W,38,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(16);doc.setTextColor(255,255,255);
+  doc.text('ATTRIBUT CONSEILS',M,16);
+  doc.setFontSize(9);doc.setFont('helvetica','normal');doc.setTextColor(219,190,63);
+  doc.text('BILAN DE COMPÉTENCES',M,23);
+  doc.setTextColor(180,200,215);doc.setFontSize(11);
+  doc.text('Mes valeurs & croyances',W-M,20,{align:'right'});
+  y=50;
+  doc.setTextColor(40,40,40);doc.setFont('helvetica','bold');doc.setFontSize(10);
+  doc.text(`${pn} ${nn}`,M,y);
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(120,120,120);
+  doc.text(`Consultante : ${cn}   |   Date : ${dn}`,M,y+6);
+  y+=16;doc.setDrawColor(216,207,199);doc.setLineWidth(0.3);doc.line(M,y,W-M,y);y+=10;
+
+  function chk(n=20){if(y>297-n){doc.addPage();y=20;}}
+  function band(t){chk(16);doc.setFillColor(89,150,178);doc.rect(M,y,W-M*2,8,'F');doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(255,255,255);doc.text(t.toUpperCase(),M+4,y+5.5);y+=14;}
+  function sub(t,r,g,b){chk(12);doc.setFillColor(r,g,b);doc.rect(M,y,W-M*2,6,'F');doc.setFont('helvetica','bold');doc.setFontSize(8);doc.setTextColor(255,255,255);doc.text(t,M+3,y+4.2);y+=10;}
+
+  function wVal(ranked,store,label){
+    band(label);
+    ranked.slice(0,5).forEach((v,i)=>{
+      chk(22);
+      doc.setFillColor(26,61,92);doc.circle(M+4,y+3,4,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(255,255,255);doc.text(String(i+1),M+4,y+4.5,{align:'center'});
+      doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(26,61,92);doc.text(v,M+12,y+4);y+=10;
+      const d=store[v]||{};
+      doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(80,80,80);
+      if(d.s){const l=doc.splitTextToSize(`Signification : ${d.s}`,W-M*2-12);doc.text(l,M+12,y);y+=l.length*5;}
+      if(d.f){const l=doc.splitTextToSize(`Satisfaite quand : ${d.f}`,W-M*2-12);doc.text(l,M+12,y);y+=l.length*5;}
+      if(d.c){doc.setFontSize(8);doc.setTextColor(130,130,130);const l=doc.splitTextToSize(`→ ${d.c}`,W-M*2-12);doc.text(l,M+12,y);y+=l.length*4.5;}
+      y+=4;
+    });
+  }
+  function wCr(lSt,aSt){
+    if(lSt.l1||lSt.l2||lSt.l3){
+      sub('Croyance limitante',160,50,40);
+      doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
+      if(lSt.l1){const l=doc.splitTextToSize(`• Je ne réussis pas complètement… : ${lSt.l1}`,W-M*2);doc.text(l,M,y);y+=l.length*5+2;}
+      if(lSt.l2){const l=doc.splitTextToSize(`• Je ne peux pas devenir… : ${lSt.l2}`,W-M*2);doc.text(l,M,y);y+=l.length*5+2;}
+      if(lSt.l3){const l=doc.splitTextToSize(`• Je ne suis pas capable de… : ${lSt.l3}`,W-M*2);doc.text(l,M,y);y+=l.length*5+2;}
+      y+=4;
+    }
+    if(aSt.a1||aSt.a2||aSt.a3){
+      sub('Croyance aidante',30,130,80);
+      doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
+      if(aSt.a1){const l=doc.splitTextToSize(`• Je suis capable de… : ${aSt.a1}`,W-M*2);doc.text(l,M,y);y+=l.length*5+2;}
+      if(aSt.a2){const l=doc.splitTextToSize(`• Je vais arriver à… : ${aSt.a2}`,W-M*2);doc.text(l,M,y);y+=l.length*5+2;}
+      if(aSt.a3){const l=doc.splitTextToSize(`• J'ai un talent pour… : ${aSt.a3}`,W-M*2);doc.text(l,M,y);y+=l.length*5+2;}
+      y+=4;
+    }
+  }
+
+  wVal(rPro,cPro,'Mes valeurs professionnelles');
+  wCr(lPro,aPro);
+  chk(30);y+=8;
+  wVal(rPerso,cPerso,'Mes valeurs personnelles');
+  wCr(lPerso,aPerso);
+
+  const pg=doc.internal.getNumberOfPages();
+  for(let i=1;i<=pg;i++){doc.setPage(i);doc.setFillColor(26,61,92);doc.rect(0,285,W,12,'F');doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(180,200,215);doc.text('Attribut Conseils — Document confidentiel',M,292);doc.text(`${i}/${pg}`,W-M,292,{align:'right'});}
+  doc.save(`ValeursCroyances_${pn}_${nn}_${dn||'bilan'}.pdf`);
+}
+
+function G(s){
+  document.querySelectorAll('.sp').forEach(p=>p.classList.remove('active'));
+  document.getElementById('s'+s).classList.add('active');
+  const map={0:0,1:1,'1b':1,2:2,'bridge':2,3:3,'3b':3,4:4,5:5};
+  const cur=map[String(s)]??0;
+  [1,2,3,4,5].forEach(n=>{
+    const d=document.getElementById('d'+n),l=document.getElementById('l'+n);
+    d.className='sd';l.className='sl';
+    if(cur>n){d.classList.add('done');l.classList.add('done');}
+    else if(cur===n){d.classList.add('active');l.classList.add('active');}
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+document.addEventListener('DOMContentLoaded',()=>{
+  RG('pro');RG('perso');
+  document.getElementById('ddate').valueAsDate=new Date();
+});
+</script>
+</body>
+</html>
