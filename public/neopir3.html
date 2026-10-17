@@ -361,6 +361,40 @@ body {
   .q-text { font-size: 19px; }
   .domains-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ═══════════════════════════════════════════
+   IMPRESSION / PDF
+   ═══════════════════════════════════════════ */
+/* Cacher la zone PDF en mode normal */
+#pdf-print-zone { display: none; }
+
+@media print {
+  /* Cacher tout l'interface */
+  .screen, .panel, .prog-wrap, .btn-consultant { display: none !important; }
+  /* Afficher uniquement la zone PDF */
+  #pdf-print-zone { display: block !important; }
+  body { background: white; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+  .pdf-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 3px solid #1a3d5c; padding-bottom: 14px; margin-bottom: 20px; }
+  .pdf-logo { font-size: 18px; font-weight: 900; letter-spacing: 0.12em; color: #1a3d5c; text-transform: uppercase; }
+  .pdf-subtitle { font-size: 11px; color: #5996b2; letter-spacing: 0.1em; text-transform: uppercase; }
+  .pdf-title-block { margin-bottom: 24px; }
+  .pdf-h1 { font-size: 22px; font-weight: 700; color: #1a3d5c; margin: 0 0 6px 0; letter-spacing: 0.04em; }
+  .pdf-meta { font-size: 12px; color: #555; }
+  .pdf-h2 { font-size: 13px; font-weight: 700; color: #1a3d5c; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid #dbbe3f; padding-bottom: 4px; margin: 24px 0 10px 0; }
+  .pdf-table { width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 12px; }
+  .pdf-table thead tr { background: #faf5f0; }
+  .pdf-table th { padding: 6px 8px; text-align: left; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: #888; border-bottom: 1px solid #ddd; }
+  .pdf-table td { padding: 5px 8px; border-bottom: 1px solid #eee; vertical-align: middle; }
+  .pdf-bar-col { width: 140px; }
+  .pdf-bar-bg { height: 8px; background: #ede9e0; border-radius: 4px; overflow: hidden; }
+  .pdf-bar-fill { height: 8px; border-radius: 4px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .pdf-domain-block { margin-bottom: 16px; page-break-inside: avoid; }
+  .pdf-domain-head { color: white; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; padding: 6px 10px; border-radius: 3px 3px 0 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .pdf-facet-table { margin-bottom: 0; }
+  .pdf-facet-table td:first-child { color: #444; }
+  .pdf-footer { margin-top: 32px; padding-top: 10px; border-top: 1px solid #ddd; font-size: 9px; color: #aaa; text-align: center; letter-spacing: 0.06em; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+}
 </style>
 </head>
 <body>
@@ -425,15 +459,15 @@ body {
     <!-- BOUTON ENVOI CANDIDAT -->
     <div class="send-box">
       <p style="font-size:15px;line-height:1.7;color:#1a1a2e;margin-bottom:8px;font-family:Arial,sans-serif;">
-        <strong>Une dernière étape :</strong> envoyez vos résultats à votre conseillère.
+        <strong>Une dernière étape :</strong> téléchargez vos résultats en PDF.
       </p>
       <p style="font-size:13px;color:#7a7a9a;margin-bottom:22px;line-height:1.6;font-family:Arial,sans-serif;">
-        Cliquez sur le bouton. Votre messagerie s'ouvre avec le message déjà rédigé.<br>
-        <strong>Saisissez l'adresse de votre conseillère et cliquez Envoyer.</strong>
+        Cliquez sur le bouton pour générer votre document PDF.<br>
+        <strong>Enregistrez-le, puis envoyez-le en pièce jointe à votre conseillère.</strong>
       </p>
-      <button class="btn-send" id="btn-send" onclick="doSend()">✉&nbsp; Envoyer mes résultats</button>
+      <button class="btn-send" id="btn-send" onclick="doDownloadPDF()">&#128196;&nbsp; Télécharger mes résultats (PDF)</button>
       <div class="send-confirm" id="send-confirm">
-        ✓ Votre messagerie est ouverte.<br>Pensez à cliquer <strong>Envoyer</strong>.
+        ✓ Votre PDF est prêt.<br>Enregistrez-le et envoyez-le <strong>en pièce jointe</strong> à votre conseillère.
       </div>
     </div>
 
@@ -596,80 +630,102 @@ function doFinish() {
 }
 
 // ══════════════════════════════════════════
-// ENVOI MAIL COMPLET
+// TÉLÉCHARGEMENT PDF
 // ══════════════════════════════════════════
-function niv(sc) {
-  return sc <= 6 ? 'Très faible' : sc <= 12 ? 'Faible' : sc <= 20 ? 'Moyen' : sc <= 26 ? 'Élevé' : 'Très élevé';
+function niv(sc, max) {
+  var pct = sc / max;
+  return pct <= 0.19 ? 'Très faible' : pct <= 0.39 ? 'Faible' : pct <= 0.60 ? 'Moyen' : pct <= 0.79 ? 'Élevé' : 'Très élevé';
 }
 
-function barASCII(sc, max, width) {
-  var filled = Math.round(sc / max * width);
-  var bar = '';
-  for (var i = 0; i < width; i++) bar += (i < filled) ? '█' : '░';
-  return bar;
-}
+function doDownloadPDF() {
+  // Injecter la zone d'impression si elle n'existe pas encore
+  var existing = document.getElementById('pdf-print-zone');
+  if (existing) existing.parentNode.removeChild(existing);
 
-function doSend() {
   var scores = calcScores();
   var fs = scores.facets;
   var ds = scores.domains;
   var now = new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
-  var LINE = '================================================\r\n';
-  var line = '------------------------------------------------\r\n';
 
-  var body = LINE;
-  body += '  NEO PI-R — RÉSULTATS COMPLETS\r\n';
-  body += LINE;
-  body += '  Candidat : ' + candidateName + '\r\n';
-  body += '  Date     : ' + now + '\r\n';
-  body += LINE + '\r\n';
-
-  // ── BLOC 1 : VUE D'ENSEMBLE DES 5 DOMAINES ──
-  body += '>>> VUE D\'ENSEMBLE — 5 GRANDS DOMAINES\r\n' + line;
   var dkeys = Object.keys(DOMAINS);
+
+  // ── Construction du HTML d'impression ──
+  var html = '<div id="pdf-print-zone">';
+
+  // En-tête
+  html += '<div class="pdf-header">';
+  html += '<div class="pdf-logo">ATTRIBUT CONSEILS</div>';
+  html += '<div class="pdf-subtitle">Bilan de compétences</div>';
+  html += '</div>';
+
+  html += '<div class="pdf-title-block">';
+  html += '<h1 class="pdf-h1">NEO PI-R — Résultats</h1>';
+  html += '<div class="pdf-meta"><strong>Candidat :</strong> ' + candidateName + '&emsp;|&emsp;<strong>Date :</strong> ' + now + '</div>';
+  html += '</div>';
+
+  // Vue d'ensemble — 5 domaines
+  html += '<h2 class="pdf-h2">Vue d\'ensemble — 5 grands domaines</h2>';
+  html += '<table class="pdf-table">';
+  html += '<thead><tr><th>Domaine</th><th>Score</th><th class="pdf-bar-col">Profil</th><th>Niveau</th></tr></thead><tbody>';
   for (var di = 0; di < dkeys.length; di++) {
     var dk = dkeys[di];
     var dom = DOMAINS[dk];
     var tot = ds[dk];
-    var bar = barASCII(tot, 192, 20);
-    var label = (dom.label + '          ').substring(0, 14);
-    body += '  ' + label + ' ' + bar + '  ' + tot + '/192  [' + niv(tot) + ']\r\n';
+    var pct = Math.round(tot / 192 * 100);
+    var level = niv(tot, 192);
+    html += '<tr>';
+    html += '<td style="font-weight:700;color:' + dom.color + '">' + dom.label + '</td>';
+    html += '<td style="text-align:center;font-weight:bold">' + tot + ' / 192</td>';
+    html += '<td class="pdf-bar-col"><div class="pdf-bar-bg"><div class="pdf-bar-fill" style="width:' + pct + '%;background:' + dom.color + '"></div></div></td>';
+    html += '<td style="color:' + dom.color + ';font-weight:600">' + level + '</td>';
+    html += '</tr>';
   }
-  body += '\r\n';
+  html += '</tbody></table>';
 
-  // ── BLOC 2 : DÉTAIL PAR DOMAINE ──
-  body += '>>> DÉTAIL DES 30 FACETTES\r\n';
+  // Détail par domaine
+  html += '<h2 class="pdf-h2" style="page-break-before:always">Détail des 30 facettes</h2>';
+
   for (var di = 0; di < dkeys.length; di++) {
     var dk = dkeys[di];
     var dom = DOMAINS[dk];
-    body += line;
-    body += '  ' + dom.label.toUpperCase() + '  —  Score global : ' + ds[dk] + ' / 192  [' + niv(ds[dk]) + ']\r\n' + line;
+    html += '<div class="pdf-domain-block">';
+    html += '<div class="pdf-domain-head" style="background:' + dom.color + '">' + dom.label.toUpperCase() + '&ensp;—&ensp;Score global : ' + ds[dk] + ' / 192&ensp;[' + niv(ds[dk], 192) + ']</div>';
+    html += '<table class="pdf-table pdf-facet-table">';
+    html += '<thead><tr><th>Facette</th><th>Score</th><th class="pdf-bar-col">Profil</th><th>Niveau</th></tr></thead><tbody>';
     var flist = dom.facets;
     for (var fi = 0; fi < flist.length; fi++) {
       var f = flist[fi];
       var sc = fs[f];
-      var bar = barASCII(sc, 32, 16);
-      var fname = (FACETS[f] + '                  ').substring(0, 20);
-      body += '  ' + fname + ' ' + bar + '  ' + sc + '/32  [' + niv(sc) + ']\r\n';
+      var fpct = Math.round(sc / 32 * 100);
+      var flevel = niv(sc, 32);
+      html += '<tr>';
+      html += '<td>' + FACETS[f] + '</td>';
+      html += '<td style="text-align:center;font-weight:bold">' + sc + ' / 32</td>';
+      html += '<td class="pdf-bar-col"><div class="pdf-bar-bg"><div class="pdf-bar-fill" style="width:' + fpct + '%;background:' + dom.color + '"></div></div></td>';
+      html += '<td style="font-weight:600">' + flevel + '</td>';
+      html += '</tr>';
     }
-    body += '\r\n';
+    html += '</tbody></table></div>';
   }
 
-  body += LINE;
-  body += '  Document généré par NEO PI-R — Attribut Conseils\r\n';
-  body += LINE;
+  // Pied de page
+  html += '<div class="pdf-footer">Document confidentiel — généré par Attribut Conseils · ' + now + '</div>';
+  html += '</div>';
 
-  var subj = encodeURIComponent('NEO PI-R — ' + candidateName + ' — ' + now);
-  var bod  = encodeURIComponent(body);
-  window.location.href = 'mailto:?subject=' + subj + '&body=' + bod;
+  // Insérer dans le body
+  var zone = document.createElement('div');
+  zone.innerHTML = html;
+  document.body.appendChild(zone.firstChild);
 
-  setTimeout(function() {
-    document.getElementById('send-confirm').style.display = 'block';
-    var b = document.getElementById('btn-send');
-    b.innerHTML = '&#10003;&nbsp; Messagerie ouverte — cliquez Envoyer';
-    b.style.background = '#7a9e8e';
-    b.disabled = true;
-  }, 900);
+  // Déclencher l'impression (→ Save as PDF)
+  window.print();
+
+  // Confirmer
+  document.getElementById('send-confirm').style.display = 'block';
+  var b = document.getElementById('btn-send');
+  b.innerHTML = '&#10003;&nbsp; PDF généré — pensez à l\'enregistrer';
+  b.style.background = '#5996b2';
+  b.disabled = true;
 }
 
 // ══════════════════════════════════════════
