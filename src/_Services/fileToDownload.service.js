@@ -22,6 +22,7 @@ import Charte_PSH from "@/Assets/FileToDownload/registreHandi/Charte_PSH.pdf";
 import PSH from "@/Assets/FileToDownload/registreHandi/LIVRET_ACCUEIL_PSH.pdf";
 import RegistreHandi from "@/Assets/FileToDownload/registreHandi/registre.pdf";
 import CGV from "@/Assets/FileToDownload/CGV.pdf";
+import CharteIAClients from "@/Assets/FileToDownload/Charte_IA_Clients_Attribut_Conseils.pdf";
 // import CreaCompanyStats from '@/Assets/FileToDownload/CreaCompany/CreaCompanyStats.pdf'
 // import CreaCompanyProg from '@/Assets/FileToDownload/CreaCompany/CreaCompanyProg.pdf'
 // import CreaCompanyPrice from '@/Assets/FileToDownload/CreaCompany/CreaCompanyPrice.pdf'
@@ -129,6 +130,12 @@ const RGPDFile = [
     pdfFile: RGPD,
   },
 ];
+const CharteIAClientsFile = [
+  {
+    name: "Charte d'engagement IA",
+    pdfFile: CharteIAClients,
+  },
+];
 const QualiopiFile = [
   {
     name: "Télécharger notre certificat Qualiopi",
@@ -192,6 +199,9 @@ let CGUFiles = () => {
 let RGPDFiles = () => {
   return RGPDFile;
 };
+let CharteIAClientsFiles = () => {
+  return CharteIAClientsFile;
+};
 let QualiopiFiles = () => {
   return QualiopiFile;
 };
@@ -212,6 +222,7 @@ export const allFiles = {
   TrainingTrainerFiles,
   CGUFiles,
   RGPDFiles,
+  CharteIAClientsFiles,
   QualiopiFiles,
   HandiFiles,
   careerConsultFiles,

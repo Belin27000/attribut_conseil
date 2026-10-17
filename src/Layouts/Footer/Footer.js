@@ -186,11 +186,18 @@ const Footer = () => {
               file={allFiles.HandiFiles()}
             />
           </div>
-          <DownloadFile
-            className="FooterFiles"
-            file={allFiles.RGPDFiles()}
-            dot={false}
-          />
+          <div className="FooterLegalFiles">
+            <DownloadFile
+              className="FooterFiles"
+              file={allFiles.RGPDFiles()}
+              dot={false}
+            />
+            <DownloadFile
+              className="FooterFiles"
+              file={allFiles.CharteIAClientsFiles()}
+              dot={false}
+            />
+          </div>
           <DownloadFile
             className="FooterFiles"
             file={allFiles.CGUFiles()}
